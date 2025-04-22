@@ -6,14 +6,14 @@
 /* ---- CSS Variables ---- */
 :root {
     /* Colors */
-    --primary-color: #2E7D32; /* Green primary color */
-    --secondary-color: #1565C0; /* Blue secondary color */
-    --accent-color: #FFC107; /* Amber accent */
-    --dark-color: #263238;
+    --primary-color: #00A3FF; /* NEAR Blue primary color */
+    --secondary-color: #0071BB; /* Darker blue secondary color */
+    --accent-color: #33CCFF; /* Light blue accent */
+    --dark-color: #121212; /* Near black for backgrounds */
     --light-color: #ECEFF1;
     --gray-color: #90A4AE;
     --danger-color: #F44336;
-    --success-color: #4CAF50;
+    --success-color: #00A3FF;
     
     /* Typography */
     --font-primary: 'Poppins', sans-serif;
@@ -158,7 +158,7 @@ section {
 }
 
 .btn-primary:hover {
-    background-color: #1B5E20; /* Darker shade */
+    background-color: var(--secondary-color); /* Darker blue */
     color: white;
 }
 
@@ -168,7 +168,7 @@ section {
 }
 
 .btn-secondary:hover {
-    background-color: #0D47A1; /* Darker shade */
+    background-color: #005A8C; /* Darker shade */
     color: white;
 }
 
@@ -299,10 +299,11 @@ nav {
     left: 0;
     width: 100%;
     height: 100%;
+    background-color: #000000;
     background-image: url('https://images.unsplash.com/photo-1611746351408-c0a1346be8e8');
     background-size: cover;
     background-position: center;
-    filter: brightness(0.7) blur(3px);
+    filter: brightness(0.5) blur(3px);
     z-index: -1;
 }
 
@@ -340,7 +341,12 @@ nav {
 
 /* ---- Stats Section ---- */
 .stats {
-    background-color: white;
+    background-color: #000000;
+    color: white;
+}
+
+.stats .section-title {
+    color: white;
 }
 
 .stats-container {
@@ -353,7 +359,7 @@ nav {
 .stat-card {
     flex: 1;
     min-width: 250px;
-    background-color: white;
+    background-color: #121212;
     padding: var(--spacing-xl);
     border-radius: var(--border-radius-md);
     box-shadow: var(--shadow-md);
@@ -378,11 +384,11 @@ nav {
     font-size: var(--font-size-xxl);
     font-weight: 700;
     margin-bottom: var(--spacing-sm);
-    color: var(--secondary-color);
+    color: var(--primary-color);
 }
 
 .stat-label {
-    color: var(--gray-color);
+    color: white;
     font-size: var(--font-size-md);
 }
 
@@ -793,7 +799,7 @@ nav {
 
 /* ---- Footer ---- */
 .footer {
-    background-color: var(--dark-color);
+    background-color: #000000;
     color: white;
     padding: var(--spacing-xxl) 0 var(--spacing-md);
 }
