@@ -453,24 +453,28 @@ nav {
 
 /* ---- Benefits Section ---- */
 .benefits {
-    background-color: white;
+    background-color: #000000;
+    color: white;
+    padding-top: var(--spacing-xxl);
+    padding-bottom: var(--spacing-xxl);
+}
+
+.benefits .section-title {
+    color: white;
 }
 
 .benefits-container {
     display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: var(--spacing-xl);
+    flex-direction: column;
+    gap: var(--spacing-xxl);
 }
 
 .benefit-card {
-    flex: 1;
-    min-width: 250px;
-    background-color: white;
+    display: flex;
+    align-items: flex-start;
+    background-color: #121212;
     padding: var(--spacing-xl);
     border-radius: var(--border-radius-md);
-    box-shadow: var(--shadow-md);
-    text-align: center;
     transition: all var(--transition-speed);
     transform: translateY(20px);
     opacity: 0;
@@ -482,17 +486,31 @@ nav {
 }
 
 .benefit-card:hover {
-    transform: scale(1.05);
+    transform: translateY(-5px);
     box-shadow: var(--shadow-lg);
 }
 
-.benefit-icon {
-    font-size: 3rem;
-    margin-bottom: var(--spacing-md);
+.benefit-number {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-right: var(--spacing-xl);
+    min-width: 80px;
+    line-height: 1;
+}
+
+.benefit-content {
+    flex: 1;
 }
 
 .benefit-card h3 {
-    color: var(--primary-color);
+    color: white;
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.benefit-card p {
+    color: rgba(255,255,255,0.7);
     margin-bottom: var(--spacing-md);
 }
 
@@ -505,6 +523,7 @@ nav {
     padding-left: 25px;
     position: relative;
     margin-bottom: var(--spacing-sm);
+    color: rgba(255,255,255,0.9);
 }
 
 .benefit-card li::before {
@@ -517,7 +536,12 @@ nav {
 
 /* ---- Impact Section ---- */
 .impact {
-    background-color: #F5F5F5;
+    background-color: #121212;
+    color: white;
+}
+
+.impact .section-title {
+    color: white;
 }
 
 .impact-metrics {
@@ -527,13 +551,14 @@ nav {
 }
 
 .impact-metric {
-    background-color: white;
+    background-color: #1d1d1d;
     padding: var(--spacing-xl);
     border-radius: var(--border-radius-md);
     box-shadow: var(--shadow-md);
     transform: translateX(-20px);
     opacity: 0;
     transition: all 0.6s ease;
+    border-left: 4px solid var(--primary-color);
 }
 
 .impact-metric.active {
@@ -543,12 +568,13 @@ nav {
 
 .impact-metric h3 {
     margin-bottom: var(--spacing-md);
+    color: white;
 }
 
 .progress-container {
     width: 100%;
     height: 24px;
-    background-color: #e0e0e0;
+    background-color: rgba(255, 255, 255, 0.1);
     border-radius: var(--border-radius-md);
     margin-bottom: var(--spacing-md);
     overflow: hidden;
@@ -570,7 +596,12 @@ nav {
 
 /* ---- Testimonials Section ---- */
 .testimonials {
-    background-color: white;
+    background-color: #121212;
+    color: white;
+}
+
+.testimonials .section-title {
+    color: white;
 }
 
 .testimonial-slider {
@@ -607,7 +638,7 @@ nav {
 }
 
 .testimonial-content {
-    background-color: white;
+    background-color: #1d1d1d;
     padding: var(--spacing-xl);
     border-radius: var(--border-radius-md);
     box-shadow: var(--shadow-md);
@@ -618,6 +649,7 @@ nav {
     font-style: italic;
     margin-bottom: var(--spacing-md);
     font-size: var(--font-size-lg);
+    color: white;
 }
 
 .testimonial-author {
@@ -675,7 +707,12 @@ nav {
 
 /* ---- Contact Section ---- */
 .contact {
-    background-color: #F5F5F5;
+    background-color: #000000;
+    color: white;
+}
+
+.contact .section-title {
+    color: white;
 }
 
 .contact-container {
@@ -713,7 +750,7 @@ nav {
 .contact-form {
     flex: 2;
     min-width: 300px;
-    background-color: white;
+    background-color: #1d1d1d;
     padding: var(--spacing-xl);
     border-radius: var(--border-radius-md);
     box-shadow: var(--shadow-md);
@@ -735,6 +772,7 @@ nav {
     display: block;
     margin-bottom: var(--spacing-xs);
     font-weight: 500;
+    color: white;
 }
 
 .form-group input,
