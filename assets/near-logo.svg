@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="40" viewBox="0 0 120 40">
+  <g fill="none" stroke="#00A3FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Celtic knot logo based on the reference -->
+    <path d="M30,15 C26,11 26,19 30,15 C34,11 34,19 30,15 Z" />
+    <path d="M30,25 C26,21 26,29 30,25 C34,21 34,29 30,25 Z" />
+    <path d="M20,20 C24,16 24,24 20,20 C16,16 16,24 20,20 Z" />
+    <path d="M40,20 C36,16 36,24 40,20 C44,16 44,24 40,20 Z" />
+    <path d="M25,15 L35,25 M35,15 L25,25 M20,20 L40,20" />
+  </g>
+  
+  <!-- NEAR text -->
+  <g fill="#00A3FF">
+    <text x="45" y="27" font-family="Arial, sans-serif" font-weight="bold" font-size="22">NEAR</text>
+  </g>
+</svg>
