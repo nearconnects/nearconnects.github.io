@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="40" viewBox="0 0 120 40">
+  <defs>
+    <linearGradient id="logo-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2E7D32" />
+      <stop offset="100%" stop-color="#1565C0" />
+    </linearGradient>
+  </defs>
+  <g fill="none" stroke="url(#logo-gradient)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <!-- N shape -->
+    <path d="M10,30 L10,10 L20,25 L20,10" />
+    
+    <!-- E shape -->
+    <path d="M25,10 L40,10 M25,20 L35,20 M25,30 L40,30 M25,10 L25,30" />
+    
+    <!-- A shape -->
+    <path d="M45,30 L50,10 L55,30 M47.5,23 L52.5,23" />
+    
+    <!-- R shape -->
+    <path d="M60,10 L60,30 M60,10 L70,10 C73.5,10 75,13 70,17 L60,17 M70,17 L75,30" />
+    
+    <!-- Circular arrow for "return" concept -->
+    <path d="M90,20 C90,12 100,8 105,15 C110,22 100,28 90,20 Z" />
+    <path d="M88,20 L90,17 L93,20" />
+  </g>
+  
+  <!-- Leaf icon symbolizing sustainability -->
+  <path d="M100,15 C105,10 110,15 105,20 C100,25 95,20 100,15 Z" fill="#2E7D32" />
+  <path d="M100,15 L103,23" stroke="#2E7D32" stroke-width="1.5" stroke-linecap="round" />
+</svg>
