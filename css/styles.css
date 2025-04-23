@@ -6,17 +6,17 @@
 /* ---- CSS Variables ---- */
 :root {
     /* Colors */
-    --primary-color: #00A3FF; /* NEAR Blue primary color */
+    --primary-color: #0a84ff; /* NEAR Blue primary color as specified in guidelines */
     --secondary-color: #0071BB; /* Darker blue secondary color */
     --accent-color: #33CCFF; /* Light blue accent */
     --dark-color: #121212; /* Near black for backgrounds */
     --light-color: #ECEFF1;
     --gray-color: #90A4AE;
     --danger-color: #F44336;
-    --success-color: #00A3FF;
+    --success-color: #4CAF50;
     
     /* Typography */
-    --font-primary: 'Poppins', sans-serif;
+    --font-primary: 'Inter', 'Open Sans', sans-serif; /* Updated to match guidelines */
     --font-size-base: 16px;
     --font-size-sm: 0.875rem;
     --font-size-md: 1rem;
@@ -195,7 +195,7 @@ section {
     top: 0;
     left: 0;
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: rgba(0, 0, 0, 0.9);
     box-shadow: var(--shadow-sm);
     z-index: 1000;
     transition: all var(--transition-speed);
@@ -236,7 +236,7 @@ nav {
 }
 
 .nav-menu a {
-    color: var(--dark-color);
+    color: var(--light-color);
     font-weight: 500;
     position: relative;
 }
@@ -260,6 +260,27 @@ nav {
 .cta-buttons {
     display: flex;
     gap: var(--spacing-md);
+    align-items: center;
+}
+
+.language-selector {
+    margin-right: var(--spacing-md);
+}
+
+.language-selector select {
+    padding: 5px 10px;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--gray-color);
+    background-color: transparent;
+    font-family: var(--font-primary);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition: all var(--transition-speed);
+}
+
+.language-selector select:focus {
+    outline: none;
+    border-color: var(--primary-color);
 }
 
 .hamburger {

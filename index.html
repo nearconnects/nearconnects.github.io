@@ -32,7 +32,7 @@
             <div class="container">
                 <div class="logo">
                     <a href="#home">
-                        <img src="assets/near-logo.svg" alt="NEAR Logo" />
+                        <!-- <img src="assets/near-logo.svg" alt="NEAR Logo" /> -->
                         <span>NEAR</span>
                     </a>
                 </div>
@@ -40,21 +40,23 @@
                 <nav>
                     <ul class="nav-menu">
                         <li><a href="#home">Inicio</a></li>
-                        <li><a href="#stats">Datos</a></li>
-                        <li><a href="#solution">Solución</a></li>
-                        <li><a href="#benefits">Beneficios</a></li>
-                        <li><a href="#impact">Impacto</a></li>
-                        <li><a href="#testimonials">Testimonios</a></li>
-                        <li><a href="#contact">Contacto</a></li>
+                        <li><a href="#shippers">Shippers</a></li>
+                        <li><a href="#carriers">Carriers</a></li>
+                        <li><a href="#send-package">Send a Package</a></li>
+                        <li><a href="#green-deliveries">Green Deliveries</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#blog">Blog</a></li>
                     </ul>
 
                     <div class="cta-buttons">
-                        <a href="#download" class="btn btn-primary"
-                            >Descargar App</a
-                        >
-                        <a href="#transporter" class="btn btn-outline"
-                            >Soy Transportista</a
-                        >
+                        <div class="language-selector">
+                            <select>
+                                <option value="es">ES</option>
+                                <option value="en">EN</option>
+                            </select>
+                        </div>
+                        <a href="#login" class="btn btn-outline">Sign In</a>
+                        <a href="#start" class="btn btn-primary">Get Started</a>
                     </div>
 
                     <div class="hamburger">
@@ -73,19 +75,14 @@
             </div>
             <div class="container">
                 <div class="hero-content animate-on-load">
-                    <h1>Conectamos caminos, cuidamos el planeta 🌍</h1>
+                    <h1>Never Empty Again on Return</h1>
                     <p>
-                        Transformamos rutas vacías en oportunidades sostenibles
+                        Reducing empty trips and emissions while enabling accessible deliveries
                     </p>
 
                     <div class="hero-buttons">
-                        <a href="#download" class="btn btn-large btn-primary"
-                            >Descargar Aplicación</a
-                        >
-                        <a
-                            href="#transporter"
-                            class="btn btn-large btn-secondary"
-                            >Soy Transportista</a
+                        <a href="#how-it-works" class="btn btn-large btn-primary"
+                            >Discover How It Works</a
                         >
                     </div>
                 </div>
@@ -96,7 +93,7 @@
         <section id="stats" class="stats">
             <div class="container">
                 <h2 class="section-title animate-on-scroll">
-                    Datos que impulsan el cambio
+                    OTLE Data Insights: Understanding Transport Efficiency and Environmental Impact
                 </h2>
 
                 <div class="stats-container">
@@ -108,7 +105,7 @@
                             <span class="counter" data-target="393">0</span>M
                         </div>
                         <div class="stat-label">
-                            Tons moved in internal commerce
+                            Annual tons moved in internal displacement commerce in Spain
                         </div>
                     </div>
 
@@ -119,7 +116,7 @@
                         <div class="stat-number">
                             +<span class="counter" data-target="93">0</span>M
                         </div>
-                        <div class="stat-label">Empty operations per year</div>
+                        <div class="stat-label">Annual number of empty operations</div>
                     </div>
 
                     <div class="stat-card animate-on-scroll">
@@ -131,7 +128,7 @@
                             tons CO₂
                         </div>
                         <div class="stat-label">
-                            Annual emissions from empty trips
+                            Annual CO₂ emissions from these displacements
                         </div>
                     </div>
                 </div>
@@ -183,31 +180,37 @@
         <!-- Benefits Section -->
         <section id="benefits" class="benefits">
             <div class="container">
-                <h2 class="section-title animate-on-scroll">Para Transportistas:</h2>
+                <h2 class="section-title animate-on-scroll">Beneficios</h2>
 
                 <div class="benefits-container">
                     <div class="benefit-card animate-on-scroll">
-                        <div class="benefit-number">01</div>
-                        <div class="benefit-content">
-                            <h3>Cada entrega cuenta, cada kilómetro importa:</h3>
-                            <p>Llenar espacios vacíos durante tus rutas de retorno</p>
-                        </div>
+                        <div class="benefit-icon">💸</div>
+                        <h3>Transportistas</h3>
+                        <ul>
+                            <li>Cargas en rutas de retorno</li>
+                            <li>Reducción de kilómetros vacíos</li>
+                            <li>Ingresos adicionales</li>
+                        </ul>
                     </div>
 
                     <div class="benefit-card animate-on-scroll">
-                        <div class="benefit-number">02</div>
-                        <div class="benefit-content">
-                            <h3>Rutas llenas, beneficios que suman:</h3>
-                            <p>Aumento de ganancias por cada kilómetro recorrido.</p>
-                        </div>
+                        <div class="benefit-icon">📦</div>
+                        <h3>Clientes</h3>
+                        <ul>
+                            <li>Envíos económicos</li>
+                            <li>Gestión simplificada</li>
+                            <li>Seguimiento en tiempo real</li>
+                        </ul>
                     </div>
 
                     <div class="benefit-card animate-on-scroll">
-                        <div class="benefit-number">03</div>
-                        <div class="benefit-content">
-                            <h3>Compromiso verde en cada viaje.</h3>
-                            <p>Reducción significativa de la huella de carbono.</p>
-                        </div>
+                        <div class="benefit-icon">🌱</div>
+                        <h3>Planeta</h3>
+                        <ul>
+                            <li>Reducción de emisiones de CO₂</li>
+                            <li>Optimización de recursos</li>
+                            <li>Menor huella de carbono</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -317,15 +320,15 @@
                         <p>Contáctanos y te responderemos lo antes posible.</p>
                         <div class="contact-method">
                             <i class="fas fa-envelope"></i>
-                            <span>info@nearplatform.com</span>
+                            <span>nearconnects@gmail.com</span>
                         </div>
                         <div class="contact-method">
                             <i class="fas fa-phone"></i>
-                            <span>+34 900 123 456</span>
+                            <span>+34 644 25 65 77</span>
                         </div>
                         <div class="contact-method">
                             <i class="fas fa-map-marker-alt"></i>
-                            <span>C/ Innovación, 123, Madrid</span>
+                            <span>Barcelona, Spain</span>
                         </div>
                     </div>
 
@@ -397,7 +400,7 @@
             <div class="container">
                 <div class="footer-content">
                     <div class="footer-logo">
-                        <img src="assets/near-logo.svg" alt="NEAR Logo" />
+                        <span>NEAR</span>
                         <p class="tagline">
                             Cuidando el planeta, conectando caminos 🌱
                         </p>
@@ -543,7 +546,7 @@
 
                 <div class="footer-bottom">
                     <p>
-                        &copy; 2023 NEAR (Never Empty Again on Return). Todos
+                        &copy; 2025 NEAR (Never Empty Again on Return). Todos
                         los derechos reservados.
                     </p>
                 </div>
