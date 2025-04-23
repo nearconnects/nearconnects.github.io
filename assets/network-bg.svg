@@ -1,49 +1,25 @@
-
-<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="800" viewBox="0 0 1440 800">
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0a84ff" stop-opacity="0.2"/>
-      <stop offset="100%" stop-color="#0a84ff" stop-opacity="0.4"/>
-    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4"/>
+    </filter>
   </defs>
-  
-  <!-- Background -->
-  <rect width="100%" height="100%" fill="#061023"/>
-  
-  <!-- Network Nodes -->
-  <circle cx="200" cy="150" r="5" fill="#0a84ff" opacity="0.7"/>
-  <circle cx="400" cy="250" r="4" fill="#0a84ff" opacity="0.6"/>
-  <circle cx="650" cy="100" r="6" fill="#0a84ff" opacity="0.8"/>
-  <circle cx="900" cy="200" r="4" fill="#0a84ff" opacity="0.7"/>
-  <circle cx="1200" cy="150" r="5" fill="#0a84ff" opacity="0.6"/>
-  <circle cx="300" cy="400" r="4" fill="#0a84ff" opacity="0.7"/>
-  <circle cx="600" cy="450" r="5" fill="#0a84ff" opacity="0.6"/>
-  <circle cx="900" cy="500" r="6" fill="#0a84ff" opacity="0.8"/>
-  <circle cx="1100" cy="400" r="4" fill="#0a84ff" opacity="0.7"/>
-  <circle cx="200" cy="600" r="5" fill="#0a84ff" opacity="0.6"/>
-  <circle cx="500" cy="650" r="4" fill="#0a84ff" opacity="0.7"/>
-  <circle cx="800" cy="700" r="5" fill="#0a84ff" opacity="0.8"/>
-  <circle cx="1200" cy="650" r="4" fill="#0a84ff" opacity="0.6"/>
-  
-  <!-- Connection Lines -->
-  <line x1="200" y1="150" x2="400" y2="250" stroke="#0a84ff" stroke-width="1" opacity="0.3"/>
-  <line x1="400" y1="250" x2="650" y2="100" stroke="#0a84ff" stroke-width="1" opacity="0.3"/>
-  <line x1="650" y1="100" x2="900" y2="200" stroke="#0a84ff" stroke-width="1" opacity="0.3"/>
-  <line x1="900" y1="200" x2="1200" y2="150" stroke="#0a84ff" stroke-width="1" opacity="0.3"/>
-  <line x1="300" y1="400" x2="600" y2="450" stroke="#0a84ff" stroke-width="1" opacity="0.3"/>
-  <line x1="600" y1="450" x2="900" y2="500" stroke="#0a84ff" stroke-width="1" opacity="0.3"/>
-  <line x1="900" y1="500" x2="1100" y2="400" stroke="#0a84ff" stroke-width="1" opacity="0.3"/>
-  <line x1="200" y1="600" x2="500" y2="650" stroke="#0a84ff" stroke-width="1" opacity="0.3"/>
-  <line x1="500" y1="650" x2="800" y2="700" stroke="#0a84ff" stroke-width="1" opacity="0.3"/>
-  <line x1="800" y1="700" x2="1200" y2="650" stroke="#0a84ff" stroke-width="1" opacity="0.3"/>
-  
-  <!-- Cross-level connections -->
-  <line x1="400" y1="250" x2="300" y2="400" stroke="#0a84ff" stroke-width="1" opacity="0.2"/>
-  <line x1="650" y1="100" x2="600" y2="450" stroke="#0a84ff" stroke-width="1" opacity="0.2"/>
-  <line x1="900" y1="200" x2="900" y2="500" stroke="#0a84ff" stroke-width="1" opacity="0.2"/>
-  <line x1="1200" y1="150" x2="1100" y2="400" stroke="#0a84ff" stroke-width="1" opacity="0.2"/>
-  <line x1="300" y1="400" x2="200" y2="600" stroke="#0a84ff" stroke-width="1" opacity="0.2"/>
-  <line x1="600" y1="450" x2="500" y2="650" stroke="#0a84ff" stroke-width="1" opacity="0.2"/>
-  <line x1="900" y1="500" x2="800" y2="700" stroke="#0a84ff" stroke-width="1" opacity="0.2"/>
-  <line x1="1100" y1="400" x2="1200" y2="650" stroke="#0a84ff" stroke-width="1" opacity="0.2"/>
+  <g fill="none" stroke="#0a84ff" stroke-width="2" opacity="0.3">
+    <circle cx="300" cy="300" r="4"/>
+    <circle cx="600" cy="400" r="4"/>
+    <circle cx="900" cy="200" r="4"/>
+    <circle cx="1200" cy="500" r="4"/>
+    <circle cx="1500" cy="300" r="4"/>
+    <line x1="300" y1="300" x2="600" y2="400"/>
+    <line x1="600" y1="400" x2="900" y2="200"/>
+    <line x1="900" y1="200" x2="1200" y2="500"/>
+    <line x1="1200" y1="500" x2="1500" y2="300"/>
+  </g>
+  <g fill="#0a84ff" opacity="0.1">
+    <circle cx="300" cy="300" r="8" filter="url(#glow)"/>
+    <circle cx="600" cy="400" r="8" filter="url(#glow)"/>
+    <circle cx="900" cy="200" r="8" filter="url(#glow)"/>
+    <circle cx="1200" cy="500" r="8" filter="url(#glow)"/>
+    <circle cx="1500" cy="300" r="8" filter="url(#glow)"/>
+  </g>
 </svg>
