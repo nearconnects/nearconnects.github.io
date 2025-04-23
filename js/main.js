@@ -9,8 +9,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const navMenu = document.querySelector('.nav-menu');
     const ctaButtons = document.querySelector('.cta-buttons');
     
+    function closeMenu() {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+        ctaButtons.classList.remove('active');
+        const spans = hamburger.querySelectorAll('span');
+        spans[0].style.transform = 'none';
+        spans[1].style.opacity = '1';
+        spans[2].style.transform = 'none';
+    }
+
     if (hamburger) {
-        hamburger.addEventListener('click', function() {
+        hamburger.addEventListener('click', function(e) {
+            e.stopPropagation();
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
             ctaButtons.classList.toggle('active');
@@ -26,6 +37,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 spans[1].style.opacity = '1';
                 spans[2].style.transform = 'none';
             }
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
+                closeMenu();
+            }
+        });
+
+        // Prevent menu from closing when clicking inside
+        navMenu.addEventListener('click', function(e) {
+            e.stopPropagation();
         });
     }
     
