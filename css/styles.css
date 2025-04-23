@@ -989,8 +989,8 @@ nav {
         top: 80px;
         left: 0;
         width: 100%;
-        background-color: white;
-        box-shadow: var(--shadow-md);
+        background-color: rgba(18, 24, 38, 0.98); /* Dark background to match header */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         padding: var(--spacing-md) 0;
         z-index: 10;
     }
@@ -1008,6 +1008,8 @@ nav {
         width: 100%;
         padding: var(--spacing-md) var(--spacing-xl);
         gap: var(--spacing-sm);
+        background-color: rgba(18, 24, 38, 0.98); /* Dark background to match header */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
     
     .hero-buttons {
