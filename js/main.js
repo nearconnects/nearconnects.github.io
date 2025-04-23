@@ -20,28 +20,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     if (hamburger) {
-        hamburger.addEventListener('click', function() {
-            if (hamburger.classList.contains('active')) {
-                closeMenu();
-            } else {
-                hamburger.classList.add('active');
-                navMenu.classList.add('active');
-                ctaButtons.classList.add('active');
-                const spans = hamburger.querySelectorAll('span');
-                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-                spans[1].style.opacity = '0';
-                spans[2].style.transform = 'rotate(-45deg) translate(7px, -7px)';
-            }
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', function(e) {
-            if (navMenu.classList.contains('active') && 
-                !navMenu.contains(e.target) && 
-                !hamburger.contains(e.target)) {
-                closeMenu();
-            }
-        });
+        hamburger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            ctaButtons.classList.toggle('active');
             
             // Toggle hamburger animation
             const spans = hamburger.querySelectorAll('span');
