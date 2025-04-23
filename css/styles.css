@@ -1261,34 +1261,15 @@ nav {
     flex: 1;
     position: relative;
     min-height: 300px;
+    overflow: hidden;
 }
 
-.truck-image {
-    background-image: url("data:image/svg+xml,%3Csvg width='400' height='200' viewBox='0 0 400 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50,150 L100,150 L120,120 L280,120 L300,150 L350,150 M80,150 C80,160 70,170 60,170 C50,170 40,160 40,150 M320,150 C320,160 310,170 300,170 C290,170 280,160 280,150' stroke='%230a84ff' fill='none' stroke-width='2'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: center;
-    height: 100%;
+.tech-video {
     width: 100%;
-    position: relative;
-}
-
-.connection-point {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background-color: #0a84ff;
-    position: absolute;
-    box-shadow: 0 0 0 4px rgba(10, 132, 255, 0.3);
-}
-
-#point1 {
-    top: 30%;
-    left: 25%;
-}
-
-#point2 {
-    top: 30%;
-    left: 75%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
+    border-radius: 8px;
 }
 
 .tech-text {
