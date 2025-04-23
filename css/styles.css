@@ -321,12 +321,28 @@ nav {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #000000;
-    background-image: url('https://images.unsplash.com/photo-1611746351408-c0a1346be8e8');
+    background-color: #061023;
+    background-image: url('/assets/network-bg.svg');
     background-size: cover;
     background-position: center;
-    filter: brightness(0.5) blur(3px);
+    filter: none;
     z-index: -1;
+    animation: pulse 15s infinite alternate;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.8;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+    100% {
+        opacity: 0.9;
+        transform: scale(1);
+    }
 }
 
 .hero-content {
