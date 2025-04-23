@@ -63,11 +63,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const currentScrollPosition = window.pageYOffset;
         
         if (currentScrollPosition > 100) {
-            header.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
-            header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+            header.style.backgroundColor = 'rgba(18, 24, 38, 0.98)'; // Dark background
+            header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.3)';
         } else {
-            header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
-            header.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.1)';
+            header.style.backgroundColor = 'rgba(18, 24, 38, 0.95)'; // Dark background
+            header.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.2)';
         }
         
         lastScrollPosition = currentScrollPosition;
