@@ -1193,34 +1193,36 @@ nav {
     display: flex;
     flex-direction: column;
     position: relative;
+    padding-left: 2rem;
+    border-left: 4px solid #83c900;
 }
 
 .fields-tag {
     color: #83c900;
     font-weight: 700;
-    margin-bottom: 1.5rem;
-    font-size: 1rem;
-    letter-spacing: 1px;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
 .fields-text {
     position: relative;
+    max-width: 55%;
 }
 
 .fields-text h2 {
-    font-size: 2.5rem;
+    font-size: 3.5rem;
     font-weight: 700;
-    margin-bottom: 2rem;
-    max-width: 800px;
-    line-height: 1.2;
+    margin-bottom: 3rem;
+    line-height: 1.1;
 }
 
 .fields-text p {
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     line-height: 1.6;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     color: rgba(255, 255, 255, 0.8);
-    max-width: 600px;
 }
 
 .fields-image {
