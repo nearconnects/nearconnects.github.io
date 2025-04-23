@@ -195,7 +195,7 @@ section {
     top: 0;
     left: 0;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(18, 24, 38, 0.95); /* Dark background consistent with our JS */
     box-shadow: var(--shadow-sm);
     z-index: 1000;
     transition: all var(--transition-speed);
