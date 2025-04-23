@@ -272,6 +272,7 @@ nav {
     border-radius: var(--border-radius-sm);
     border: 1px solid var(--gray-color);
     background-color: transparent;
+    color: var(--light-color);
     font-family: var(--font-primary);
     font-size: var(--font-size-sm);
     cursor: pointer;
@@ -296,7 +297,7 @@ nav {
     display: block;
     height: 3px;
     width: 100%;
-    background-color: var(--dark-color);
+    background-color: var(--light-color);
     border-radius: 10px;
     transition: all var(--transition-speed);
 }
@@ -415,7 +416,12 @@ nav {
 
 /* ---- Solution Section ---- */
 .solution {
-    background-color: #F5F5F5;
+    background-color: #121212;
+    color: white;
+}
+
+.solution .section-title {
+    color: white;
 }
 
 .solution-cards {
@@ -429,13 +435,14 @@ nav {
     flex: 1;
     min-width: 300px;
     max-width: 500px;
-    background-color: white;
+    background-color: #1d1d1d;
     padding: var(--spacing-xl);
     border-radius: var(--border-radius-md);
     box-shadow: var(--shadow-md);
     transform: scale(0.95);
     opacity: 0;
     transition: all 0.5s ease;
+    border-top: 4px solid var(--primary-color);
 }
 
 .card.active {
@@ -453,19 +460,28 @@ nav {
     color: var(--danger-color);
 }
 
+.problem-card {
+    border-top-color: var(--danger-color);
+}
+
 .solution-card .card-icon {
     color: var(--success-color);
 }
 
+.solution-card {
+    border-top-color: var(--success-color);
+}
+
 .card h3 {
     margin-bottom: var(--spacing-md);
-    color: var(--dark-color);
+    color: white;
 }
 
 .card ul {
     list-style: disc;
     padding-left: var(--spacing-xl);
     margin-top: var(--spacing-md);
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .card li {

@@ -180,50 +180,62 @@
         <!-- Benefits Section -->
         <section id="benefits" class="benefits">
             <div class="container">
-                <h2 class="section-title animate-on-scroll">Beneficios</h2>
+                <h2 class="section-title animate-on-scroll">Transportation Benefits</h2>
 
                 <div class="benefits-container">
                     <div class="benefit-card animate-on-scroll">
-                        <div class="benefit-icon">💸</div>
-                        <h3>Transportistas</h3>
-                        <ul>
-                            <li>Cargas en rutas de retorno</li>
-                            <li>Reducción de kilómetros vacíos</li>
-                            <li>Ingresos adicionales</li>
-                        </ul>
+                        <div class="benefit-number">01</div>
+                        <div class="benefit-content">
+                            <h3>Carriers and Drivers</h3>
+                            <p>Maximize your earnings and efficiency with our platform</p>
+                            <ul>
+                                <li>Loads on return routes</li>
+                                <li>Reduction of empty kilometers</li>
+                                <li>Additional revenue</li>
+                                <li>Route optimization</li>
+                            </ul>
+                        </div>
                     </div>
 
                     <div class="benefit-card animate-on-scroll">
-                        <div class="benefit-icon">📦</div>
-                        <h3>Clientes</h3>
-                        <ul>
-                            <li>Envíos económicos</li>
-                            <li>Gestión simplificada</li>
-                            <li>Seguimiento en tiempo real</li>
-                        </ul>
+                        <div class="benefit-number">02</div>
+                        <div class="benefit-content">
+                            <h3>Shippers and Businesses</h3>
+                            <p>Reduce your costs and simplify your logistics operations</p>
+                            <ul>
+                                <li>Economic shipments</li>
+                                <li>Simplified management</li>
+                                <li>Real-time tracking</li>
+                                <li>Reduced costs</li>
+                            </ul>
+                        </div>
                     </div>
 
                     <div class="benefit-card animate-on-scroll">
-                        <div class="benefit-icon">🌱</div>
-                        <h3>Planeta</h3>
-                        <ul>
-                            <li>Reducción de emisiones de CO₂</li>
-                            <li>Optimización de recursos</li>
-                            <li>Menor huella de carbono</li>
-                        </ul>
+                        <div class="benefit-number">03</div>
+                        <div class="benefit-content">
+                            <h3>Environmental Impact</h3>
+                            <p>Contribute to a more sustainable future with each shipment</p>
+                            <ul>
+                                <li>Reduction of CO₂ emissions</li>
+                                <li>Resource optimization</li>
+                                <li>Lower carbon footprint</li>
+                                <li>Sustainable practices</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Impact Section -->
-        <section id="impact" class="impact">
+        <section id="green-deliveries" class="impact">
             <div class="container">
-                <h2 class="section-title animate-on-scroll">Nuestro Impacto</h2>
+                <h2 class="section-title animate-on-scroll">Environmental Impact Metrics</h2>
 
                 <div class="impact-metrics">
                     <div class="impact-metric animate-on-scroll">
-                        <h3>Toneladas de CO₂ evitadas</h3>
+                        <h3>CO₂ Emissions Avoided</h3>
                         <div class="progress-container">
                             <div class="progress-bar" data-progress="75"></div>
                         </div>
@@ -234,7 +246,7 @@
                     </div>
 
                     <div class="impact-metric animate-on-scroll">
-                        <h3>Kilómetros vacíos eliminados</h3>
+                        <h3>Empty Kilometers Eliminated</h3>
                         <div class="progress-container">
                             <div class="progress-bar" data-progress="68"></div>
                         </div>
@@ -245,7 +257,7 @@
                     </div>
 
                     <div class="impact-metric animate-on-scroll">
-                        <h3>Ingresos adicionales generados</h3>
+                        <h3>Additional Revenue Generated</h3>
                         <div class="progress-container">
                             <div class="progress-bar" data-progress="82"></div>
                         </div>
@@ -261,7 +273,7 @@
    
     <section id="testimonials" class="testimonials">
         <div class="container">
-            <h2 class="section-title animate-on-scroll">Testimonios y Casos de Éxito</h2>
+            <h2 class="section-title animate-on-scroll">Client Success Stories</h2>
             
             <div class="testimonial-slider animate-on-scroll">
                 <div class="slider-container">
@@ -312,12 +324,12 @@
     <!-- Contact Section -->
         <section id="contact" class="contact">
             <div class="container">
-                <h2 class="section-title animate-on-scroll">Contacto</h2>
+                <h2 class="section-title animate-on-scroll">Contact Us</h2>
 
                 <div class="contact-container">
                     <div class="contact-info animate-on-scroll">
-                        <h3>¿Tienes alguna pregunta?</h3>
-                        <p>Contáctanos y te responderemos lo antes posible.</p>
+                        <h3>Have a question?</h3>
+                        <p>Contact us and we'll get back to you as soon as possible.</p>
                         <div class="contact-method">
                             <i class="fas fa-envelope"></i>
                             <span>nearconnects@gmail.com</span>
@@ -337,7 +349,7 @@
                         class="contact-form animate-on-scroll"
                     >
                         <div class="form-group">
-                            <label for="name">Nombre</label>
+                            <label for="name">Name</label>
                             <input type="text" id="name" name="name" required />
                             <span class="error-message"></span>
                         </div>
@@ -354,22 +366,18 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="type"
-                                >¿Eres cliente o transportista?</label
-                            >
+                            <label for="type">Are you a shipper or carrier?</label>
                             <select id="type" name="type" required>
-                                <option value="">Selecciona una opción</option>
-                                <option value="client">Cliente</option>
-                                <option value="transporter">
-                                    Transportista
-                                </option>
-                                <option value="other">Otro</option>
+                                <option value="">Select an option</option>
+                                <option value="client">Shipper</option>
+                                <option value="transporter">Carrier</option>
+                                <option value="other">Other</option>
                             </select>
                             <span class="error-message"></span>
                         </div>
 
                         <div class="form-group">
-                            <label for="message">Mensaje</label>
+                            <label for="message">Message</label>
                             <textarea
                                 id="message"
                                 name="message"
@@ -380,14 +388,13 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary">
-                            Enviar mensaje
+                            Send Message
                         </button>
 
                         <div id="form-success" class="form-success">
                             <i class="fas fa-check-circle"></i>
                             <p>
-                                ¡Mensaje enviado con éxito! Nos pondremos en
-                                contacto contigo pronto.
+                                Message sent successfully! We'll be in touch soon.
                             </p>
                         </div>
                     </form>
@@ -402,7 +409,7 @@
                     <div class="footer-logo">
                         <span>NEAR</span>
                         <p class="tagline">
-                            Cuidando el planeta, conectando caminos 🌱
+                            Caring for the planet, connecting paths 🌱
                         </p>
                     </div>
 
