@@ -11,6 +11,20 @@ document.addEventListener('DOMContentLoaded', function() {
         threshold: 0.1
     };
     
+    // Add observers for new sections
+    document.querySelectorAll('.fields-content, .technology-content').forEach(element => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        observer.observe(element);
+    });
+    
     const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
