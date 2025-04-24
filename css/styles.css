@@ -1254,8 +1254,19 @@ nav {
     padding-left: 2rem;
     border-left: 4px solid #83c900;
     opacity: 0;
-    transform: translateX(-50px);
-    transition: all 0.8s ease-out;
+    transform: translateX(-100px);
+    transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fields-content .fields-text {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+}
+
+.fields-content.active .fields-text {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .fields-content.active {
@@ -1337,8 +1348,19 @@ nav {
     flex-direction: row;
     align-items: center;
     opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s ease-out;
+    transform: translateY(50px);
+    transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tech-text {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+}
+
+.technology-content.active .tech-text {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .technology-content.active {
