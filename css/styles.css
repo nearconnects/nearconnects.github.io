@@ -1253,6 +1253,14 @@ nav {
     position: relative;
     padding-left: 2rem;
     border-left: 4px solid #83c900;
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: all 0.8s ease-out;
+}
+
+.fields-content.active {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .fields-tag {
@@ -1328,6 +1336,23 @@ nav {
     display: flex;
     flex-direction: row;
     align-items: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+.technology-content.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.tech-illustration {
+    transform: scale(0.9);
+    transition: transform 0.6s ease-out;
+}
+
+.technology-content.active .tech-illustration {
+    transform: scale(1);
 }
 
 .tech-illustration {
