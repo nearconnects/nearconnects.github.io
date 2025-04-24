@@ -590,45 +590,8 @@ nav {
 
 /* ---- Impact Section ---- */
 .impact {
-    background-color: #061023;
-    padding: 6rem 0;
+    background-color: #121212;
     color: white;
-    position: relative;
-    overflow: hidden;
-}
-
-.metrics-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
-}
-
-.metric-card {
-    background: rgba(10, 132, 255, 0.1);
-    border-radius: 20px;
-    padding: 2rem;
-    text-align: center;
-    transition: transform 0.3s ease;
-    backdrop-filter: blur(10px);
-}
-
-.chart-container {
-    height: 200px;
-    margin-bottom: 1.5rem;
-    position: relative;
-}
-
-.metric-value {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--primary-color);
-    margin: 1rem 0;
-}
-
-.metric-unit {
-    font-size: 1.2rem;
-    color: rgba(255, 255, 255, 0.7);
 }
 
 .impact .section-title {
