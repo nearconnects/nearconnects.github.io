@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How It Works - NEAR</title>
+    <meta name="description" content="Learn how NEAR connects transporters with clients to avoid empty logistic trips and reduce CO₂ emissions">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/how-it-works.css">
+</head>
+<body>
+    <!-- Header (reused from index.html) -->
+    <header id="header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <span>NEAR</span>
+                </a>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#overview">Overview</a></li>
+                    <li><a href="#process">Process</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#integration">Integration</a></li>
+                </ul>
+                <div class="cta-buttons">
+                    <a href="#start" class="btn btn-primary">Get Started</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="how-it-works-hero">
+        <div class="container">
+            <div class="hero-content animate-fade-in">
+                <h1>How NEAR Works</h1>
+                <p>Discover how we're revolutionizing logistics with smart technology</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section id="overview" class="overview-section">
+        <div class="container">
+            <div class="overview-content animate-on-scroll">
+                <div class="overview-text">
+                    <h2>Platform Overview</h2>
+                    <p>NEAR connects carriers with available cargo space to shippers who need to transport goods, optimizing routes and reducing empty trips.</p>
+                </div>
+                <div class="overview-animation">
+                    <div class="connection-animation">
+                        <div class="node carrier">
+                            <i class="fas fa-truck"></i>
+                            <span>Carrier</span>
+                        </div>
+                        <div class="connection-line"></div>
+                        <div class="node near">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>NEAR</span>
+                        </div>
+                        <div class="connection-line"></div>
+                        <div class="node shipper">
+                            <i class="fas fa-box"></i>
+                            <span>Shipper</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="process" class="process-section">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="process-steps">
+                <div class="step animate-on-scroll">
+                    <div class="step-icon">
+                        <i class="fas fa-location-dot"></i>
+                    </div>
+                    <h3>1. Route Planning</h3>
+                    <p>Carriers input their planned routes and available cargo space</p>
+                </div>
+                <div class="step animate-on-scroll">
+                    <div class="step-icon">
+                        <i class="fas fa-magnifying-glass"></i>
+                    </div>
+                    <h3>2. Smart Matching</h3>
+                    <p>Our algorithm matches carriers with nearby shipping requests</p>
+                </div>
+                <div class="step animate-on-scroll">
+                    <div class="step-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>3. Instant Booking</h3>
+                    <p>Both parties confirm the arrangement through our platform</p>
+                </div>
+                <div class="step animate-on-scroll">
+                    <div class="step-icon">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <h3>4. Efficient Delivery</h3>
+                    <p>Real-time tracking and optimized delivery execution</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <h2>Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card animate-on-scroll">
+                    <i class="fas fa-map-location-dot"></i>
+                    <h3>Real-time Tracking</h3>
+                    <p>Monitor your shipments with precise GPS tracking</p>
+                </div>
+                <div class="feature-card animate-on-scroll">
+                    <i class="fas fa-calculator"></i>
+                    <h3>Smart Pricing</h3>
+                    <p>Automated pricing based on route optimization</p>
+                </div>
+                <div class="feature-card animate-on-scroll">
+                    <i class="fas fa-mobile-screen"></i>
+                    <h3>Mobile App</h3>
+                    <p>Manage everything from our user-friendly mobile app</p>
+                </div>
+                <div class="feature-card animate-on-scroll">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Analytics</h3>
+                    <p>Detailed insights into your logistics operations</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Integration Section -->
+    <section id="integration" class="integration-section">
+        <div class="container">
+            <h2>Integration Examples</h2>
+            <div class="integration-examples">
+                <div class="integration-case animate-on-scroll">
+                    <div class="case-content">
+                        <h3>Retail Distribution</h3>
+                        <p>See how major retailers optimize their delivery networks</p>
+                        <video class="lazy" data-src="assets/retail-case.mp4" autoplay loop muted playsinline></video>
+                    </div>
+                </div>
+                <div class="integration-case animate-on-scroll">
+                    <div class="case-content">
+                        <h3>Manufacturing</h3>
+                        <p>Learn about just-in-time delivery optimization</p>
+                        <video class="lazy" data-src="assets/manufacturing-case.mp4" autoplay loop muted playsinline></video>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (reused from index.html) -->
+    <footer class="footer">
+        <!-- Footer content here -->
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/how-it-works.js"></script>
+</body>
+</html>
