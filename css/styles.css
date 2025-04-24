@@ -1252,7 +1252,7 @@ nav {
     flex-direction: column;
     position: relative;
     padding-left: 2rem;
-    border-left: 4px solid #83c900;
+    border-left: 4px solid #c77e00;
     opacity: 0;
     transform: translateX(-100px);
     transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1275,7 +1275,7 @@ nav {
 }
 
 .fields-tag {
-    color: #83c900;
+    color: #c77e00;
     font-weight: 700;
     margin-bottom: 2rem;
     font-size: 1.1rem;
@@ -1398,7 +1398,7 @@ nav {
 }
 
 .tech-tag {
-    color: #0a84ff;
+    color: #83c900;
     font-weight: 700;
     margin-bottom: 1.5rem;
     font-size: 1rem;
