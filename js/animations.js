@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     
     // Add observers for new sections
-    document.querySelectorAll('.fields-content, .technology-content').forEach(element => {
+    document.querySelectorAll('.fields-content, .technology-content, .metric-card').forEach(element => {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
