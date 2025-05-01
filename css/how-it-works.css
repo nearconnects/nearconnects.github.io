@@ -1,0 +1,306 @@
+
+/* How It Works Specific Styles */
+.how-it-works-hero {
+    height: 60vh;
+    min-height: 400px;
+    background-color: #061023;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.how-it-works-hero:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../assets/network-bg.svg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.4;
+    z-index: 0;
+}
+
+.how-it-works-hero .hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    color: white;
+}
+
+.how-it-works-hero h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+/* Overview Section */
+.overview-section {
+    background-color: #061023;
+    padding: 6rem 0;
+    color: white;
+}
+
+.overview-content {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+}
+
+.overview-text {
+    flex: 1;
+}
+
+.overview-animation {
+    flex: 1;
+}
+
+.connection-animation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem;
+}
+
+.node {
+    background: rgba(10, 132, 255, 0.1);
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.node i {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.node span {
+    font-size: 0.8rem;
+    color: white;
+}
+
+.connection-line {
+    flex: 1;
+    height: 2px;
+    background: var(--primary-color);
+    margin: 0 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.connection-line:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    animation: flow 2s linear infinite;
+}
+
+@keyframes flow {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* Process Section */
+.process-section {
+    background-color: #0a1428;
+    padding: 6rem 0;
+    color: white;
+}
+
+.process-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.step {
+    text-align: center;
+    padding: 2rem;
+    background: rgba(10, 132, 255, 0.1);
+    border-radius: var(--border-radius-lg);
+    transition: transform 0.3s ease;
+}
+
+.step:hover {
+    transform: translateY(-5px);
+}
+
+.step-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    background: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.step-icon i {
+    font-size: 2rem;
+    color: white;
+}
+
+/* Features Section */
+.features-section {
+    background-color: #061023;
+    padding: 6rem 0;
+    color: white;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.feature-card {
+    background: rgba(10, 132, 255, 0.1);
+    border-radius: var(--border-radius-lg);
+    padding: 2rem;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-card i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+}
+
+/* Integration Section */
+.integration-section {
+    background-color: #0a1428;
+    padding: 6rem 0;
+    color: white;
+}
+
+.integration-examples {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.integration-case {
+    background: rgba(10, 132, 255, 0.1);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+}
+
+.case-content {
+    padding: 2rem;
+}
+
+.case-content video {
+    width: 100%;
+    border-radius: var(--border-radius-md);
+    margin-top: 1.5rem;
+}
+
+/* Animations */
+.animate-fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 1s ease forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .how-it-works-hero h1 {
+        font-size: 3rem;
+    }
+    
+    .overview-content {
+        flex-direction: column;
+    }
+    
+    .connection-animation {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .how-it-works-hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .node {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .node i {
+        font-size: 1.5rem;
+    }
+}
+
+
+/* Impact Metrics Section */
+.impact-metrics-section {
+    background-color: #061023;
+    padding: 6rem 0;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.metrics-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.metric-card {
+    background: rgba(10, 132, 255, 0.1);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    transition: transform 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.chart-container {
+    height: 200px;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.metric-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 1rem 0;
+}
+
+.metric-unit {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.7);
+}
