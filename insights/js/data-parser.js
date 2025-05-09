@@ -173,6 +173,27 @@ function updateUI() {
     document.getElementById('key-insight').textContent = 
         `With ${nearData.stats.driversWithEmptyCargo} drivers reporting empty cargo trips and ${nearData.stats.willingDriversPercentage}% willing to deliver packages during these trips, 
         NEAR offers a significant opportunity to reduce empty miles while creating new revenue streams for transporters.`;
+    
+    // Start general chart initialization
+    if (typeof initializeCharts === "function") {
+        setTimeout(initializeCharts, 100);
+    }
+    
+    // Also initialize business opportunity if that tab is active
+    const activeTabContent = document.querySelector('.tab-content.active');
+    if (activeTabContent && activeTabContent.id === 'business-opportunity' && typeof initBusinessOpportunityCharts === "function") {
+        setTimeout(initBusinessOpportunityCharts, 300);
+    } else {
+        // Set up first-time initialization for business opportunity charts when tab is clicked
+        const businessTab = document.querySelector('.tab-button[data-tab="business-opportunity"]');
+        if (businessTab && typeof initBusinessOpportunityCharts === "function") {
+            businessTab.addEventListener('click', function onFirstClick() {
+                setTimeout(initBusinessOpportunityCharts, 300);
+                // Remove event listener after first click
+                businessTab.removeEventListener('click', onFirstClick);
+            }, { once: true });
+        }
+    }
 }
 
 // Data helper functions for charts
