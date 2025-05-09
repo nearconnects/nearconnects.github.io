@@ -243,38 +243,55 @@ function enhanceGaugeAnimation(canvasId, targetValue, duration = 1500, options =
         return;
     }
     
+    // Determine custom colors based on canvas ID
+    let primaryColor = config.colors.primary;
+    let gradientEndColor = adjustColor(primaryColor, 20); // default lighter version
+    
+    // Set colors based on gauge type
+    if (canvasId === 'driver-readiness-chart') {
+        primaryColor = '#2563EB'; // Strong blue
+        gradientEndColor = '#60A5FA'; // Light blue
+    } else if (canvasId === 'customer-readiness-chart') {
+        primaryColor = '#059669'; // Strong green
+        gradientEndColor = '#34D399'; // Light green
+    } else if (canvasId === 'opportunity-score-chart') {
+        primaryColor = '#0891B2'; // Cyan
+        gradientEndColor = '#22D3EE'; // Light cyan
+    }
+    
     // Check if we need to create a gradient
     if (config.colors.gradient) {
         const ctx = canvas.getContext('2d');
         const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
         
-        // Parse the primary color to create a gradient
-        let baseColor = config.colors.primary;
-        
-        // Add gradient stops
-        gradient.addColorStop(0, baseColor);
-        gradient.addColorStop(1, adjustColor(baseColor, 20)); // Lighter version
+        // Add gradient stops with enhanced colors
+        gradient.addColorStop(0, primaryColor);
+        gradient.addColorStop(1, gradientEndColor);
         
         // Update chart color
         chartInstance.data.datasets[0].backgroundColor[0] = gradient;
     } else {
         // Use solid color
-        chartInstance.data.datasets[0].backgroundColor[0] = config.colors.primary;
+        chartInstance.data.datasets[0].backgroundColor[0] = primaryColor;
     }
     
-    // Update background color
-    chartInstance.data.datasets[0].backgroundColor[1] = config.colors.background;
+    // Make the background color more transparent for better contrast
+    chartInstance.data.datasets[0].backgroundColor[1] = 'rgba(229, 231, 235, 0.25)';
     
-    // Add shadow effect
+    // Add enhanced shadow effect for 3D look
     chartInstance.options.elements = {
         arc: {
             borderWidth: 0,
             shadowOffsetX: 0,
-            shadowOffsetY: 3,
-            shadowBlur: 10,
-            shadowColor: 'rgba(0, 0, 0, 0.2)'
+            shadowOffsetY: 4,
+            shadowBlur: 12,
+            shadowColor: 'rgba(0, 0, 0, 0.25)'
         }
     };
+    
+    // Improve chart rendering with better responsive options
+    chartInstance.options.responsive = true;
+    chartInstance.options.maintainAspectRatio = false;
     
     // Force update
     chartInstance.update('none');
@@ -284,6 +301,11 @@ function enhanceGaugeAnimation(canvasId, targetValue, duration = 1500, options =
     let currentValue = 0;
     const displayElement = config.displayElementId ? 
                            document.getElementById(config.displayElementId) : null;
+    
+    // Add animation class to the display element
+    if (displayElement) {
+        displayElement.classList.add('animate-pulse');
+    }
     
     function animateFrame(timestamp) {
         if (!startTime) startTime = timestamp;
@@ -324,6 +346,20 @@ function enhanceGaugeAnimation(canvasId, targetValue, duration = 1500, options =
         // Update display element if provided
         if (displayElement) {
             displayElement.textContent = Math.round(currentValue) + config.valueSuffix;
+            
+            // Add visual delta indicator
+            if (progress >= 0.98 && targetValue > 50) {
+                const deltaElement = document.createElement('span');
+                deltaElement.className = 'delta positive';
+                deltaElement.innerHTML = '▲ ' + (Math.round(targetValue * 0.3) / 10).toFixed(1);
+                
+                // Remove any existing deltas first
+                const existingDeltas = displayElement.parentNode.querySelectorAll('.delta');
+                existingDeltas.forEach(el => el.remove());
+                
+                // Add the new delta
+                displayElement.parentNode.appendChild(deltaElement);
+            }
         }
         
         // Continue animation if not complete
