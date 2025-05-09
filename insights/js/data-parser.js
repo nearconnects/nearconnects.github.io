@@ -280,7 +280,7 @@ function getWillingnessLevelData() {
     // Datos predefinidos para el gráfico de disposición
     return {
         labels: ['Muy dispuesto', 'Dispuesto', 'Indiferente', 'Poco dispuesto', 'Nada dispuesto'],
-        counts: [26, 8, 3, 1, 1]
+        counts: [30, 8, 3, 1, 1]
     };
 }
 

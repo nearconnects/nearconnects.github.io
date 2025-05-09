@@ -279,100 +279,105 @@ function autoStartAllAnimations() {
 function fixNaNValuesWithHardcodedData() {
     console.log("Corrigiendo valores NaN con datos predeterminados");
     
-    // Definir los valores correctos para cada métrica
+    // Definir los valores correctos para cada métrica - UTILIZANDO 30 para clientes dispuestos
     const correctMetrics = {
         'total-respondents': 73,
         'empty-cargo-drivers': 34,
         'empty-cargo-percentage': 72,
         'willing-drivers': 30,
         'willing-drivers-percentage': 65,
-        'willing-customers': 26,
+        'willing-customers': 30,
         'willing-customers-percentage': 60
     };
     
-    // Buscar todas las métricas en la página y reemplazar los valores NaN
+    // Primero, aplicar preventivamente todos los valores correctos incluso si no son NaN
     Object.keys(correctMetrics).forEach(key => {
         // Buscar por ID
         const elementById = document.getElementById(key);
         if (elementById) {
-            // Verificar si el contenido es NaN
-            if (elementById.textContent.includes('NaN')) {
-                elementById.textContent = key.includes('percentage') ? 
-                    `${correctMetrics[key]}%` : correctMetrics[key].toString();
-                
-                // Iniciar animación
-                animateElement(elementById);
-            }
+            // Asignar valor correcto independientemente del contenido actual
+            elementById.textContent = key.includes('percentage') ? 
+                `${correctMetrics[key]}%` : correctMetrics[key].toString();
         }
         
-        // Buscar por clase (para casos donde no hay ID)
+        // Buscar por clase
         const elementsByClass = document.querySelectorAll(`.${key}`);
         elementsByClass.forEach(element => {
-            if (element.textContent.includes('NaN')) {
-                element.textContent = key.includes('percentage') ? 
-                    `${correctMetrics[key]}%` : correctMetrics[key].toString();
-                
-                // Iniciar animación
-                animateElement(element);
-            }
+            element.textContent = key.includes('percentage') ? 
+                `${correctMetrics[key]}%` : correctMetrics[key].toString();
         });
     });
     
     // Caso especial para las tarjetas de métricas en el dashboard principal
     const metricValues = document.querySelectorAll('.metric-value');
     metricValues.forEach(metricValue => {
-        if (metricValue.textContent.includes('NaN')) {
-            // Determinar qué tipo de métrica es basado en su contexto
-            const metricCard = metricValue.closest('.metric-card');
-            if (metricCard) {
-                const title = metricCard.querySelector('h3')?.textContent.toLowerCase() || '';
-                
-                // Asignar valor según el título
-                if (title.includes('respondents') || title.includes('encuestados')) {
-                    metricValue.textContent = '73';
-                } else if (title.includes('empty cargo') || title.includes('carga vacía')) {
-                    metricValue.textContent = '34';
-                } else if (title.includes('willing to deliver') || title.includes('dispuestos a entregar')) {
-                    metricValue.textContent = '30';
-                } else if (title.includes('willing customers') || title.includes('clientes dispuestos')) {
-                    metricValue.textContent = '26';
-                } else {
-                    // Valor predeterminado si no podemos determinar
-                    metricValue.textContent = '0';
-                }
-                
-                // Iniciar animación
-                animateElement(metricValue);
+        // Corregir independientemente de si muestra NaN
+        const metricCard = metricValue.closest('.metric-card');
+        if (metricCard) {
+            const title = metricCard.querySelector('h3')?.textContent.toLowerCase() || '';
+            
+            // Asignar valor según el título
+            if (title.includes('respondents') || title.includes('encuestados')) {
+                metricValue.textContent = '73';
+            } else if (title.includes('empty cargo') || title.includes('carga vacía')) {
+                metricValue.textContent = '34';
+            } else if (title.includes('willing to deliver') || title.includes('dispuestos a entregar')) {
+                metricValue.textContent = '30';
+            } else if (title.includes('willing customers') || title.includes('clientes dispuestos')) {
+                metricValue.textContent = '30'; // Valor correcto: 30
             }
+            
+            // Guardar el valor correcto en un atributo para animaciones
+            metricValue.setAttribute('data-target', metricValue.textContent);
         }
     });
     
     // Para los porcentajes
     const percentageValues = document.querySelectorAll('.metric-percentage');
     percentageValues.forEach(percentageValue => {
-        if (percentageValue.textContent.includes('NaN')) {
-            // Determinar qué tipo de métrica es basado en su contexto
-            const metricCard = percentageValue.closest('.metric-card');
-            if (metricCard) {
-                const title = metricCard.querySelector('h3')?.textContent.toLowerCase() || '';
-                
-                // Asignar valor según el título
-                if (title.includes('empty cargo') || title.includes('carga vacía')) {
-                    percentageValue.textContent = '72%';
-                } else if (title.includes('willing to deliver') || title.includes('dispuestos a entregar')) {
-                    percentageValue.textContent = '65%';
-                } else if (title.includes('willing customers') || title.includes('clientes dispuestos')) {
-                    percentageValue.textContent = '60%';
-                } else {
-                    // Valor predeterminado si no podemos determinar
-                    percentageValue.textContent = '0%';
-                }
-                
-                // Iniciar animación
-                animateElement(percentageValue);
+        // Corregir independientemente de si muestra NaN
+        const metricCard = percentageValue.closest('.metric-card');
+        if (metricCard) {
+            const title = metricCard.querySelector('h3')?.textContent.toLowerCase() || '';
+            
+            // Asignar valor según el título
+            if (title.includes('empty cargo') || title.includes('carga vacía')) {
+                percentageValue.textContent = '72%';
+            } else if (title.includes('willing to deliver') || title.includes('dispuestos a entregar')) {
+                percentageValue.textContent = '65%';
+            } else if (title.includes('willing customers') || title.includes('clientes dispuestos')) {
+                percentageValue.textContent = '60%';
             }
+            
+            // Guardar el valor sin % para animaciones
+            const numericValue = percentageValue.textContent.replace('%', '');
+            percentageValue.setAttribute('data-target', numericValue);
         }
     });
+    
+    // Aplicar inmediatamente todos los valores en elementos con data-stat
+    const statElements = document.querySelectorAll('[data-stat]');
+    statElements.forEach(el => {
+        const statName = el.getAttribute('data-stat');
+        if (correctMetrics[statName]) {
+            el.textContent = statName.includes('percentage') ? 
+                `${correctMetrics[statName]}%` : correctMetrics[statName].toString();
+        }
+    });
+    
+    // Actualizar otros lugares específicos donde podríamos tener el valor
+    const specificCustomerElements = document.querySelectorAll('.willing-customers, #willing-customers, [data-metric="willing-customers"]');
+    specificCustomerElements.forEach(el => {
+        el.textContent = '30';
+    });
+    
+    // Iniciar animaciones con retraso para permitir que los valores se establezcan primero
+    setTimeout(() => {
+        // Animamos métricas y porcentajes con los valores ya establecidos
+        document.querySelectorAll('.metric-value, .metric-percentage').forEach(el => {
+            animateElement(el);
+        });
+    }, 100);
 }
 
 // Aplicar una animación a un elemento para darle vida
@@ -432,14 +437,14 @@ function initializeChartAnimations() {
 function setupDramaticMetricReveals() {
     console.log("Setting up simple counter animations");
     
-    // Define our metrics with fixed values
+    // Define our metrics with fixed values, con 30 para willing-customers
     const metricValues = {
         'total-respondents': 73,
         'empty-cargo-drivers': 34,
         'empty-cargo-percentage': 72,
         'willing-drivers': 30,
         'willing-drivers-percentage': 65,
-        'willing-customers': 26,
+        'willing-customers': 30,
         'willing-customers-percentage': 60
     };
     
