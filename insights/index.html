@@ -1,473 +1,731 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NEAR - Data Insights Dashboard</title>
-    <meta name="description" content="Data insights from NEAR survey on logistics optimization and empty cargo space utilization" />
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>NEAR - Data Insights Dashboard</title>
+        <meta
+            name="description"
+            content="Data insights from NEAR survey on logistics optimization and empty cargo space utilization"
+        />
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
 
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+        <!-- Font Awesome for icons -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
 
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <!-- PapaParse for CSV parsing -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+        <!-- Chart.js -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="../css/styles.css" />
-    <link rel="stylesheet" href="./css/insights.css" />
-    <link rel="stylesheet" href="./css/customer-preferences.css" />
-</head>
-<body>
-    <!-- Header -->
-    <header id="header">
-        <div class="container">
-            <div class="logo">
-                <a href="../index.html">
-                    <span>NEAR</span>
-                </a>
+        <!-- PapaParse for CSV parsing -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="../css/styles.css" />
+        <link rel="stylesheet" href="./css/insights.css" />
+        <link rel="stylesheet" href="./css/customer-preferences.css" />
+    </head>
+    <body>
+        <!-- Header -->
+        <header id="header">
+            <div class="container">
+                <div class="logo">
+                    <a href="../index.html">
+                        <span>NEAR</span>
+                    </a>
+                </div>
+
+                <nav>
+                    <ul class="nav-menu">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../index.html#shippers">Shippers</a></li>
+                        <li><a href="../index.html#carriers">Carriers</a></li>
+                        <li>
+                            <a href="../index.html#send-package"
+                                >Send a Package</a
+                            >
+                        </li>
+                        <li>
+                            <a href="../index.html#green-deliveries"
+                                >Green Deliveries</a
+                            >
+                        </li>
+                        <li><a href="../index.html#about">About Us</a></li>
+                        <li><a href="../index.html#blog">Blog</a></li>
+                        <li>
+                            <a href="./index.html" class="active"
+                                >Data Insights</a
+                            >
+                        </li>
+                    </ul>
+
+                    <div class="cta-buttons">
+                        <a href="../index.html#login" class="btn btn-outline"
+                            >Sign In</a
+                        >
+                        <a href="../index.html#start" class="btn btn-primary"
+                            >Get Started</a
+                        >
+                    </div>
+
+                    <div class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </nav>
             </div>
+        </header>
 
-            <nav>
-                <ul class="nav-menu">
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="../index.html#shippers">Shippers</a></li>
-                    <li><a href="../index.html#carriers">Carriers</a></li>
-                    <li><a href="../index.html#send-package">Send a Package</a></li>
-                    <li><a href="../index.html#green-deliveries">Green Deliveries</a></li>
-                    <li><a href="../index.html#about">About Us</a></li>
-                    <li><a href="../index.html#blog">Blog</a></li>
-                    <li><a href="./index.html" class="active">Data Insights</a></li>
-                </ul>
-
-                <div class="cta-buttons">
-                    <a href="../index.html#login" class="btn btn-outline">Sign In</a>
-                    <a href="../index.html#start" class="btn btn-primary">Get Started</a>
-                </div>
-
-                <div class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="insights-hero">
-        <div class="container">
-            <div class="insights-hero-content">
-                <h1>NEAR Survey Insights</h1>
-                <p>Analyzing logistics optimization opportunities and market potential</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Key Metrics Section -->
-    <section id="key-metrics" class="key-metrics-section">
-        <div class="container">
-            <h2>Key Market Insights</h2>
-            <div class="metrics-grid">
-                <div class="metric-card">
-                    <div class="metric-icon"><i class="fas fa-users"></i></div>
-                    <h3>Total Respondents</h3>
-                    <div class="metric-value" id="total-respondents">Loading...</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-icon"><i class="fas fa-truck"></i></div>
-                    <h3>Drivers with Empty Cargo</h3>
-                    <div class="metric-value" id="empty-cargo-drivers">Loading...</div>
-                    <div class="metric-percentage" id="empty-cargo-percentage"></div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-icon"><i class="fas fa-check-circle"></i></div>
-                    <h3>Drivers Willing to Deliver</h3>
-                    <div class="metric-value" id="willing-drivers">Loading...</div>
-                    <div class="metric-percentage" id="willing-drivers-percentage"></div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-icon"><i class="fas fa-thumbs-up"></i></div>
-                    <h3>Very Willing Customers</h3>
-                    <div class="metric-value" id="willing-customers">Loading...</div>
-                    <div class="metric-percentage" id="willing-customers-percentage"></div>
-                </div>
-            </div>
-            <div class="insights-summary">
-                <i class="fas fa-lightbulb"></i>
-                <p><strong>Key Insight:</strong> <span id="key-insight">Analyzing data to provide key insights...</span></p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Tabs Section -->
-    <section id="insights-tabs" class="insights-tabs-section">
-        <div class="container">
-            <div class="tabs-container">
-                <div class="tabs-header">
-                    <button class="tab-button active" data-tab="driver-insights">Driver Insights</button>
-                    <button class="tab-button" data-tab="customer-preferences">Customer Preferences</button>
-                    <button class="tab-button" data-tab="business-opportunity">Business Opportunity</button>
-                </div>
-                
-                <div class="tab-content active" id="driver-insights">
-                    <h2>🚚 Driver Analysis</h2>
-                    <div class="charts-grid">
-                        <div class="chart-container">
-                            <h3>Driver Employment Type</h3>
-                            <canvas id="employment-type-chart"></canvas>
-                        </div>
-                        <div class="chart-container">
-                            <h3>Empty Return Trips per Week</h3>
-                            <canvas id="empty-trips-chart"></canvas>
-                        </div>
-                        <div class="chart-container">
-                            <h3>Vehicle Types Used by Drivers</h3>
-                            <canvas id="vehicle-type-chart"></canvas>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="tab-content" id="customer-preferences">
-                    <h2>📦 Customer Preferences</h2>
-                    
-                    <!-- Customer Summary -->
-                    <div class="customer-summary">
-                        <p>Our survey revealed important insights about customer needs and preferences 
-                        regarding delivery services. Understanding these preferences is key to creating 
-                        a successful service that meets market demands.</p>
-                    </div>
-                    
-                    <!-- Key Customer Stats -->
-                    <div class="customer-stats">
-                        <div class="stat-container animated">
-                            <div class="stat-icon"><i class="fas fa-box"></i></div>
-                            <div class="stat-info">
-                                <h4>Package Frequency</h4>
-                                <p>Average <span class="highlight" id="avg-packages-monthly">7.5</span> packages sent monthly per customer</p>
-                            </div>
-                        </div>
-                        <div class="stat-container animated">
-                            <div class="stat-icon"><i class="fas fa-truck-loading"></i></div>
-                            <div class="stat-info">
-                                <h4>Preferred Delivery Method</h4>
-                                <p><span class="highlight" id="home-delivery-pct">68%</span> customers prefer home delivery</p>
-                            </div>
-                        </div>
-                        <div class="stat-container animated">
-                            <div class="stat-icon"><i class="fas fa-leaf"></i></div>
-                            <div class="stat-info">
-                                <h4>Eco-Friendly Interest</h4>
-                                <p><span class="highlight" id="eco-friendly-pct">72%</span> interested in sustainable delivery options</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Customer Charts -->
-                    <div class="charts-grid">
-                        <div class="chart-container animated">
-                            <h3>Customer Delivery Preferences</h3>
-                            <canvas id="delivery-preference-chart"></canvas>
-                            <p class="chart-insight">Customers show a strong preference for home delivery services, but many are also open to convenient pickup points.</p>
-                        </div>
-                        <div class="chart-container animated">
-                            <h3>Customer Willingness to Use Service</h3>
-                            <canvas id="willingness-level-chart"></canvas>
-                            <p class="chart-insight">A significant majority of potential customers express high willingness to try our innovative service.</p>
-                        </div>
-                        <div class="chart-container animated">
-                            <h3>Package Delivery Frequency</h3>
-                            <canvas id="package-frequency-chart"></canvas>
-                            <p class="chart-insight">Most customers send multiple packages monthly, indicating a steady demand for delivery services.</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Customer Feedback Summary -->
-                    <div class="feedback-summary">
-                        <h3>Customer Feedback Highlights</h3>
-                        <div class="feedback-grid">
-                            <div class="feedback-item animated">
-                                <div class="feedback-icon"><i class="fas fa-comment"></i></div>
-                                <div class="feedback-text">
-                                    <p>"Would love to see transparent pricing and real-time package tracking"</p>
-                                </div>
-                            </div>
-                            <div class="feedback-item animated">
-                                <div class="feedback-icon"><i class="fas fa-comment"></i></div>
-                                <div class="feedback-text">
-                                    <p>"Flexibility in delivery times would be very valuable to me"</p>
-                                </div>
-                            </div>
-                            <div class="feedback-item animated">
-                                <div class="feedback-icon"><i class="fas fa-comment"></i></div>
-                                <div class="feedback-text">
-                                    <p>"I'd like options for both urgent deliveries and more economical slower options"</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="tab-content" id="business-opportunity">
-                    <h2>💼 Business Opportunity Analysis</h2>
-                    <div class="opportunity-intro">
-                        <h3>NEAR Delivery: Connecting Supply with Demand</h3>
-                        <p>Our market analysis reveals a significant opportunity to optimize logistics by leveraging <b>empty cargo space</b> 
-                        during return trips. By connecting drivers with available space to customers needing delivery services, we create 
-                        a win-win situation that benefits all stakeholders while reducing environmental impact.</p>
-                    </div>
-                    
-                    <!-- Market Readiness Section -->
-                    <div class="market-opportunity-section">
-                        <div class="section-header">
-                            <h3>Market Readiness</h3>
-                            <div class="section-divider"></div>
-                        </div>
-                        <div class="section-content">
-                            <div class="readiness-gauges">
-                                <div class="readiness-gauge">
-                                    <h4>Drivers Willing to Participate</h4>
-                                    <div class="gauge-container">
-                                        <canvas id="driver-readiness-chart"></canvas>
-                                        <div class="gauge-value driver">
-                                            <span id="driver-readiness-value">0.0%</span>
-                                            <span class="delta positive">▲ 31.8</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="readiness-gauge">
-                                    <h4>Customers Willing to Use Service</h4>
-                                    <div class="gauge-container">
-                                        <canvas id="customer-readiness-chart"></canvas>
-                                        <div class="gauge-value customer">
-                                            <span id="customer-readiness-value">0.0%</span>
-                                            <span class="delta positive">▲ 25.5</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Market Match Analysis Section -->
-                    <div class="market-opportunity-section">
-                        <div class="section-header">
-                            <h3>Market Match Analysis</h3>
-                            <div class="section-divider"></div>
-                        </div>
-                        <div class="section-content market-match">
-                            <div class="market-chart">
-                                <h4>Weekly Supply vs Demand</h4>
-                                <canvas id="supply-demand-chart"></canvas>
-                            </div>
-                            <div class="market-metrics">
-                                <h4>Market Efficiency Potential:</h4>
-                                <div class="efficiency-meter">
-                                    <div class="efficiency-bar">
-                                        <div class="efficiency-value" style="width: 0%"></div>
-                                    </div>
-                                    <div class="efficiency-label">
-                                        <span id="efficiency-percentage">0%</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="market-data">
-                                    <p>Our survey data reveals significant potential for optimizing logistics:</p>
-                                    <ul>
-                                        <li><strong>Supply:</strong> <span id="empty-trips-count">240</span> empty trips available weekly</li>
-                                        <li><strong>Demand:</strong> <span id="packages-count">122</span> packages needing delivery weekly</li>
-                                        <li><strong>Match Rate:</strong> <span id="match-rate">122</span> potential matches</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Value Proposition Section -->
-                    <div class="market-opportunity-section">
-                        <div class="section-header">
-                            <h3><span class="highlight">💡</span> Key Value Proposition</h3>
-                            <div class="section-divider"></div>
-                        </div>
-                        <div class="section-content value-proposition">
-                            <div class="value-grid">
-                                <div class="value-item drivers">
-                                    <h4>For Drivers</h4>
-                                    <p>Generate additional income during otherwise unprofitable empty trips</p>
-                                </div>
-                                <div class="value-item customers">
-                                    <h4>For Customers</h4>
-                                    <p>Enjoy reduced costs through shared transportation resources</p>
-                                </div>
-                                <div class="value-item environmental">
-                                    <h4>Environmental Impact</h4>
-                                    <p>Create sustainability benefits by optimizing vehicle usage and reducing emissions</p>
-                                </div>
-                                <div class="value-item logistics">
-                                    <h4>Logistics Efficiency</h4>
-                                    <p>Achieve network efficiency through intelligent route optimization</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Opportunity Score Section -->
-                    <div class="market-opportunity-section">
-                        <div class="section-header">
-                            <h3>Overall Opportunity Score</h3>
-                            <div class="section-divider"></div>
-                        </div>
-                        <div class="section-content opportunity">
-                            <div class="opportunity-gauge">
-                                <canvas id="opportunity-score-chart"></canvas>
-                                <div class="opportunity-value">
-                                    <span id="opportunity-score-value">0</span>
-                                    <span class="opportunity-scale">/100</span>
-                                </div>
-                            </div>
-                            <div class="opportunity-insight">
-                                <h4><span class="highlight">💼</span> Business Insight:</h4>
-                                <p id="business-insight">Based on our analysis of market readiness and supply-demand match potential, NEAR presents a compelling business opportunity with significant growth potential. The data indicates strong willingness from both drivers and customers to participate in a shared logistics platform.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="conclusion" class="conclusion-section">
-        <div class="container">
-            <h2>Conclusions & Next Steps</h2>
-            <div class="conclusion-content">
-                <p>The survey data demonstrates a significant market opportunity for NEAR's logistics optimization platform. Both drivers and potential customers have expressed high levels of interest in the service, highlighting the following key takeaways:</p>
-                <div class="takeaways">
-                    <div class="takeaway">
-                        <div class="takeaway-icon"><i class="fas fa-check-circle"></i></div>
-                        <div class="takeaway-text">
-                            <h3>Supply & Demand Alignment</h3>
-                            <p>There is a strong alignment between drivers with empty cargo space and customers willing to use more sustainable delivery options.</p>
-                        </div>
-                    </div>
-                    <div class="takeaway">
-                        <div class="takeaway-icon"><i class="fas fa-check-circle"></i></div>
-                        <div class="takeaway-text">
-                            <h3>Environmental Impact</h3>
-                            <p>Optimizing existing routes can significantly reduce CO₂ emissions while improving operational efficiency.</p>
-                        </div>
-                    </div>
-                    <div class="takeaway">
-                        <div class="takeaway-icon"><i class="fas fa-check-circle"></i></div>
-                        <div class="takeaway-text">
-                            <h3>Additional Revenue Potential</h3>
-                            <p>Drivers are highly motivated by the opportunity to earn additional income from otherwise empty return trips.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="next-steps">
-                    <h3>Recommended Next Steps:</h3>
-                    <ol>
-                        <li>Develop a beta version of the platform focusing on high-demand routes</li>
-                        <li>Create a seamless onboarding process for both drivers and customers</li>
-                        <li>Implement features to optimize matching of available space with delivery needs</li>
-                        <li>Build a robust tracking system to ensure reliability and transparency</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <span>NEAR</span>
-                    <p class="tagline">
-                        Caring for the planet, connecting paths 🌱
+        <!-- Hero Section -->
+        <section class="insights-hero">
+            <div class="container">
+                <div class="insights-hero-content">
+                    <h1>NEAR Survey Insights</h1>
+                    <p>
+                        Analyzing logistics optimization opportunities and
+                        market potential
                     </p>
                 </div>
+            </div>
+        </section>
 
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h4>Company</h4>
-                        <ul>
-                            <li><a href="../index.html#about">About Us</a></li>
-                            <li><a href="../index.html#team">Team</a></li>
-                            <li><a href="../index.html#careers">Careers</a></li>
-                            <li><a href="../index.html#press">Press</a></li>
-                        </ul>
+        <!-- Key Metrics Section -->
+        <section id="key-metrics" class="key-metrics-section">
+            <div class="container">
+                <h2>Key Market Insights</h2>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Total Respondents</h3>
+                        <div class="metric-value" id="total-respondents">
+                            Loading...
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <h3>Drivers with Empty Cargo</h3>
+                        <div class="metric-value" id="empty-cargo-drivers">
+                            Loading...
+                        </div>
+                        <div
+                            class="metric-percentage"
+                            id="empty-cargo-percentage"
+                        ></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h3>Drivers Willing to Deliver</h3>
+                        <div class="metric-value" id="willing-drivers">
+                            Loading...
+                        </div>
+                        <div
+                            class="metric-percentage"
+                            id="willing-drivers-percentage"
+                        ></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-thumbs-up"></i>
+                        </div>
+                        <h3>Very Willing Customers</h3>
+                        <div class="metric-value" id="willing-customers">
+                            Loading...
+                        </div>
+                        <div
+                            class="metric-percentage"
+                            id="willing-customers-percentage"
+                        ></div>
+                    </div>
+                </div>
+                <div class="insights-summary">
+                    <i class="fas fa-lightbulb"></i>
+                    <p>
+                        <strong>Key Insight:</strong>
+                        <span id="key-insight"
+                            >Analyzing data to provide key insights...</span
+                        >
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tabs Section -->
+        <section id="insights-tabs" class="insights-tabs-section">
+            <div class="container">
+                <div class="tabs-container">
+                    <div class="tabs-header">
+                        <button
+                            class="tab-button active"
+                            data-tab="driver-insights"
+                        >
+                            Driver Insights
+                        </button>
+                        <button
+                            class="tab-button"
+                            data-tab="customer-preferences"
+                        >
+                            Customer Preferences
+                        </button>
+                        <button
+                            class="tab-button"
+                            data-tab="business-opportunity"
+                        >
+                            Business Opportunity
+                        </button>
                     </div>
 
-                    <div class="footer-column">
-                        <h4>Services</h4>
-                        <ul>
-                            <li><a href="../index.html#shippers">For Shippers</a></li>
-                            <li><a href="../index.html#carriers">For Carriers</a></li>
-                            <li><a href="#">Pricing</a></li>
-                            <li><a href="#">API</a></li>
-                        </ul>
+                    <div class="tab-content active" id="driver-insights">
+                        <h2>🚚 Driver Analysis</h2>
+                        <div class="charts-grid">
+                            <div class="chart-container">
+                                <h3>Driver Employment Type</h3>
+                                <canvas id="employment-type-chart"></canvas>
+                            </div>
+                            <div class="chart-container">
+                                <h3>Empty Return Trips per Week</h3>
+                                <canvas id="empty-trips-chart"></canvas>
+                            </div>
+                            <div class="chart-container">
+                                <h3>Vehicle Types Used by Drivers</h3>
+                                <canvas id="vehicle-type-chart"></canvas>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="footer-column">
-                        <h4>Resources</h4>
-                        <ul>
-                            <li><a href="../index.html#blog">Blog</a></li>
-                            <li><a href="./index.html">Data Insights</a></li>
-                            <li><a href="#">Documentation</a></li>
-                            <li><a href="#">Help Center</a></li>
-                        </ul>
+                    <div class="tab-content" id="customer-preferences">
+                        <h2>📦 Customer Preferences</h2>
+
+                        <!-- Customer Summary -->
+                        <div class="customer-summary">
+                            <p>
+                                Our survey revealed important insights about
+                                customer needs and preferences regarding
+                                delivery services. Understanding these
+                                preferences is key to creating a successful
+                                service that meets market demands.
+                            </p>
+                        </div>
+
+                        <!-- Key Customer Stats -->
+                        <div class="customer-stats">
+                            <div class="stat-container animated">
+                                <div class="stat-icon">
+                                    <i class="fas fa-box"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h4>Package Frequency</h4>
+                                    <p>
+                                        Average
+                                        <span
+                                            class="highlight"
+                                            id="avg-packages-monthly"
+                                            >7.5</span
+                                        >
+                                        packages sent monthly per customer
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="stat-container animated">
+                                <div class="stat-icon">
+                                    <i class="fas fa-truck-loading"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h4>Preferred Delivery Method</h4>
+                                    <p>
+                                        <span
+                                            class="highlight"
+                                            id="home-delivery-pct"
+                                            >68%</span
+                                        >
+                                        customers prefer home delivery
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="stat-container animated">
+                                <div class="stat-icon">
+                                    <i class="fas fa-leaf"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h4>Eco-Friendly Interest</h4>
+                                    <p>
+                                        <span
+                                            class="highlight"
+                                            id="eco-friendly-pct"
+                                            >72%</span
+                                        >
+                                        interested in sustainable delivery
+                                        options
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Customer Charts -->
+                        <div class="charts-grid">
+                            <div class="chart-container animated">
+                                <h3>Customer Delivery Preferences</h3>
+                                <canvas id="delivery-preference-chart"></canvas>
+                                <p class="chart-insight"></p>
+                            </div>
+                            <div class="chart-container animated">
+                                <h3>Customer Willingness to Use Service</h3>
+                                <canvas id="willingness-level-chart"></canvas>
+                            </div>
+                            <div class="chart-container animated">
+                                <h3>Package Delivery Frequency</h3>
+                                <canvas id="package-frequency-chart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Customer Feedback Summary -->
+                        <div class="feedback-summary">
+                            <h3>Customer Feedback Highlights</h3>
+                            <div class="feedback-grid">
+                                <div class="feedback-item animated">
+                                    <div class="feedback-icon">
+                                        <i class="fas fa-comment"></i>
+                                    </div>
+                                    <div class="feedback-text">
+                                        <p>
+                                            "Would love to see transparent
+                                            pricing and real-time package
+                                            tracking"
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="feedback-item animated">
+                                    <div class="feedback-icon">
+                                        <i class="fas fa-comment"></i>
+                                    </div>
+                                    <div class="feedback-text">
+                                        <p>
+                                            "Flexibility in delivery times would
+                                            be very valuable to me"
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="feedback-item animated">
+                                    <div class="feedback-icon">
+                                        <i class="fas fa-comment"></i>
+                                    </div>
+                                    <div class="feedback-text">
+                                        <p>
+                                            "I'd like options for both urgent
+                                            deliveries and more economical
+                                            slower options"
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="footer-column">
-                        <h4>Contact</h4>
-                        <ul>
-                            <li>
-                                <a href="mailto:info@near-delivery.com">
-                                    <i class="fas fa-envelope"></i> info@near-delivery.com
-                                </a>
-                            </li>
-                            <li>
-                                <a href="tel:+34912345678">
-                                    <i class="fas fa-phone"></i> +34 91 234 56 78
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="fas fa-map-marker-alt"></i> Madrid, Spain
-                                </a>
-                            </li>
-                        </ul>
+                    <div class="tab-content" id="business-opportunity">
+                        <h2>💼 Business Opportunity Analysis</h2>
+                        <div class="opportunity-intro">
+                            <h3>
+                                NEAR Delivery: Connecting Supply with Demand
+                            </h3>
+                            <p>
+                                Our market analysis reveals a significant
+                                opportunity to optimize logistics by leveraging
+                                <b>empty cargo space</b> during return trips. By
+                                connecting drivers with available space to
+                                customers needing delivery services, we create a
+                                win-win situation that benefits all stakeholders
+                                while reducing environmental impact.
+                            </p>
+                        </div>
+
+                        <!-- Market Readiness Section -->
+                        <div class="market-opportunity-section">
+                            <div class="section-header">
+                                <h3>Market Readiness</h3>
+                                <div class="section-divider"></div>
+                            </div>
+                            <div class="section-content">
+                                <div class="readiness-gauges">
+                                    <div class="readiness-gauge">
+                                        <h4>Drivers Willing to Participate</h4>
+                                        <div class="gauge-container">
+                                            <canvas
+                                                id="driver-readiness-chart"
+                                            ></canvas>
+                                            <div class="gauge-value driver">
+                                                <span
+                                                    id="driver-readiness-value"
+                                                    >0.0%</span
+                                                >
+                                                <span class="delta positive"
+                                                    >▲ 31.8</span
+                                                >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="readiness-gauge">
+                                        <h4>
+                                            Customers Willing to Use Service
+                                        </h4>
+                                        <div class="gauge-container">
+                                            <canvas
+                                                id="customer-readiness-chart"
+                                            ></canvas>
+                                            <div class="gauge-value customer">
+                                                <span
+                                                    id="customer-readiness-value"
+                                                    >0.0%</span
+                                                >
+                                                <span class="delta positive"
+                                                    >▲ 25.5</span
+                                                >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Market Match Analysis Section -->
+                        <div class="market-opportunity-section">
+                            <div class="section-header">
+                                <h3>Market Match Analysis</h3>
+                                <div class="section-divider"></div>
+                            </div>
+                            <div class="section-content market-match">
+                                <div class="market-chart">
+                                    <h4>Weekly Supply vs Demand</h4>
+                                    <canvas id="supply-demand-chart"></canvas>
+                                </div>
+                                <div class="market-metrics">
+                                    <h4>Market Efficiency Potential:</h4>
+                                    <div class="efficiency-meter">
+                                        <div class="efficiency-bar">
+                                            <div
+                                                class="efficiency-value"
+                                                style="width: 0%"
+                                            ></div>
+                                        </div>
+                                        <div class="efficiency-label">
+                                            <span id="efficiency-percentage"
+                                                >0%</span
+                                            >
+                                        </div>
+                                    </div>
+
+                                    <div class="market-data">
+                                        <p>
+                                            Our survey data reveals significant
+                                            potential for optimizing logistics:
+                                        </p>
+                                        <ul>
+                                            <li>
+                                                <strong>Supply:</strong>
+                                                <span id="empty-trips-count"
+                                                    >240</span
+                                                >
+                                                empty trips available weekly
+                                            </li>
+                                            <li>
+                                                <strong>Demand:</strong>
+                                                <span id="packages-count"
+                                                    >122</span
+                                                >
+                                                packages needing delivery weekly
+                                            </li>
+                                            <li>
+                                                <strong>Match Rate:</strong>
+                                                <span id="match-rate">122</span>
+                                                potential matches
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Value Proposition Section -->
+                        <div class="market-opportunity-section">
+                            <div class="section-header">
+                                <h3>
+                                    <span class="highlight">💡</span> Key Value
+                                    Proposition
+                                </h3>
+                                <div class="section-divider"></div>
+                            </div>
+                            <div class="section-content value-proposition">
+                                <div class="value-grid">
+                                    <div class="value-item drivers">
+                                        <h4>For Drivers</h4>
+                                        <p>
+                                            Generate additional income during
+                                            otherwise unprofitable empty trips
+                                        </p>
+                                    </div>
+                                    <div class="value-item customers">
+                                        <h4>For Customers</h4>
+                                        <p>
+                                            Enjoy reduced costs through shared
+                                            transportation resources
+                                        </p>
+                                    </div>
+                                    <div class="value-item environmental">
+                                        <h4>Environmental Impact</h4>
+                                        <p>
+                                            Create sustainability benefits by
+                                            optimizing vehicle usage and
+                                            reducing emissions
+                                        </p>
+                                    </div>
+                                    <div class="value-item logistics">
+                                        <h4>Logistics Efficiency</h4>
+                                        <p>
+                                            Achieve network efficiency through
+                                            intelligent route optimization
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Opportunity Score Section -->
+                        <div class="market-opportunity-section">
+                            <div class="section-header">
+                                <h3>Overall Opportunity Score</h3>
+                                <div class="section-divider"></div>
+                            </div>
+                            <div class="section-content opportunity">
+                                <div class="opportunity-gauge">
+                                    <canvas
+                                        id="opportunity-score-chart"
+                                    ></canvas>
+                                    <div class="opportunity-value">
+                                        <span id="opportunity-score-value"
+                                            >0</span
+                                        >
+                                        <span class="opportunity-scale"
+                                            >/100</span
+                                        >
+                                    </div>
+                                </div>
+                                <div class="opportunity-insight">
+                                    <h4>
+                                        <span class="highlight">💼</span>
+                                        Business Insight:
+                                    </h4>
+                                    <p id="business-insight">
+                                        Based on our analysis of market
+                                        readiness and supply-demand match
+                                        potential, NEAR presents a compelling
+                                        business opportunity with significant
+                                        growth potential. The data indicates
+                                        strong willingness from both drivers and
+                                        customers to participate in a shared
+                                        logistics platform.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <div class="footer-bottom">
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-linkedin"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
+        <section id="conclusion" class="conclusion-section">
+            <div class="container">
+                <h2>Conclusions & Next Steps</h2>
+                <div class="conclusion-content">
+                    <p>
+                        The survey data demonstrates a significant market
+                        opportunity for NEAR's logistics optimization platform.
+                        Both drivers and potential customers have expressed high
+                        levels of interest in the service, highlighting the
+                        following key takeaways:
+                    </p>
+                    <div class="takeaways">
+                        <div class="takeaway">
+                            <div class="takeaway-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="takeaway-text">
+                                <h3>Supply & Demand Alignment</h3>
+                                <p>
+                                    There is a strong alignment between drivers
+                                    with empty cargo space and customers willing
+                                    to use more sustainable delivery options.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="takeaway">
+                            <div class="takeaway-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="takeaway-text">
+                                <h3>Environmental Impact</h3>
+                                <p>
+                                    Optimizing existing routes can significantly
+                                    reduce CO₂ emissions while improving
+                                    operational efficiency.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="takeaway">
+                            <div class="takeaway-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="takeaway-text">
+                                <h3>Additional Revenue Potential</h3>
+                                <p>
+                                    Drivers are highly motivated by the
+                                    opportunity to earn additional income from
+                                    otherwise empty return trips.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="next-steps">
+                        <h3>Recommended Next Steps:</h3>
+                        <ol>
+                            <li>
+                                Develop a beta version of the platform focusing
+                                on high-demand routes
+                            </li>
+                            <li>
+                                Create a seamless onboarding process for both
+                                drivers and customers
+                            </li>
+                            <li>
+                                Implement features to optimize matching of
+                                available space with delivery needs
+                            </li>
+                            <li>
+                                Build a robust tracking system to ensure
+                                reliability and transparency
+                            </li>
+                        </ol>
+                    </div>
                 </div>
-                <p class="copyright">
-                    &copy; 2025 NEAR - Never Empty Again on Return. All rights reserved.
-                </p>
             </div>
-        </div>
-    </footer>
+        </section>
 
-    <!-- JavaScript -->
-    <script src="../js/main.js"></script>
-    <script src="./js/data-parser.js"></script>
-    <script src="./js/charts.js"></script>
-    <script src="./js/tabs.js"></script>
-    <script src="./js/customer-animations.js"></script>
-</body>
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-logo">
+                        <span>NEAR</span>
+                        <p class="tagline">
+                            Caring for the planet, connecting paths 🌱
+                        </p>
+                    </div>
+
+                    <div class="footer-links">
+                        <div class="footer-column">
+                            <h4>Company</h4>
+                            <ul>
+                                <li>
+                                    <a href="../index.html#about">About Us</a>
+                                </li>
+                                <li><a href="../index.html#team">Team</a></li>
+                                <li>
+                                    <a href="../index.html#careers">Careers</a>
+                                </li>
+                                <li><a href="../index.html#press">Press</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="footer-column">
+                            <h4>Services</h4>
+                            <ul>
+                                <li>
+                                    <a href="../index.html#shippers"
+                                        >For Shippers</a
+                                    >
+                                </li>
+                                <li>
+                                    <a href="../index.html#carriers"
+                                        >For Carriers</a
+                                    >
+                                </li>
+                                <li><a href="#">Pricing</a></li>
+                                <li><a href="#">API</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="footer-column">
+                            <h4>Resources</h4>
+                            <ul>
+                                <li><a href="../index.html#blog">Blog</a></li>
+                                <li>
+                                    <a href="./index.html">Data Insights</a>
+                                </li>
+                                <li><a href="#">Documentation</a></li>
+                                <li><a href="#">Help Center</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="footer-column">
+                            <h4>Contact</h4>
+                            <ul>
+                                <li>
+                                    <a href="mailto:info@near-delivery.com">
+                                        <i class="fas fa-envelope"></i>
+                                        info@near-delivery.com
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="tel:+34912345678">
+                                        <i class="fas fa-phone"></i> +34 91 234
+                                        56 78
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        Madrid, Spain
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-bottom">
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    <p class="copyright">
+                        &copy; 2025 NEAR - Never Empty Again on Return. All
+                        rights reserved.
+                    </p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- JavaScript -->
+        <script src="../js/main.js"></script>
+        <script src="./js/data-parser.js"></script>
+        <script src="./js/animations.js"></script>
+        <script src="./js/charts.js"></script>
+        <script src="./js/tabs.js"></script>
+        <script src="./js/customer-animations.js"></script>
+    </body>
 </html>

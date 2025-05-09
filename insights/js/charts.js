@@ -483,6 +483,43 @@ function initBusinessOpportunityCharts() {
     createSupplyDemandChart(kpis);
     createOpportunityScoreChart(kpis);
     updateMarketMetrics(kpis);
+    
+    // Apply enhanced gauge animations if available
+    if (typeof enhanceGaugeAnimation === "function") {
+        // Apply enhanced animations to the gauge charts
+        setTimeout(() => {
+            // Driver readiness gauge with blue gradient
+            enhanceGaugeAnimation('driver-readiness-chart', kpis.driverReadiness, 2000, {
+                displayElementId: 'driver-readiness-value',
+                colors: {
+                    primary: '#2563EB',
+                    gradient: true
+                },
+                easing: 'easeOutCubic'
+            });
+            
+            // Customer readiness gauge with green gradient
+            enhanceGaugeAnimation('customer-readiness-chart', kpis.customerReadiness, 2000, {
+                displayElementId: 'customer-readiness-value',
+                colors: {
+                    primary: '#059669',
+                    gradient: true
+                },
+                easing: 'easeOutCubic'
+            });
+            
+            // Opportunity score gauge with dynamic color
+            enhanceGaugeAnimation('opportunity-score-chart', kpis.opportunityScore, 2500, {
+                displayElementId: 'opportunity-score-value',
+                valueSuffix: '',
+                colors: {
+                    primary: getOpportunityColor(kpis.opportunityScore),
+                    gradient: true
+                },
+                easing: 'easeOutElastic'
+            });
+        }, 500);
+    }
 }
 
 // Market Readiness Gauge Charts
@@ -749,14 +786,22 @@ function animateEfficiencyMeter(targetValue) {
 
 // Update market metrics
 function updateMarketMetrics(kpis) {
-    // Update supply, demand and match rate values
-    const supplyElement = document.getElementById('empty-trips-count');
-    const demandElement = document.getElementById('packages-count');
-    const matchElement = document.getElementById('match-rate');
-    
-    if (supplyElement) supplyElement.textContent = kpis.supplyPerWeek;
-    if (demandElement) demandElement.textContent = kpis.demandPerWeek;
-    if (matchElement) matchElement.textContent = kpis.matchRate;
+    // Update supply, demand and match rate values with animation
+    if (typeof animateNumberWithCommas === "function") {
+        // Animate values with comma formatting
+        animateNumberWithCommas('empty-trips-count', kpis.supplyPerWeek, 1800);
+        animateNumberWithCommas('packages-count', kpis.demandPerWeek, 1800);
+        animateNumberWithCommas('match-rate', kpis.matchRate, 1800);
+    } else {
+        // Fallback to direct updates if animation function is not available
+        const supplyElement = document.getElementById('empty-trips-count');
+        const demandElement = document.getElementById('packages-count');
+        const matchElement = document.getElementById('match-rate');
+        
+        if (supplyElement) supplyElement.textContent = kpis.supplyPerWeek;
+        if (demandElement) demandElement.textContent = kpis.demandPerWeek;
+        if (matchElement) matchElement.textContent = kpis.matchRate;
+    }
 }
 
 // Generate business insight text based on KPIs
