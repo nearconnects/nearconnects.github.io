@@ -159,18 +159,28 @@ function createDeliveryPreferenceChart() {
     if (!preferenceData) return;
     
     const ctx = document.getElementById('delivery-preference-chart').getContext('2d');
-    new Chart(ctx, {
+    
+    // Start with zero values for animation
+    const animatedData = [...preferenceData.counts].map(() => 0);
+    
+    const chart = new Chart(ctx, {
         type: 'pie',
         data: {
             labels: preferenceData.labels,
             datasets: [{
-                data: preferenceData.counts,
+                data: animatedData, // Start with zeros for animation
                 backgroundColor: greenColors,
                 borderColor: 'white',
                 borderWidth: 2
             }]
         },
         options: {
+            animation: {
+                animateRotate: true,
+                animateScale: true,
+                duration: 1500,
+                easing: 'easeOutQuart'
+            },
             plugins: {
                 legend: {
                     position: 'bottom'
@@ -191,6 +201,12 @@ function createDeliveryPreferenceChart() {
             maintainAspectRatio: true
         }
     });
+    
+    // Animate the pie chart segments growing from 0 to their real values
+    setTimeout(() => {
+        chart.data.datasets[0].data = preferenceData.counts;
+        chart.update();
+    }, 200);
 }
 
 function createWillingnessLevelChart() {
@@ -198,19 +214,34 @@ function createWillingnessLevelChart() {
     if (!willingnessData) return;
     
     const ctx = document.getElementById('willingness-level-chart').getContext('2d');
-    new Chart(ctx, {
+    
+    // Start with zero values for animation
+    const animatedData = [...willingnessData.counts].map(() => 0);
+    
+    // Create gradient for better visuals
+    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+    gradient.addColorStop(0, '#10B981');  // Light green at top
+    gradient.addColorStop(1, '#047857');  // Darker green at bottom
+    
+    const chart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: willingnessData.labels,
             datasets: [{
                 label: 'Number of Customers',
-                data: willingnessData.counts,
-                backgroundColor: greenColors,
+                data: animatedData,  // Start with zeros for animation
+                backgroundColor: gradient,
                 borderColor: 'white',
-                borderWidth: 1
+                borderWidth: 1,
+                borderRadius: 6,
+                hoverBackgroundColor: '#059669'
             }]
         },
         options: {
+            animation: {
+                duration: 1800,
+                easing: 'easeOutQuart'
+            },
             plugins: {
                 legend: {
                     display: false
@@ -229,6 +260,12 @@ function createWillingnessLevelChart() {
             maintainAspectRatio: true
         }
     });
+    
+    // Animate the bars growing from 0 to their real values
+    setTimeout(() => {
+        chart.data.datasets[0].data = willingnessData.counts;
+        chart.update();
+    }, 200);
 }
 
 function createPackageFrequencyChart() {
@@ -236,19 +273,34 @@ function createPackageFrequencyChart() {
     if (!freqData) return;
     
     const ctx = document.getElementById('package-frequency-chart').getContext('2d');
-    new Chart(ctx, {
+    
+    // Start with zero values for animation
+    const animatedData = [...freqData.counts].map(() => 0);
+    
+    // Create gradient for better visuals
+    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+    gradient.addColorStop(0, '#059669');  // Light green at top
+    gradient.addColorStop(1, '#047857');  // Darker green at bottom
+    
+    const chart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: freqData.labels,
             datasets: [{
                 label: 'Number of Customers',
-                data: freqData.counts,
-                backgroundColor: greenColors[1],
+                data: animatedData,  // Start with zeros for animation
+                backgroundColor: gradient,
                 borderColor: greenColors[0],
-                borderWidth: 1
+                borderWidth: 1,
+                borderRadius: 6,
+                hoverBackgroundColor: '#065F46'
             }]
         },
         options: {
+            animation: {
+                duration: 1800,
+                easing: 'easeOutQuart'
+            },
             plugins: {
                 legend: {
                     display: false
@@ -273,6 +325,12 @@ function createPackageFrequencyChart() {
             maintainAspectRatio: true
         }
     });
+    
+    // Animate the bars growing from 0 to their real values
+    setTimeout(() => {
+        chart.data.datasets[0].data = freqData.counts;
+        chart.update();
+    }, 400); // Slightly delayed compared to the other chart for staggered animation
 }
 
 /**
