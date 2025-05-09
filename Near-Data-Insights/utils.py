@@ -9,7 +9,8 @@ def load_and_clean_data():
     Load and clean the survey data from the CSV file
     """
     # Use the Encuesta_NEAR_limpia.csv file
-    csv_path = "attached_assets/Encuesta_NEAR_limpia.csv"
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    csv_path = os.path.join(current_dir, "attached_assets/Encuesta_NEAR_limpia.csv")
     
     # Load the CSV file
     try:
