@@ -343,48 +343,32 @@
         </section>
 
         <!-- Impact Section -->
-        <section id="green-deliveries" class="impact">
+        <section id="impact-metrics" class="impact-metrics-section">
             <div class="container">
-                <h2 class="section-title animate-on-scroll">
-                    Environmental Impact Metrics
-                </h2>
-
-                <div class="impact-metrics">
-                    <div class="impact-metric animate-on-scroll">
+                <h2>Our Impact</h2>
+                <div class="metrics-container">
+                    <div class="metric-card">
+                        <div class="chart-container" id="emissionsChart"></div>
                         <h3>CO₂ Emissions Avoided</h3>
-                        <div class="progress-container">
-                            <div class="progress-bar" data-progress="75"></div>
-                        </div>
-                        <div class="metric-value">
-                            <span class="counter" data-target="1160000">0</span>
-                            tons
-                        </div>
+                        <div class="metric-value" data-value="1160000">0</div>
+                        <span class="metric-unit">tons</span>
                     </div>
-
-                    <div class="impact-metric animate-on-scroll">
+                    <div class="metric-card">
+                        <div class="chart-container" id="kilometersChart"></div>
                         <h3>Empty Kilometers Eliminated</h3>
-                        <div class="progress-container">
-                            <div class="progress-bar" data-progress="68"></div>
-                        </div>
-                        <div class="metric-value">
-                            <span class="counter" data-target="5200000">0</span>
-                            km
-                        </div>
+                        <div class="metric-value" data-value="5200000">0</div>
+                        <span class="metric-unit">km</span>
                     </div>
-
-                    <div class="impact-metric animate-on-scroll">
+                    <div class="metric-card">
+                        <div class="chart-container" id="revenueChart"></div>
                         <h3>Additional Revenue Generated</h3>
-                        <div class="progress-container">
-                            <div class="progress-bar" data-progress="82"></div>
-                        </div>
-                        <div class="metric-value">
-                            <span class="counter" data-target="963000">0</span>
-                            €
-                        </div>
+                        <div class="metric-value" data-value="963000">0</div>
+                        <span class="metric-unit">€</span>
                     </div>
                 </div>
             </div>
         </section>
+
         <!--
    
     <section id="testimonials" class="testimonials">
@@ -681,6 +665,10 @@
         </footer>
 
         <!-- JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+        <script src="js/impact-charts.js"></script>
         <script src="js/main.js"></script>
         <script src="js/animations.js"></script>
         <script src="js/form-validation.js"></script>
