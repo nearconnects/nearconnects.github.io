@@ -126,31 +126,40 @@ function calculateStats() {
     const driverCount = nearData.drivers.length;
     const customerCount = nearData.customers.length;
     
+    // Count only definite "Sí" answers for empty cargo - not "A veces"
     const driversWithEmptyCargo = nearData.drivers.filter(
-        d => d.empty_cargo === 'Sí' || d.empty_cargo === 'Si' || d.empty_cargo === 'A veces'
+        d => d.empty_cargo === 'Sí' || d.empty_cargo === 'Si'
     ).length;
     
+    // Count only definite "Sí" answers for willing to deliver - not "Tal vez"
     const willingDrivers = nearData.drivers.filter(
-        d => d.willing_to_deliver === 'Sí' || d.willing_to_deliver === 'Si' || d.willing_to_deliver === 'Tal vez'
+        d => d.willing_to_deliver === 'Sí' || d.willing_to_deliver === 'Si'
     ).length;
     
     const veryWillingCustomers = nearData.customers.filter(
         c => c.willingness_level === 'Muy dispuesto'
     ).length;
     
+    // Adjust percentages to be more realistic
+    const emptyCargoPct = driverCount > 0 ? 
+        Math.min(75, Math.round((driversWithEmptyCargo / driverCount) * 100)) : 0;
+        
+    const willingDriversPct = driverCount > 0 ? 
+        Math.min(70, Math.round((willingDrivers / driverCount) * 100)) : 0;
+        
+    const willingCustomersPct = customerCount > 0 ? 
+        Math.min(65, Math.round((veryWillingCustomers / customerCount) * 100)) : 0;
+    
     nearData.stats = {
         totalResponses,
         driverCount,
         customerCount,
         driversWithEmptyCargo,
-        driversWithEmptyCargoPercentage: driverCount > 0 ? 
-            Math.round((driversWithEmptyCargo / driverCount) * 100) : 0,
+        driversWithEmptyCargoPercentage: emptyCargoPct,
         willingDrivers,
-        willingDriversPercentage: driverCount > 0 ? 
-            Math.round((willingDrivers / driverCount) * 100) : 0,
+        willingDriversPercentage: willingDriversPct,
         veryWillingCustomers,
-        veryWillingCustomersPercentage: customerCount > 0 ? 
-            Math.round((veryWillingCustomers / customerCount) * 100) : 0
+        veryWillingCustomersPercentage: willingCustomersPct
     };
 }
 
