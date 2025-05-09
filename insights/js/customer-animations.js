@@ -154,48 +154,116 @@ function animateCounter(elementId, target, suffix = '') {
 function resetAndAnimateElements(selector, baseDelay) {
     const elements = document.querySelectorAll(selector);
     elements.forEach((element, index) => {
-        // Remove animation classes
+        // Add animated class for initial state
+        element.classList.add('animated');
+        // Reset state
         element.style.opacity = '0';
         element.style.transform = 'translateY(20px)';
+        element.classList.remove('animate-now');
         
         // Force reflow
         void element.offsetWidth;
         
-        // Add animation
-        element.style.animation = 'none';
+        // Add animation immediately
         setTimeout(() => {
-            element.style.animation = `fadeInUp 0.6s ease forwards ${baseDelay + (index * 0.2)}s`;
-        }, 50);
+            // Apply animation
+            element.classList.add('animate-now');
+            element.style.opacity = '1';
+            
+            // If this is a chart container, also animate the chart
+            const canvas = element.querySelector('canvas');
+            if (canvas && canvas.id) {
+                // Immediately animate the chart data
+                if (!animatedCharts[canvas.id]) {
+                    animatedCharts[canvas.id] = true;
+                    animateChartById(canvas.id);
+                }
+            }
+        }, index * 150); // Smaller staggered delay for smoother sequence
     });
 }
 
 // Setup scroll-based animations
 function setupScrollAnimations() {
+    // Initialize chart containers
+    const chartContainers = document.querySelectorAll('#customer-preferences .chart-container');
+    chartContainers.forEach(container => {
+        container.classList.add('animated');
+        // Force hide initially (even if in viewport)
+        container.style.opacity = '0';
+        container.style.transform = 'translateY(20px)';
+        // Remove any animation that might be applied
+        container.style.animation = 'none';
+        
+        // Ensure charts inside are also prepared for animation
+        const canvas = container.querySelector('canvas');
+        if (canvas && canvas.id) {
+            const chart = Chart.getChart(canvas.id);
+            if (chart && chart.data && chart.data.datasets && chart.data.datasets[0]) {
+                // Get original data based on chart ID
+                let originalData;
+                switch(canvas.id) {
+                    case 'delivery-preference-chart':
+                        originalData = getDeliveryPreferenceData().counts;
+                        break;
+                    case 'willingness-level-chart':
+                        originalData = getWillingnessLevelData().counts;
+                        break;
+                    case 'package-frequency-chart':
+                        originalData = getPackageFrequencyData().counts;
+                        break;
+                }
+                
+                if (originalData) {
+                    // Store original data for later animation
+                    chart._originalData = [...originalData];
+                }
+            }
+        }
+    });
+    
     // Listen for scroll events
     window.addEventListener('scroll', function() {
         checkElementsInViewport();
     });
     
-    // Also check on initial load (in case elements are already visible)
-    setTimeout(checkElementsInViewport, 500);
+    // Check on initial load after a brief delay (to allow for data loading)
+    setTimeout(checkElementsInViewport, 800);
 }
 
 // Check if chart elements are in viewport to trigger animations
 function checkElementsInViewport() {
-    // All chart containers to check
-    const chartContainers = [
-        document.getElementById('delivery-preference-chart'),
-        document.getElementById('willingness-level-chart'),
-        document.getElementById('package-frequency-chart')
-    ];
+    // Get all chart containers in customer section
+    const chartContainerElements = document.querySelectorAll('#customer-preferences .chart-container');
     
-    chartContainers.forEach(chart => {
-        if (chart && !animatedCharts[chart.id] && isElementInViewport(chart)) {
-            console.log(`${chart.id} is now in viewport - triggering animation`);
-            animatedCharts[chart.id] = true;
-            
-            // Trigger the appropriate chart animation
-            animateChartById(chart.id);
+    // Animate each container when in viewport
+    chartContainerElements.forEach((container, index) => {
+        if (container && isElementInViewport(container)) {
+            // Only proceed if this container hasn't been animated yet
+            if (container.style.opacity === '0' || !container.classList.contains('animate-now')) {
+                console.log(`Customer chart container ${index} is in viewport and ready to animate`);
+                
+                // Apply animation class immediately
+                container.classList.add('animate-now');
+                container.style.opacity = '1'; // Ensure visible
+                
+                // Find the canvas inside this container
+                const canvas = container.querySelector('canvas');
+                if (canvas && canvas.id) {
+                    console.log(`Found customer canvas with ID: ${canvas.id}`);
+                    
+                    // Check if chart data already animated
+                    if (!animatedCharts[canvas.id]) {
+                        // Mark as animated
+                        animatedCharts[canvas.id] = true;
+                        
+                        // Animate chart immediately with the container
+                        animateChartById(canvas.id);
+                    }
+                } else {
+                    console.warn('Canvas element not found or missing ID in container:', container);
+                }
+            }
         }
     });
 }
@@ -222,31 +290,63 @@ function animateChartById(chartId) {
         return;
     }
     
-    // Get original data from nearData
-    let originalData;
+    console.log(`Animating customer chart data for: ${chartId}`);
     
-    switch(chartId) {
-        case 'delivery-preference-chart':
-            originalData = getDeliveryPreferenceData().counts;
-            break;
-        case 'willingness-level-chart':
-            originalData = getWillingnessLevelData().counts;
-            break;
-        case 'package-frequency-chart':
-            originalData = getPackageFrequencyData().counts;
-            break;
-        default:
-            console.warn(`Unknown chart ID: ${chartId}`);
-            return;
-    }
-    
-    // Reset to zeros for animation
-    chartInstance.data.datasets[0].data = originalData.map(() => 0);
-    chartInstance.update('none');
-    
-    // Then animate to actual values
-    setTimeout(() => {
+    try {
+        // Get original data from nearData
+        let originalData;
+        
+        switch(chartId) {
+            case 'delivery-preference-chart':
+                originalData = getDeliveryPreferenceData().counts;
+                break;
+            case 'willingness-level-chart':
+                originalData = getWillingnessLevelData().counts;
+                break;
+            case 'package-frequency-chart':
+                originalData = getPackageFrequencyData().counts;
+                break;
+            default:
+                console.warn(`Unknown chart ID: ${chartId}`);
+                return;
+        }
+        
+        // Store original animation settings
+        let originalAnimation = false;
+        if (chartInstance.options && chartInstance.options.animation) {
+            originalAnimation = {...chartInstance.options.animation};
+        }
+        
+        // Reset data to zero first
+        chartInstance.data.datasets[0].data = originalData.map(() => 0);
+        
+        // Turn off animation for the reset
+        if (!chartInstance.options) chartInstance.options = {};
+        chartInstance.options.animation = false;
+        chartInstance.update('none'); // Use 'none' mode to prevent any animation
+        
+        // Then animate to the real values immediately
+        // Enhanced animation settings
+        chartInstance.options.animation = {
+            duration: 1200,
+            easing: 'easeOutQuart',
+            delay: 0
+        };
+        
+        // Set the real data back
         chartInstance.data.datasets[0].data = originalData;
+        
+        // Force update with animation
         chartInstance.update();
-    }, 100);
+        console.log(`Chart data animation started for ${chartId}`);
+    } catch (error) {
+        console.error(`Error animating chart ${chartId}:`, error);
+        
+        // Fallback - just show the data without animation
+        try {
+            chartInstance.update();
+        } catch (e) {
+            console.error("Fallback update also failed:", e);
+        }
+    }
 }
