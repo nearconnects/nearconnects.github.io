@@ -777,6 +777,37 @@
     }
 }
 
+/* Estilos específicos para el gráfico circular */
+.pie-chart-container {
+    position: relative;
+    transform: scale(0.8);
+    opacity: 0;
+    transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+    animation: pieAppear 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.5s;
+}
+
+.pie-chart-container canvas {
+    filter: drop-shadow(0 6px 15px rgba(0, 0, 0, 0.15));
+    transition: transform 0.3s ease;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.pie-chart-container:hover canvas {
+    transform: scale(1.05);
+}
+
+@keyframes pieAppear {
+    0% {
+        transform: scale(0.8) rotate(-15deg);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1) rotate(0);
+        opacity: 1;
+    }
+}
+
 /* Dramatic pulse effect for important elements */
 .opportunity-gauge,
 .efficiency-meter,
