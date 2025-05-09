@@ -14,30 +14,30 @@ const nearData = {
 // Column names mapping
 const columnMap = {
     'Marca temporal': 'timestamp',
-    'Genero': 'gender',
-    'Qu edad tienes?': 'age',
-    'Trabajas en la carretera?': 'is_driver',
-    'Eres autnomo o asalariado?': 'employment_type',
-    'Tienes momentos en los que la carga esta vaca?': 'empty_cargo',
-    'Estaras dispuesto a recoger un envo adicional si este se ajusta a tu ruta actual y est disponible inmediatamente?': 'willing_to_deliver',
-    'Con qu frecuencia tienes viajes de retorno vacos a la semana?': 'empty_trips_frequency',
-    'Qu tipo de vehculo usas?': 'vehicle_type',
-    'Qu tipo de carga aceptas?': 'cargo_type',
-    'Estaras dispuesto a compartir informacin sobre tus rutas y disponibilidad de espacio para mejorar la eficiencia?': 'share_route_info',
-    'Aceptaras un envo a cambio de un ingreso extra?': 'accept_for_extra_income',
-    'Tienes alguna sugerencia o caracterstica especfica que te gustara que NEAR incluyera?': 'driver_suggestions',
-    'Utilizas servicios de paqueteria habitualmente?': 'uses_delivery_services',
-    'Con que frecuencia aproximadamente envas paquetes al mes?': 'package_frequency',
-    'Cambiarias el mtodo de envi por uno ms econmico y sostenible?': 'use_service',
-    'Prefieres la recogida a domicilio, puntos de entrega locales, o ambas opciones?': 'delivery_preference',
-    'Qu tan dispuesto estarias a probar un nuevo servicio de envo como NEAR?': 'willingness_level',
-    'Tienes alguna sugerencia o caracterstica especfica que te gustara que NEAR incluyera?.1': 'comments'
+    'Genero ': 'gender',
+    '¿Qué edad tienes?': 'age',
+    '¿Trabajas en la carretera? 🚚 ': 'is_driver',
+    '¿Eres autónomo o asalariado?': 'employment_type',
+    '¿Tienes momentos en los que la carga esta vacía?': 'empty_cargo',
+    '¿Estarías dispuesto a recoger un envío adicional si este se ajusta a tu ruta actual y está disponible inmediatamente? 📍': 'willing_to_deliver',
+    '¿Con qué frecuencia tienes viajes de retorno vacíos a la semana? ⌛': 'empty_trips_frequency',
+    '¿Qué tipo de vehículo usas?': 'vehicle_type',
+    '¿Qué tipo de carga aceptas?': 'cargo_type',
+    ' ¿Estarías dispuesto a compartir información sobre tus rutas y disponibilidad de espacio para mejorar la eficiencia?': 'share_route_info',
+    '¿Aceptarías un envío a cambio de un ingreso extra? ✔️💶': 'accept_for_extra_income',
+    '💡¿Tienes alguna sugerencia o característica específica que te gustaría que NEAR incluyera?': 'driver_suggestions',
+    '¿Utilizas servicios de paquetería habitualmente?': 'uses_delivery_services',
+    '¿Con que frecuencia aproximadamente envías paquetes al mes? ⌛ ': 'package_frequency',
+    '¿Cambiarías el método de envió por uno más económico y sostenible?': 'use_service',
+    '¿Prefieres la recogida a domicilio, puntos de entrega locales, o ambas opciones? ': 'delivery_preference',
+    '¿Qué tan dispuesto estarías a probar un nuevo servicio de envío como NEAR?': 'willingness_level',
+    '💡¿Tienes alguna sugerencia o característica específica que te gustaría que NEAR incluyera?.1': 'comments'
 };
 
 // Load and process data
 async function loadSurveyData() {
     try {
-        const response = await fetch('../insights/data/Clean_Near_data.csv');
+        const response = await fetch('../insights/data/NearEncuesta_actualizado_utf8.csv');
         const csvText = await response.text();
         
         // Parse CSV data with semicolon delimiter
@@ -79,7 +79,7 @@ function processData(data) {
         
         // Convert is_driver to boolean
         if (cleanedRow.is_driver) {
-            cleanedRow.is_driver = ['si', 'sí', 'yes', 'true'].includes(
+            cleanedRow.is_driver = ['si', 'sí', 'yes', 'true', 'sí'].includes(
                 cleanedRow.is_driver.toLowerCase().trim()
             );
         } else {
@@ -109,11 +109,11 @@ function calculateStats() {
     const customerCount = nearData.customers.length;
     
     const driversWithEmptyCargo = nearData.drivers.filter(
-        d => d.empty_cargo === 'Sí' || d.empty_cargo === 'Si'
+        d => d.empty_cargo === 'Sí' || d.empty_cargo === 'Si' || d.empty_cargo === 'A veces'
     ).length;
     
     const willingDrivers = nearData.drivers.filter(
-        d => d.willing_to_deliver === 'Sí' || d.willing_to_deliver === 'Si'
+        d => d.willing_to_deliver === 'Sí' || d.willing_to_deliver === 'Si' || d.willing_to_deliver === 'Tal vez'
     ).length;
     
     const veryWillingCustomers = nearData.customers.filter(
@@ -190,7 +190,7 @@ function getEmptyTripsData() {
     });
     
     // Sort by frequency
-    const order = ['1-3', '3-5', '5-7', '7-10', '10+', 'Más de 6'];
+    const order = ['1-3', '3-5', '5-7', '7-10', '10+', 'Más de 6', '4-6'];
     
     // Create sorted arrays
     const sortedLabels = [];
@@ -286,7 +286,7 @@ function getPackageFrequencyData() {
     });
     
     // Define order for package frequency
-    const order = ['1-5', '5-10', '6-10', '10 o más', 'Más de 10'];
+    const order = ['1-5', '5-10', '6-10', '10 o más', 'Más de 10', '10 o más'];
     
     // Create sorted arrays
     const sortedLabels = [];
