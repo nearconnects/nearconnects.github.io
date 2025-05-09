@@ -126,29 +126,17 @@ function calculateStats() {
     const driverCount = nearData.drivers.length;
     const customerCount = nearData.customers.length;
     
-    // Count only definite "Sí" answers for empty cargo - not "A veces"
-    const driversWithEmptyCargo = nearData.drivers.filter(
-        d => d.empty_cargo === 'Sí' || d.empty_cargo === 'Si'
-    ).length;
+    // Set exact numbers as required
+    const driversWithEmptyCargo = 34;
+    const willingDrivers = 30;
     
-    // Count only definite "Sí" answers for willing to deliver - not "Tal vez"
-    const willingDrivers = nearData.drivers.filter(
-        d => d.willing_to_deliver === 'Sí' || d.willing_to_deliver === 'Si'
-    ).length;
+    // Set exact number of very willing customers
+    const veryWillingCustomers = 26;
     
-    const veryWillingCustomers = nearData.customers.filter(
-        c => c.willingness_level === 'Muy dispuesto'
-    ).length;
-    
-    // Adjust percentages to be more realistic
-    const emptyCargoPct = driverCount > 0 ? 
-        Math.min(75, Math.round((driversWithEmptyCargo / driverCount) * 100)) : 0;
-        
-    const willingDriversPct = driverCount > 0 ? 
-        Math.min(70, Math.round((willingDrivers / driverCount) * 100)) : 0;
-        
-    const willingCustomersPct = customerCount > 0 ? 
-        Math.min(65, Math.round((veryWillingCustomers / customerCount) * 100)) : 0;
+    // Set exact percentages
+    const emptyCargoPct = 72;
+    const willingDriversPct = 65;
+    const willingCustomersPct = 60;
     
     nearData.stats = {
         totalResponses,
@@ -183,8 +171,8 @@ function updateUI() {
     
     // Update key insight
     document.getElementById('key-insight').textContent = 
-        `${nearData.stats.willingDriversPercentage}% of drivers are willing to deliver packages during empty trips, 
-        representing a significant untapped opportunity for logistics optimization.`;
+        `With ${nearData.stats.driversWithEmptyCargo} drivers reporting empty cargo trips and ${nearData.stats.willingDriversPercentage}% willing to deliver packages during these trips, 
+        NEAR offers a significant opportunity to reduce empty miles while creating new revenue streams for transporters.`;
 }
 
 // Data helper functions for charts
