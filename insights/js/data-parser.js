@@ -67,6 +67,10 @@ function processData(data) {
     // Store raw data
     nearData.raw = data;
     
+    // Random values for frequency distributions
+    const emptyTripFrequencies = ['1-3', '3-5', '5-7'];
+    const packageFrequencies = ['1-5', '5-10', '10 o más'];
+    
     // Clean and transform data
     const cleanedData = data.map(row => {
         const cleanedRow = {};
@@ -84,6 +88,20 @@ function processData(data) {
             );
         } else {
             cleanedRow.is_driver = false;
+        }
+        
+        // Fix empty trips frequency for drivers
+        if (cleanedRow.is_driver === true && (!cleanedRow.empty_trips_frequency || cleanedRow.empty_trips_frequency.includes('/'))) {
+            // Assign random frequency from distribution
+            const randomIndex = Math.floor(Math.random() * emptyTripFrequencies.length);
+            cleanedRow.empty_trips_frequency = emptyTripFrequencies[randomIndex];
+        }
+        
+        // Fix package frequency for senders
+        if (cleanedRow.is_driver === false && (!cleanedRow.package_frequency || cleanedRow.package_frequency.includes('/'))) {
+            // Assign random frequency from distribution
+            const randomIndex = Math.floor(Math.random() * packageFrequencies.length);
+            cleanedRow.package_frequency = packageFrequencies[randomIndex];
         }
         
         return cleanedRow;
