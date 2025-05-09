@@ -358,19 +358,8 @@ function enhanceGaugeAnimation(canvasId, targetValue, duration = 1500, options =
         if (displayElement) {
             displayElement.textContent = Math.round(currentValue) + config.valueSuffix;
             
-            // Add visual delta indicator
-            if (progress >= 0.98 && targetValue > 50) {
-                const deltaElement = document.createElement('span');
-                deltaElement.className = 'delta positive';
-                deltaElement.innerHTML = '▲ ' + (Math.round(targetValue * 0.3) / 10).toFixed(1);
-                
-                // Remove any existing deltas first
-                const existingDeltas = displayElement.parentNode.querySelectorAll('.delta');
-                existingDeltas.forEach(el => el.remove());
-                
-                // Add the new delta
-                displayElement.parentNode.appendChild(deltaElement);
-            }
+            // Removed automatic delta creation to respect custom deltas
+            // We don't want the function to automatically generate deltas anymore
         }
         
         // Continue animation if not complete
