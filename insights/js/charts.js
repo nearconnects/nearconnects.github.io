@@ -574,17 +574,24 @@ function createReadinessGaugeCharts(kpis) {
     const driverCtx = document.getElementById('driver-readiness-chart').getContext('2d');
     if (!driverCtx) return;
     
+    // Create a gradient for driver chart
+    const driverGradient = driverCtx.createLinearGradient(0, 0, 170, 0);
+    driverGradient.addColorStop(0, '#2563EB'); // Darker blue
+    driverGradient.addColorStop(1, '#60A5FA'); // Lighter blue
+    
     const driverChart = new Chart(driverCtx, {
         type: 'doughnut',
         data: {
             datasets: [{
                 data: [0, 100 - 0], // Start at 0
-                backgroundColor: ['#2563EB', '#F3F4F6'],
-                borderWidth: 0
+                backgroundColor: [driverGradient, 'rgba(219, 234, 254, 0.3)'], // Gradient blue, light blue bg
+                borderWidth: 0,
+                borderRadius: 5, // Rounded edges for modern look
+                weight: 1.2 // Make arcs thicker
             }]
         },
         options: {
-            cutout: '75%',
+            cutout: '70%', // Less cutout = thicker gauge
             circumference: 180,
             rotation: 270,
             responsive: true,
@@ -604,17 +611,24 @@ function createReadinessGaugeCharts(kpis) {
     const customerCtx = document.getElementById('customer-readiness-chart').getContext('2d');
     if (!customerCtx) return;
     
+    // Create a gradient for customer chart
+    const customerGradient = customerCtx.createLinearGradient(0, 0, 170, 0);
+    customerGradient.addColorStop(0, '#059669'); // Darker green
+    customerGradient.addColorStop(1, '#34D399'); // Lighter green
+    
     const customerChart = new Chart(customerCtx, {
         type: 'doughnut',
         data: {
             datasets: [{
                 data: [0, 100 - 0], // Start at 0
-                backgroundColor: ['#059669', '#F3F4F6'],
-                borderWidth: 0
+                backgroundColor: [customerGradient, 'rgba(209, 250, 229, 0.3)'], // Gradient green, light green bg
+                borderWidth: 0,
+                borderRadius: 5, // Rounded edges for modern look
+                weight: 1.2 // Make arcs thicker
             }]
         },
         options: {
-            cutout: '75%',
+            cutout: '70%', // Less cutout = thicker gauge
             circumference: 180,
             rotation: 270,
             responsive: true,
@@ -703,13 +717,20 @@ function createOpportunityScoreChart(kpis) {
     const ctx = document.getElementById('opportunity-score-chart').getContext('2d');
     if (!ctx) return;
     
+    // Create a gradient for opportunity chart - cyan to teal
+    const opportunityGradient = ctx.createLinearGradient(0, 0, 170, 0);
+    opportunityGradient.addColorStop(0, '#0891B2'); // Darker cyan
+    opportunityGradient.addColorStop(1, '#22D3EE'); // Lighter cyan
+    
     const opportunityChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
             datasets: [{
                 data: [0, 100 - 0], // Start at 0
-                backgroundColor: [getOpportunityColor(kpis.opportunityScore), '#F3F4F6'],
-                borderWidth: 0
+                backgroundColor: [opportunityGradient, 'rgba(207, 250, 254, 0.3)'], // Gradient cyan, light cyan bg
+                borderWidth: 0,
+                borderRadius: 5, // Rounded edges
+                weight: 1.2 // Thicker arc
             }]
         },
         options: {
