@@ -269,13 +269,17 @@ function createWillingnessLevelChart() {
     if (!willingnessData) return;
     
     const ctx = document.getElementById('willingness-level-chart').getContext('2d');
-    new Chart(ctx, {
+    
+    // Comenzamos con datos en cero para animar
+    const animationData = [...willingnessData.counts].map(() => 0);
+    
+    const chart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: willingnessData.labels,
             datasets: [{
                 label: 'Number of Customers',
-                data: willingnessData.counts,
+                data: animationData, // Iniciamos con ceros
                 backgroundColor: greenColors,
                 borderColor: 'white',
                 borderWidth: 1
@@ -297,9 +301,48 @@ function createWillingnessLevelChart() {
                 }
             },
             responsive: true,
-            maintainAspectRatio: true
+            maintainAspectRatio: true,
+            animation: {
+                duration: 1500,
+                easing: 'easeOutQuart'
+            }
         }
     });
+    
+    // Crear una animación manual desde ceros hasta los valores reales
+    setTimeout(() => {
+        // Actualizar los datos gradualmente para una animación más suave
+        const steps = 20;
+        let currentStep = 0;
+        
+        const interval = setInterval(() => {
+            currentStep++;
+            
+            // Calcular valores intermedios
+            const newData = willingnessData.counts.map((value, index) => {
+                return Math.round((value * currentStep) / steps);
+            });
+            
+            // Actualizar dataset
+            chart.data.datasets[0].data = newData;
+            chart.update('none'); // Actualizar sin animación para evitar problemas
+            
+            if (currentStep >= steps) {
+                clearInterval(interval);
+                // Asegurarnos de que los valores finales son exactos
+                chart.data.datasets[0].data = willingnessData.counts;
+                chart.update();
+                
+                // Añadir efecto de sombra y animación al contenedor
+                const chartContainer = document.querySelector('#willingness-level-chart').parentNode;
+                chartContainer.classList.add('animated-chart');
+            }
+        }, 50);
+    }, 500);
+    
+    // Añadir clase específica para la animación del gráfico
+    const chartContainer = document.querySelector('#willingness-level-chart').parentNode;
+    chartContainer.classList.add('bar-chart-container');
 }
 
 function createPackageFrequencyChart() {
@@ -307,13 +350,17 @@ function createPackageFrequencyChart() {
     if (!freqData) return;
     
     const ctx = document.getElementById('package-frequency-chart').getContext('2d');
-    new Chart(ctx, {
+    
+    // Comenzamos con datos en cero para animar
+    const animationData = [...freqData.counts].map(() => 0);
+    
+    const chart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: freqData.labels,
             datasets: [{
                 label: 'Number of Customers',
-                data: freqData.counts,
+                data: animationData, // Iniciamos con ceros
                 backgroundColor: greenColors[1],
                 borderColor: greenColors[0],
                 borderWidth: 1
@@ -341,9 +388,48 @@ function createPackageFrequencyChart() {
                 }
             },
             responsive: true,
-            maintainAspectRatio: true
+            maintainAspectRatio: true,
+            animation: {
+                duration: 1500,
+                easing: 'easeOutQuart'
+            }
         }
     });
+    
+    // Crear una animación manual desde ceros hasta los valores reales
+    setTimeout(() => {
+        // Actualizar los datos gradualmente para una animación más suave
+        const steps = 20;
+        let currentStep = 0;
+        
+        const interval = setInterval(() => {
+            currentStep++;
+            
+            // Calcular valores intermedios
+            const newData = freqData.counts.map((value, index) => {
+                return Math.round((value * currentStep) / steps);
+            });
+            
+            // Actualizar dataset
+            chart.data.datasets[0].data = newData;
+            chart.update('none'); // Actualizar sin animación para evitar problemas
+            
+            if (currentStep >= steps) {
+                clearInterval(interval);
+                // Asegurarnos de que los valores finales son exactos
+                chart.data.datasets[0].data = freqData.counts;
+                chart.update();
+                
+                // Añadir efecto de sombra y animación al contenedor
+                const chartContainer = document.querySelector('#package-frequency-chart').parentNode;
+                chartContainer.classList.add('animated-chart');
+            }
+        }, 50);
+    }, 500);
+    
+    // Añadir clase específica para la animación del gráfico
+    const chartContainer = document.querySelector('#package-frequency-chart').parentNode;
+    chartContainer.classList.add('bar-chart-container');
 }
 
 /**
