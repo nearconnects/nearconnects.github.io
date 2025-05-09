@@ -7,6 +7,18 @@
 const blueColors = ['#1E40AF', '#1D4ED8', '#3B82F6', '#60A5FA', '#93C5FD'];
 const greenColors = ['#065F46', '#047857', '#10B981', '#34D399', '#6EE7B7'];
 const mixedColors = ['#1E40AF', '#0369A1', '#047857', '#B45309', '#A21CAF'];
+const amberColors = ['#B45309', '#D97706', '#F59E0B', '#FBBF24', '#FCD34D'];
+const grayColors = ['#374151', '#4B5563', '#6B7280', '#9CA3AF', '#D1D5DB'];
+
+// Chart.js default colors
+const chartColors = {
+    blue: '#3B82F6',
+    green: '#10B981',
+    amber: '#F59E0B',
+    red: '#EF4444',
+    purple: '#8B5CF6',
+    gray: '#9CA3AF'
+};
 
 // Create charts when data is loaded
 document.addEventListener('DOMContentLoaded', function() {
@@ -26,8 +38,12 @@ function initializeCharts() {
     createDeliveryPreferenceChart();
     createWillingnessLevelChart();
     createPackageFrequencyChart();
-    createReadinessGaugeCharts();
-    createOpportunityScoreChart();
+    
+    // Auto-select the first tab on load
+    const firstTabButton = document.querySelector('.tab-button');
+    if (firstTabButton) {
+        firstTabButton.click();
+    }
 }
 
 // Driver analysis charts
@@ -797,29 +813,32 @@ function typeBusinessInsight(text) {
 function drawGaugeCenter(ctx, text, label) {
     if (!ctx || !ctx.canvas) return;
     
-    const width = ctx.canvas.width;
-    const height = ctx.canvas.height;
-    
-    ctx.save();
-    ctx.textBaseline = 'middle';
-    ctx.textAlign = 'center';
-    
-    // Clear previous text
-    ctx.clearRect(width * 0.3, height * 0.55, width * 0.4, height * 0.4);
-    
-    // Value text
-    ctx.font = 'bold 22px Arial';
-    ctx.fillStyle = '#1E3A8A';
-    ctx.fillText(text, width / 2, height * 0.65);
-    
-    // Label text (if provided)
-    if (label) {
-        ctx.font = '12px Arial';
-        ctx.fillStyle = '#6B7280';
-        ctx.fillText(label, width / 2, height * 0.8);
-    }
-    
-    ctx.restore();
+    // Need to wait for the chart to render before drawing the text
+    setTimeout(() => {
+        const width = ctx.canvas.width;
+        const height = ctx.canvas.height;
+        
+        ctx.save();
+        ctx.textBaseline = 'middle';
+        ctx.textAlign = 'center';
+        
+        // Clear previous text
+        ctx.clearRect(width * 0.3, height * 0.55, width * 0.4, height * 0.4);
+        
+        // Value text
+        ctx.font = 'bold 22px Arial';
+        ctx.fillStyle = '#1E3A8A';
+        ctx.fillText(text, width / 2, height * 0.65);
+        
+        // Label text (if provided)
+        if (label) {
+            ctx.font = '12px Arial';
+            ctx.fillStyle = '#6B7280';
+            ctx.fillText(label, width / 2, height * 0.8);
+        }
+        
+        ctx.restore();
+    }, 50);
 }
 
 // Get color for opportunity score based on value

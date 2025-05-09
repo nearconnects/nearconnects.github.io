@@ -21,6 +21,14 @@ document.addEventListener('DOMContentLoaded', function() {
             // Add active class to clicked button and corresponding content
             this.classList.add('active');
             document.getElementById(tabName).classList.add('active');
+            
+            // Initialize business opportunity charts if this tab is selected
+            if (tabName === 'business-opportunity' && typeof initBusinessOpportunityCharts === 'function') {
+                setTimeout(() => {
+                    console.log('Initializing business opportunity charts');
+                    initBusinessOpportunityCharts();
+                }, 100);
+            }
         });
     });
     
