@@ -228,19 +228,22 @@
 
 /* Driver Insights Animations */
 #driver-insights .chart-container.animated {
+    /* Initial state only - animation is applied via JavaScript */
     opacity: 0;
     transform: translateY(20px);
+    transition: none; /* Prevent any automatic transitions */
 }
 
-#driver-insights .chart-container:nth-child(1) {
+/* Apply staggered delays when animation is added through JS */
+#driver-insights .chart-container.animated.fade-in:nth-child(1) {
     animation-delay: 0.2s;
 }
 
-#driver-insights .chart-container:nth-child(2) {
+#driver-insights .chart-container.animated.fade-in:nth-child(2) {
     animation-delay: 0.4s;
 }
 
-#driver-insights .chart-container:nth-child(3) {
+#driver-insights .chart-container.animated.fade-in:nth-child(3) {
     animation-delay: 0.6s;
 }
 

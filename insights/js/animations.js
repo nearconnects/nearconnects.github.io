@@ -44,8 +44,11 @@ function setupDriverScrollAnimations() {
     const driverChartContainers = document.querySelectorAll('#driver-insights .chart-container');
     driverChartContainers.forEach(container => {
         container.classList.add('animated');
+        // Force hide initially (even if in viewport)
         container.style.opacity = '0';
         container.style.transform = 'translateY(20px)';
+        // Remove any animation that might be applied
+        container.style.animation = 'none';
     });
     
     // Listen for scroll events
@@ -57,14 +60,30 @@ function setupDriverScrollAnimations() {
     const driverTab = document.querySelector('.tab-button[data-tab="driver-insights"]');
     if (driverTab) {
         driverTab.addEventListener('click', function() {
+            // Reset animations when tab is clicked
+            driverChartContainers.forEach(container => {
+                // Only reset if not already animated
+                if (container.style.opacity !== '1') {
+                    container.style.opacity = '0';
+                    container.style.transform = 'translateY(20px)';
+                    container.style.animation = 'none';
+                }
+            });
+            
+            // Reset animation tracking
+            for (let chartId in animatedDriverCharts) {
+                animatedDriverCharts[chartId] = false;
+            }
+            
+            // Check after a short delay
             setTimeout(() => {
                 checkDriverChartsInViewport();
             }, 200);
         });
     }
     
-    // Also check on initial load (in case elements are already visible)
-    setTimeout(checkDriverChartsInViewport, 500);
+    // Delay initial check to ensure page is fully loaded and scroll position is stable
+    // Do NOT check immediately on load - wait for user to scroll
 }
 
 /**
@@ -334,7 +353,12 @@ function checkDriverChartsInViewport() {
         if (container && isElementInViewport(container)) {
             // Add animation class if not already animated
             if (container.style.opacity === '0') {
+                // Add fade-in class for proper animation with delays
+                container.classList.add('fade-in');
                 container.style.animation = 'fadeInUp 0.8s ease forwards';
+                
+                // Log that we're animating this container
+                console.log('Animating driver chart container:', container);
                 
                 // Find the canvas inside this container
                 const canvas = container.querySelector('canvas');
