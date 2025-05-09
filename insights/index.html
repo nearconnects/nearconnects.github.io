@@ -160,18 +160,95 @@
                         during return trips. By connecting drivers with available space to customers needing delivery services, we create 
                         a win-win situation that benefits all stakeholders while reducing environmental impact.</p>
                     </div>
-                    <div class="charts-grid">
-                        <div class="chart-container">
-                            <h3>Market Readiness - Drivers</h3>
-                            <canvas id="driver-readiness-chart"></canvas>
+                    <div class="business-opportunity">
+                        <div class="charts-grid">
+                            <div class="chart-container">
+                                <h3>Market Readiness - Drivers</h3>
+                                <canvas id="driver-readiness-chart"></canvas>
+                            </div>
+                            <div class="chart-container">
+                                <h3>Market Readiness - Customers</h3>
+                                <canvas id="customer-readiness-chart"></canvas>
+                            </div>
+                            <div class="chart-container">
+                                <h3>Opportunity Score</h3>
+                                <canvas id="opportunity-score-chart"></canvas>
+                            </div>
                         </div>
-                        <div class="chart-container">
-                            <h3>Market Readiness - Customers</h3>
-                            <canvas id="customer-readiness-chart"></canvas>
-                        </div>
-                        <div class="chart-container">
-                            <h3>Opportunity Score</h3>
-                            <canvas id="opportunity-score-chart"></canvas>
+                        
+                        <!-- Additional Business KPIs Section -->
+                        <div id="additional-kpis" class="mt-8 bg-white rounded-lg p-6 shadow-sm">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Advanced Business KPIs</h3>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <!-- Market Potential KPI -->
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-sm font-medium text-gray-600">Market Potential</span>
+                                        <span class="text-2xl">📈</span>
+                                    </div>
+                                    <div class="relative pt-1">
+                                        <div class="overflow-hidden h-2 text-xs flex rounded bg-gray-200">
+                                            <div id="market-potential-bar" 
+                                                class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500" 
+                                                style="width: 0%">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between mt-1">
+                                        <span class="text-xs text-gray-500">Score</span>
+                                        <span id="market-potential-value" class="text-xs font-bold text-gray-800">0/100</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Network Effect KPI -->
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-sm font-medium text-gray-600">Network Effect</span>
+                                        <span class="text-2xl">🔄</span>
+                                    </div>
+                                    <div class="relative pt-1">
+                                        <div class="overflow-hidden h-2 text-xs flex rounded bg-gray-200">
+                                            <div id="network-effect-bar" 
+                                                class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500" 
+                                                style="width: 0%">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between mt-1">
+                                        <span class="text-xs text-gray-500">Score</span>
+                                        <span id="network-effect-value" class="text-xs font-bold text-gray-800">0/100</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Sustainability Impact KPI -->
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-sm font-medium text-gray-600">Sustainability Impact</span>
+                                        <span class="text-2xl">🌱</span>
+                                    </div>
+                                    <div class="relative pt-1">
+                                        <div class="overflow-hidden h-2 text-xs flex rounded bg-gray-200">
+                                            <div id="sustainability-impact-bar" 
+                                                class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-500" 
+                                                style="width: 0%">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between mt-1">
+                                        <span class="text-xs text-gray-500">Score</span>
+                                        <span id="sustainability-impact-value" class="text-xs font-bold text-gray-800">0/100</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Business Insight Box -->
+                            <div class="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-100">
+                                <h4 class="text-sm font-semibold text-blue-800 mb-2">NEAR Business Insight</h4>
+                                <p id="business-insight-advanced" class="text-sm text-blue-700">
+                                    Analyzing market conditions...
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -445,119 +445,196 @@ function createAnimatedGaugeChart(canvasId, value, label, color, additionalText 
 
 // Business opportunity charts
 function createReadinessGaugeCharts() {
-    // Get KPI values from our advanced calculation
+    // Get KPI values from our algorithm
     const kpis = calculateBusinessOpportunityKPIs();
     
-    // Create driver readiness gauge with animation
-    createAnimatedGaugeChart(
-        'driver-readiness-chart', 
-        kpis.driverReadiness, 
-        'Driver Readiness', 
-        blueColors[1]
-    );
+    // Driver readiness gauge
+    const driverCtx = document.getElementById('driver-readiness-chart').getContext('2d');
+    const driverChart = new Chart(driverCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Ready', 'Not Ready'],
+            datasets: [{
+                data: [0, 100], // Start at 0 for animation
+                backgroundColor: [blueColors[1], '#E5E7EB'],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            circumference: 180,
+            rotation: 270,
+            cutout: '70%',
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    enabled: false
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: true
+        }
+    });
     
-    // Create customer readiness gauge with animation
-    createAnimatedGaugeChart(
-        'customer-readiness-chart', 
-        kpis.customerReadiness, 
-        'Customer Readiness', 
-        greenColors[1]
-    );
+    // Customer readiness gauge
+    const customerCtx = document.getElementById('customer-readiness-chart').getContext('2d');
+    const customerChart = new Chart(customerCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Ready', 'Not Ready'],
+            datasets: [{
+                data: [0, 100], // Start at 0 for animation
+                backgroundColor: [greenColors[1], '#E5E7EB'],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            circumference: 180,
+            rotation: 270,
+            cutout: '70%',
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    enabled: false
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: true
+        }
+    });
     
-    // Add KPI info to business opportunity section
-    updateBusinessOpportunityInfo(kpis);
+    // Add initial text in center
+    drawGaugeCenter(driverCtx, `0%`, 'Driver Readiness');
+    drawGaugeCenter(customerCtx, `0%`, 'Customer Readiness');
+    
+    // Animate the gauges with smooth transitions
+    animateChart(driverChart, driverCtx, kpis.driverReadiness, '%', 'Driver Readiness');
+    animateChart(customerChart, customerCtx, kpis.customerReadiness, '%', 'Customer Readiness');
+    
+    // Update KPI metrics
+    updateKPIMetrics(kpis);
 }
 
 function createOpportunityScoreChart() {
-    // Get KPI values from our advanced calculation
+    // Get KPI values from our algorithm
     const kpis = calculateBusinessOpportunityKPIs();
     
-    // Create opportunity score gauge with animation
-    createAnimatedGaugeChart(
-        'opportunity-score-chart', 
-        kpis.opportunityScore, 
-        'Opportunity Score', 
-        getOpportunityColor(kpis.opportunityScore),
-        '/100'
-    );
+    // Opportunity score gauge
+    const ctx = document.getElementById('opportunity-score-chart').getContext('2d');
+    const chart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Opportunity', 'Remaining'],
+            datasets: [{
+                data: [0, 100], // Start at 0 for animation
+                backgroundColor: [
+                    getOpportunityColor(kpis.opportunityScore),
+                    '#E5E7EB'
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            circumference: 180,
+            rotation: 270,
+            cutout: '70%',
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    enabled: false
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: true
+        }
+    });
+    
+    // Add initial empty text in center
+    drawGaugeCenter(ctx, '0/100', 'Opportunity Score');
+    
+    // Animate opportunity score 
+    animateChart(chart, ctx, kpis.opportunityScore, '/100', 'Opportunity Score');
 }
 
-// Update business opportunity section with additional KPI information
-function updateBusinessOpportunityInfo(kpis) {
-    // Get the business opportunity section to add additional KPI info
-    const section = document.querySelector('.business-opportunity');
-    if (!section) return;
+// Helper function to animate a chart from 0 to target value
+function animateChart(chart, ctx, targetValue, suffix = '%', label) {
+    let currentValue = 0;
+    const duration = 1500; // 1.5 seconds
+    const interval = 16; // ~60fps
+    const steps = Math.ceil(duration / interval);
+    const increment = targetValue / steps;
     
-    // Check if we already have the additional KPI section
-    let kpiDiv = document.getElementById('additional-kpis');
-    if (!kpiDiv) {
-        // Create elements for additional KPIs
-        kpiDiv = document.createElement('div');
-        kpiDiv.id = 'additional-kpis';
-        kpiDiv.className = 'mt-8 bg-white rounded-lg p-6 shadow-sm';
+    const animation = setInterval(() => {
+        currentValue += increment;
         
-        // Create heading
-        const heading = document.createElement('h3');
-        heading.className = 'text-xl font-semibold text-gray-800 mb-4';
-        heading.textContent = 'Advanced Business KPIs';
-        kpiDiv.appendChild(heading);
+        if (currentValue >= targetValue) {
+            currentValue = targetValue;
+            clearInterval(animation);
+        }
         
-        // Create KPI container
-        const kpiContainer = document.createElement('div');
-        kpiContainer.className = 'grid grid-cols-1 md:grid-cols-3 gap-4';
-        
-        // Add each KPI
-        const kpiMetrics = [
-            { id: 'market-potential', label: 'Market Potential', value: kpis.marketPotential, icon: '📈' },
-            { id: 'network-effect', label: 'Network Effect', value: kpis.networkEffectScore, icon: '🔄' },
-            { id: 'sustainability-impact', label: 'Sustainability Impact', value: kpis.sustainabilityImpact, icon: '🌱' }
+        // Update chart data
+        chart.data.datasets[0].data = [
+            Math.round(currentValue), 
+            100 - Math.round(currentValue)
         ];
+        chart.update('none'); // Update without animation
         
-        kpiMetrics.forEach(kpi => {
-            const kpiElement = document.createElement('div');
-            kpiElement.className = 'bg-gray-50 p-4 rounded-lg';
-            kpiElement.innerHTML = `
-                <div class="flex justify-between items-center mb-2">
-                    <span class="text-sm font-medium text-gray-600">${kpi.label}</span>
-                    <span class="text-2xl">${kpi.icon}</span>
-                </div>
-                <div class="relative pt-1">
-                    <div class="overflow-hidden h-2 text-xs flex rounded bg-gray-200">
-                        <div id="${kpi.id}-bar" 
-                             class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center ${getKPIColorClass(kpi.value)}" 
-                             style="width: 0%">
-                        </div>
-                    </div>
-                </div>
-                <div class="flex justify-between mt-1">
-                    <span class="text-xs text-gray-500">Score</span>
-                    <span id="${kpi.id}-value" class="text-xs font-bold text-gray-800">0/100</span>
-                </div>
-            `;
-            kpiContainer.appendChild(kpiElement);
-        });
+        // Update center text
+        drawGaugeCenter(ctx, `${Math.round(currentValue)}${suffix}`, label);
+    }, interval);
+}
+
+// Update KPI metrics in UI
+function updateKPIMetrics(kpis) {
+    // Start by updating the insight text
+    updateBusinessInsight(kpis);
+    
+    // Animate the KPI progress bars
+    setTimeout(() => {
+        animateKPIBar('market-potential', kpis.marketPotential);
+        animateKPIBar('network-effect', kpis.networkEffectScore);
+        animateKPIBar('sustainability-impact', kpis.sustainabilityImpact);
+    }, 800);
+}
+
+// Animate individual KPI bar
+function animateKPIBar(id, value) {
+    const bar = document.getElementById(`${id}-bar`);
+    const valueDisplay = document.getElementById(`${id}-value`);
+    
+    if (!bar || !valueDisplay) return;
+    
+    // Set the color based on value
+    bar.className = `shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center ${getKPIColorClass(value)}`;
+    
+    // Animate width and counter
+    let currentWidth = 0;
+    let currentValue = 0;
+    const duration = 1500; // 1.5 seconds
+    const interval = 16; // ~60fps
+    const steps = duration / interval;
+    const widthIncrement = value / steps;
+    const valueIncrement = value / steps;
+    
+    const animation = setInterval(() => {
+        currentWidth += widthIncrement;
+        currentValue += valueIncrement;
         
-        kpiDiv.appendChild(kpiContainer);
+        const displayWidth = Math.min(value, Math.round(currentWidth));
+        const displayValue = Math.min(value, Math.round(currentValue));
         
-        // Add insight box
-        const insightBox = document.createElement('div');
-        insightBox.className = 'mt-6 p-4 bg-blue-50 rounded-lg border border-blue-100';
-        insightBox.innerHTML = `
-            <h4 class="text-sm font-semibold text-blue-800 mb-2">NEAR Business Insight</h4>
-            <p id="business-insight" class="text-sm text-blue-700">
-                Analyzing market conditions...
-            </p>
-        `;
-        kpiDiv.appendChild(insightBox);
+        bar.style.width = `${displayWidth}%`;
+        valueDisplay.textContent = `${displayValue}/100`;
         
-        // Add the KPI section to the business opportunity section
-        section.appendChild(kpiDiv);
-        
-        // Animate the KPI bars
-        setTimeout(() => {
-            animateKPIBars(kpiMetrics, kpis);
-        }, 500);
-    }
+        if (displayWidth >= value) {
+            clearInterval(animation);
+        }
+    }, interval);
 }
 
 // Animate KPI bars with counting effect
@@ -605,7 +682,14 @@ function animateKPIBars(kpiMetrics, kpis) {
 
 // Update the business insight message based on KPIs
 function updateBusinessInsight(kpis) {
-    const insightElement = document.getElementById('business-insight');
+    // Try to get the advanced insight element first
+    let insightElement = document.getElementById('business-insight-advanced');
+    
+    // If not found, use the original insight element as a fallback
+    if (!insightElement) {
+        insightElement = document.getElementById('business-insight');
+    }
+    
     if (!insightElement) return;
     
     // Generate insight message based on KPI values
@@ -619,12 +703,11 @@ function updateBusinessInsight(kpis) {
         insight = `The market analysis shows a developing opportunity for NEAR with ${kpis.customerReadiness}% customer readiness. Focus on increasing driver participation could improve the ${kpis.marketPotential}% market potential significantly.`;
     }
     
-    // Animate the text replacement
-    const currentText = insightElement.textContent;
+    // Animate the text replacement with typing effect
     insightElement.textContent = '';
     
     let charIndex = 0;
-    const typingSpeed = 30; // milliseconds per character
+    const typingSpeed = 20; // milliseconds per character
     
     const typingAnimation = setInterval(() => {
         if (charIndex < insight.length) {
