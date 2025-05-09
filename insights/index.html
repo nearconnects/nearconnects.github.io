@@ -136,18 +136,80 @@
                 
                 <div class="tab-content" id="customer-preferences">
                     <h2>📦 Customer Preferences</h2>
+                    
+                    <!-- Customer Summary -->
+                    <div class="customer-summary">
+                        <p>Our survey revealed important insights about customer needs and preferences 
+                        regarding delivery services. Understanding these preferences is key to creating 
+                        a successful service that meets market demands.</p>
+                    </div>
+                    
+                    <!-- Key Customer Stats -->
+                    <div class="customer-stats">
+                        <div class="stat-container animated">
+                            <div class="stat-icon"><i class="fas fa-box"></i></div>
+                            <div class="stat-info">
+                                <h4>Package Frequency</h4>
+                                <p>Average <span class="highlight" id="avg-packages-monthly">7.5</span> packages sent monthly per customer</p>
+                            </div>
+                        </div>
+                        <div class="stat-container animated">
+                            <div class="stat-icon"><i class="fas fa-truck-loading"></i></div>
+                            <div class="stat-info">
+                                <h4>Preferred Delivery Method</h4>
+                                <p><span class="highlight" id="home-delivery-pct">68%</span> customers prefer home delivery</p>
+                            </div>
+                        </div>
+                        <div class="stat-container animated">
+                            <div class="stat-icon"><i class="fas fa-leaf"></i></div>
+                            <div class="stat-info">
+                                <h4>Eco-Friendly Interest</h4>
+                                <p><span class="highlight" id="eco-friendly-pct">72%</span> interested in sustainable delivery options</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Customer Charts -->
                     <div class="charts-grid">
-                        <div class="chart-container">
+                        <div class="chart-container animated">
                             <h3>Customer Delivery Preferences</h3>
                             <canvas id="delivery-preference-chart"></canvas>
+                            <p class="chart-insight">Customers show a strong preference for home delivery services, but many are also open to convenient pickup points.</p>
                         </div>
-                        <div class="chart-container">
+                        <div class="chart-container animated">
                             <h3>Customer Willingness to Use Service</h3>
                             <canvas id="willingness-level-chart"></canvas>
+                            <p class="chart-insight">A significant majority of potential customers express high willingness to try our innovative service.</p>
                         </div>
-                        <div class="chart-container">
+                        <div class="chart-container animated">
                             <h3>Package Delivery Frequency</h3>
                             <canvas id="package-frequency-chart"></canvas>
+                            <p class="chart-insight">Most customers send multiple packages monthly, indicating a steady demand for delivery services.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Customer Feedback Summary -->
+                    <div class="feedback-summary">
+                        <h3>Customer Feedback Highlights</h3>
+                        <div class="feedback-grid">
+                            <div class="feedback-item animated">
+                                <div class="feedback-icon"><i class="fas fa-comment"></i></div>
+                                <div class="feedback-text">
+                                    <p>"Would love to see transparent pricing and real-time package tracking"</p>
+                                </div>
+                            </div>
+                            <div class="feedback-item animated">
+                                <div class="feedback-icon"><i class="fas fa-comment"></i></div>
+                                <div class="feedback-text">
+                                    <p>"Flexibility in delivery times would be very valuable to me"</p>
+                                </div>
+                            </div>
+                            <div class="feedback-item animated">
+                                <div class="feedback-icon"><i class="fas fa-comment"></i></div>
+                                <div class="feedback-text">
+                                    <p>"I'd like options for both urgent deliveries and more economical slower options"</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
