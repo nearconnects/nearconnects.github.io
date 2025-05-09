@@ -121,43 +121,24 @@
 .animated {
     opacity: 0;
     transform: translateY(20px);
-    animation: fadeInUp 0.6s ease forwards;
+    transition: none; /* Prevent any automatic transitions */
+    animation: none !important; /* Reset any animations */
+    position: relative;
+    z-index: 2;
 }
 
-.stat-container:nth-child(1) {
-    animation-delay: 0.2s;
+/* Class to apply when element should animate */
+.animate-now {
+    animation: fadeInUp 0.6s ease-out forwards;
+    opacity: 1;
+    will-change: transform, opacity; /* Optimize for animation */
 }
 
-.stat-container:nth-child(2) {
-    animation-delay: 0.4s;
-}
-
-.stat-container:nth-child(3) {
-    animation-delay: 0.6s;
-}
-
-.chart-container.animated:nth-child(1) {
-    animation-delay: 0.4s;
-}
-
-.chart-container.animated:nth-child(2) {
-    animation-delay: 0.6s;
-}
-
-.chart-container.animated:nth-child(3) {
-    animation-delay: 0.8s;
-}
-
-.feedback-item:nth-child(1) {
-    animation-delay: 0.6s;
-}
-
-.feedback-item:nth-child(2) {
-    animation-delay: 0.8s;
-}
-
-.feedback-item:nth-child(3) {
-    animation-delay: 1s;
+/* Improve animation fluidity with GPU acceleration */
+#customer-preferences canvas {
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    -webkit-font-smoothing: subpixel-antialiased;
 }
 
 @keyframes fadeInUp {
