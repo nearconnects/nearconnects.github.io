@@ -3,6 +3,13 @@
  * Number and Gauge Animations
  */
 
+// Track if driver charts have been animated yet
+const animatedDriverCharts = {
+    'employment-type-chart': false,
+    'empty-trips-chart': false,
+    'vehicle-types-chart': false
+};
+
 // Execute animations when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     // Wait for data to be loaded
@@ -10,11 +17,12 @@ document.addEventListener('DOMContentLoaded', function() {
         if (nearData && nearData.stats) {
             clearInterval(checkData);
             setupAnimations();
+            setupDriverScrollAnimations();
         }
     }, 100);
 });
 
-// Setup initial animations
+// Setup initial animations for key metrics
 function setupAnimations() {
     console.log("Setting up simple counter animations");
     
@@ -28,6 +36,35 @@ function setupAnimations() {
     animateNumber('empty-cargo-percentage', nearData.stats.driversWithEmptyCargoPercentage, 1500, '%');
     animateNumber('willing-drivers-percentage', nearData.stats.willingDriversPercentage, 1500, '%');
     animateNumber('willing-customers-percentage', nearData.stats.veryWillingCustomersPercentage, 1500, '%');
+}
+
+// Setup scroll-based animations for driver insights
+function setupDriverScrollAnimations() {
+    // Add class to driver charts for animations
+    const driverChartContainers = document.querySelectorAll('#driver-insights .chart-container');
+    driverChartContainers.forEach(container => {
+        container.classList.add('animated');
+        container.style.opacity = '0';
+        container.style.transform = 'translateY(20px)';
+    });
+    
+    // Listen for scroll events
+    window.addEventListener('scroll', function() {
+        checkDriverChartsInViewport();
+    });
+    
+    // Add event listener for tab change to check visibility
+    const driverTab = document.querySelector('.tab-button[data-tab="driver-insights"]');
+    if (driverTab) {
+        driverTab.addEventListener('click', function() {
+            setTimeout(() => {
+                checkDriverChartsInViewport();
+            }, 200);
+        });
+    }
+    
+    // Also check on initial load (in case elements are already visible)
+    setTimeout(checkDriverChartsInViewport, 500);
 }
 
 /**
@@ -278,6 +315,75 @@ function adjustColor(color, percent) {
     const BB = ((B.toString(16).length == 1) ? "0" + B.toString(16) : B.toString(16));
 
     return "#" + RR + GG + BB;
+}
+
+// Check if driver charts are in viewport to trigger animations
+function checkDriverChartsInViewport() {
+    // All chart containers to check
+    const chartContainers = [
+        document.getElementById('employment-type-chart'),
+        document.getElementById('empty-trips-chart'),
+        document.getElementById('vehicle-types-chart')
+    ];
+    
+    // Get all chart containers in driver insights
+    const driverChartContainers = document.querySelectorAll('#driver-insights .chart-container');
+    
+    // Animate each chart container when in viewport
+    driverChartContainers.forEach(container => {
+        if (container && isElementInViewport(container)) {
+            // Add animation class if not already animated
+            if (container.style.opacity === '0') {
+                container.style.animation = 'fadeInUp 0.8s ease forwards';
+                
+                // Find the canvas inside this container
+                const canvas = container.querySelector('canvas');
+                if (canvas && !animatedDriverCharts[canvas.id] && canvas.id) {
+                    // Mark as animated
+                    animatedDriverCharts[canvas.id] = true;
+                    
+                    // Trigger chart-specific animation
+                    animateDriverChartById(canvas.id);
+                }
+            }
+        }
+    });
+}
+
+// Check if an element is visible in the viewport
+function isElementInViewport(el) {
+    const rect = el.getBoundingClientRect();
+    
+    return (
+        rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.bottom >= 0 &&
+        rect.left <= (window.innerWidth || document.documentElement.clientWidth) &&
+        rect.right >= 0
+    );
+}
+
+// Animate specific driver chart by ID
+function animateDriverChartById(chartId) {
+    // Get the Chart.js instance for this canvas
+    const chartInstance = Chart.getChart(chartId);
+    
+    if (!chartInstance) {
+        console.warn(`No Chart.js instance found for ${chartId}`);
+        return;
+    }
+    
+    // Store the original data
+    const originalData = [...chartInstance.data.datasets[0].data];
+    
+    // Reset to zeros for animation
+    chartInstance.data.datasets[0].data = originalData.map(() => 0);
+    chartInstance.update('none');
+    
+    // Then animate to actual values
+    setTimeout(() => {
+        chartInstance.data.datasets[0].data = originalData;
+        chartInstance.update();
+    }, 100);
 }
 
 // Export functions for use in other modules
