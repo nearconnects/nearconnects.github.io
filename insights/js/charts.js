@@ -717,17 +717,17 @@ function createOpportunityScoreChart(kpis) {
     const ctx = document.getElementById('opportunity-score-chart').getContext('2d');
     if (!ctx) return;
     
-    // Create a gradient for opportunity chart - cyan to teal
+    // Create a gradient for opportunity chart - elegant gray to silver
     const opportunityGradient = ctx.createLinearGradient(0, 0, 170, 0);
-    opportunityGradient.addColorStop(0, '#0891B2'); // Darker cyan
-    opportunityGradient.addColorStop(1, '#22D3EE'); // Lighter cyan
+    opportunityGradient.addColorStop(0, '#4B5563'); // Darker gray
+    opportunityGradient.addColorStop(1, '#9CA3AF'); // Lighter silver gray
     
     const opportunityChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
             datasets: [{
                 data: [0, 100 - 0], // Start at 0
-                backgroundColor: [opportunityGradient, 'rgba(207, 250, 254, 0.3)'], // Gradient cyan, light cyan bg
+                backgroundColor: [opportunityGradient, 'rgba(243, 244, 246, 0.3)'], // Gradient gray, light gray bg
                 borderWidth: 0,
                 borderRadius: 5, // Rounded edges
                 weight: 1.2 // Thicker arc
