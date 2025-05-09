@@ -461,6 +461,11 @@
     white-space: nowrap;
 }
 
+/* Hide elements with hidden class */
+.hidden {
+    display: none !important;
+}
+
 @keyframes slideIn {
     from {
         opacity: 0;
