@@ -49,39 +49,12 @@ async function loadSurveyData() {
                 if (results.data && results.data.length > 0) {
                     processData(results.data);
                     updateUI();
-                    
-                    // Apply hardcoded metrics directly - this ensures values are shown
-                    setTimeout(() => {
-                        document.getElementById('total-respondents').textContent = '73';
-                        document.getElementById('empty-cargo-drivers').textContent = '34';
-                        document.getElementById('empty-cargo-percentage').textContent = '72%';
-                        document.getElementById('willing-drivers').textContent = '30';
-                        document.getElementById('willing-drivers-percentage').textContent = '65%';
-                        document.getElementById('willing-customers').textContent = '26';
-                        document.getElementById('willing-customers-percentage').textContent = '60%';
-                    }, 500);
                 } else {
                     console.error('No data found in CSV');
-                    // Fallback in case of error
-                    document.getElementById('total-respondents').textContent = '73';
-                    document.getElementById('empty-cargo-drivers').textContent = '34';
-                    document.getElementById('empty-cargo-percentage').textContent = '72%';
-                    document.getElementById('willing-drivers').textContent = '30';
-                    document.getElementById('willing-drivers-percentage').textContent = '65%';
-                    document.getElementById('willing-customers').textContent = '26';
-                    document.getElementById('willing-customers-percentage').textContent = '60%';
                 }
             },
             error: function(error) {
                 console.error('Error parsing CSV:', error);
-                // Fallback in case of error
-                document.getElementById('total-respondents').textContent = '73';
-                document.getElementById('empty-cargo-drivers').textContent = '34';
-                document.getElementById('empty-cargo-percentage').textContent = '72%';
-                document.getElementById('willing-drivers').textContent = '30';
-                document.getElementById('willing-drivers-percentage').textContent = '65%';
-                document.getElementById('willing-customers').textContent = '26';
-                document.getElementById('willing-customers-percentage').textContent = '60%';
             }
         });
     } catch (error) {
@@ -182,44 +155,24 @@ function calculateStats() {
 function updateUI() {
     if (!nearData.stats) return;
     
-    console.log("Updating UI with stats:", nearData.stats);
+    // Update key metrics
+    document.getElementById('total-respondents').textContent = nearData.stats.totalResponses;
+    document.getElementById('empty-cargo-drivers').textContent = nearData.stats.driversWithEmptyCargo;
+    document.getElementById('empty-cargo-percentage').textContent = 
+        `${nearData.stats.driversWithEmptyCargoPercentage}%`;
     
-    // Update key metrics directly for initial display
-    const totalRespondents = document.getElementById('total-respondents');
-    totalRespondents.textContent = nearData.stats.totalResponses;
+    document.getElementById('willing-drivers').textContent = nearData.stats.willingDrivers;
+    document.getElementById('willing-drivers-percentage').textContent = 
+        `${nearData.stats.willingDriversPercentage}%`;
     
-    const emptyCargoDrivers = document.getElementById('empty-cargo-drivers');
-    emptyCargoDrivers.textContent = nearData.stats.driversWithEmptyCargo;
-    
-    const emptyCargoPercentage = document.getElementById('empty-cargo-percentage');
-    emptyCargoPercentage.textContent = `${nearData.stats.driversWithEmptyCargoPercentage}%`;
-    
-    const willingDrivers = document.getElementById('willing-drivers');
-    willingDrivers.textContent = nearData.stats.willingDrivers;
-    
-    const willingDriversPercentage = document.getElementById('willing-drivers-percentage');
-    willingDriversPercentage.textContent = `${nearData.stats.willingDriversPercentage}%`;
-    
-    const willingCustomers = document.getElementById('willing-customers');
-    willingCustomers.textContent = nearData.stats.veryWillingCustomers;
-    
-    const willingCustomersPercentage = document.getElementById('willing-customers-percentage');
-    willingCustomersPercentage.textContent = `${nearData.stats.veryWillingCustomersPercentage}%`;
+    document.getElementById('willing-customers').textContent = nearData.stats.veryWillingCustomers;
+    document.getElementById('willing-customers-percentage').textContent = 
+        `${nearData.stats.veryWillingCustomersPercentage}%`;
     
     // Update key insight
     document.getElementById('key-insight').textContent = 
         `With ${nearData.stats.driversWithEmptyCargo} drivers reporting empty cargo trips and ${nearData.stats.willingDriversPercentage}% willing to deliver packages during these trips, 
         NEAR offers a significant opportunity to reduce empty miles while creating new revenue streams for transporters.`;
-    
-    // Add animation classes to metrics after a short delay
-    setTimeout(() => {
-        // Trigger scroll animations for all metric elements
-        if (typeof setupDramaticMetricReveals === 'function') {
-            setupDramaticMetricReveals();
-        } else {
-            console.warn('setupDramaticMetricReveals function not available');
-        }
-    }, 1000);
     
     // Start general chart initialization
     if (typeof initializeCharts === "function") {
@@ -245,50 +198,146 @@ function updateUI() {
 
 // Data helper functions for charts
 function getEmploymentTypeData() {
-    // Datos predefinidos para el gráfico de tipo de empleo
+    if (!nearData.drivers) return null;
+    
+    const employmentCounts = {};
+    nearData.drivers.forEach(driver => {
+        if (driver.employment_type) {
+            employmentCounts[driver.employment_type] = 
+                (employmentCounts[driver.employment_type] || 0) + 1;
+        }
+    });
+    
     return {
-        labels: ['Autónomo', 'Asalariado'],
-        counts: [22, 12]
+        labels: Object.keys(employmentCounts),
+        counts: Object.values(employmentCounts)
     };
 }
 
 function getEmptyTripsData() {
-    // Datos predefinidos para el gráfico de viajes vacíos
+    if (!nearData.drivers) return null;
+    
+    const emptyCounts = {};
+    nearData.drivers.forEach(driver => {
+        if (driver.empty_trips_frequency) {
+            emptyCounts[driver.empty_trips_frequency] = 
+                (emptyCounts[driver.empty_trips_frequency] || 0) + 1;
+        }
+    });
+    
+    // Sort by frequency
+    const order = ['1-3', '3-5', '5-7', '7-10', '10+', 'Más de 6', '4-6'];
+    
+    // Create sorted arrays
+    const sortedLabels = [];
+    const sortedCounts = [];
+    
+    order.forEach(freq => {
+        if (emptyCounts[freq]) {
+            sortedLabels.push(freq);
+            sortedCounts.push(emptyCounts[freq]);
+        }
+    });
+    
     return {
-        labels: ['1-3', '3-5', '5-7'],
-        counts: [15, 12, 7]
+        labels: sortedLabels,
+        counts: sortedCounts
     };
 }
 
 function getVehicleTypeData() {
-    // Datos predefinidos para el gráfico de tipos de vehículos
+    if (!nearData.drivers) return null;
+    
+    const vehicleCounts = {};
+    nearData.drivers.forEach(driver => {
+        if (driver.vehicle_type) {
+            vehicleCounts[driver.vehicle_type] = 
+                (vehicleCounts[driver.vehicle_type] || 0) + 1;
+        }
+    });
+    
     return {
-        labels: ['Furgoneta', 'Camión pequeño', 'Camión grande', 'Tráiler'],
-        counts: [14, 10, 6, 4]
+        labels: Object.keys(vehicleCounts),
+        counts: Object.values(vehicleCounts)
     };
 }
 
 function getDeliveryPreferenceData() {
-    // Datos predefinidos para asegurar que el gráfico circular funcione correctamente
+    if (!nearData.customers) return null;
+    
+    const preferenceCounts = {};
+    nearData.customers.forEach(customer => {
+        if (customer.delivery_preference) {
+            preferenceCounts[customer.delivery_preference] = 
+                (preferenceCounts[customer.delivery_preference] || 0) + 1;
+        }
+    });
+    
     return {
-        labels: ['Ambas opciones', 'Recogida a domicilio', 'Puntos de entrega'],
-        counts: [20, 12, 7]
+        labels: Object.keys(preferenceCounts),
+        counts: Object.values(preferenceCounts)
     };
 }
 
 function getWillingnessLevelData() {
-    // Datos predefinidos para el gráfico de disposición
+    if (!nearData.customers) return null;
+    
+    const willCounts = {};
+    nearData.customers.forEach(customer => {
+        if (customer.willingness_level) {
+            willCounts[customer.willingness_level] = 
+                (willCounts[customer.willingness_level] || 0) + 1;
+        }
+    });
+    
+    // Define order for willingness levels
+    const order = ['Muy dispuesto', 'Dispuesto', 'Indiferente', 'Poco dispuesto', 'Nada dispuesto'];
+    
+    // Create sorted arrays
+    const sortedLabels = [];
+    const sortedCounts = [];
+    
+    order.forEach(level => {
+        if (willCounts[level]) {
+            sortedLabels.push(level);
+            sortedCounts.push(willCounts[level]);
+        }
+    });
+    
     return {
-        labels: ['Muy dispuesto', 'Dispuesto', 'Indiferente', 'Poco dispuesto', 'Nada dispuesto'],
-        counts: [30, 8, 3, 1, 1]
+        labels: sortedLabels,
+        counts: sortedCounts
     };
 }
 
 function getPackageFrequencyData() {
-    // Datos predefinidos para el gráfico de frecuencia de paquetes
+    if (!nearData.customers) return null;
+    
+    const freqCounts = {};
+    nearData.customers.forEach(customer => {
+        if (customer.package_frequency) {
+            freqCounts[customer.package_frequency] = 
+                (freqCounts[customer.package_frequency] || 0) + 1;
+        }
+    });
+    
+    // Define order for package frequency
+    const order = ['1-5', '5-10', '6-10', '10 o más', 'Más de 10', '10 o más'];
+    
+    // Create sorted arrays
+    const sortedLabels = [];
+    const sortedCounts = [];
+    
+    order.forEach(freq => {
+        if (freqCounts[freq]) {
+            sortedLabels.push(freq);
+            sortedCounts.push(freqCounts[freq]);
+        }
+    });
+    
     return {
-        labels: ['1-5', '5-10', '10 o más'],
-        counts: [18, 14, 7]
+        labels: sortedLabels,
+        counts: sortedCounts
     };
 }
 
