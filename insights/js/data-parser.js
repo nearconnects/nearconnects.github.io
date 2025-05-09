@@ -155,24 +155,45 @@ function calculateStats() {
 function updateUI() {
     if (!nearData.stats) return;
     
-    // Update key metrics
-    document.getElementById('total-respondents').textContent = nearData.stats.totalResponses;
-    document.getElementById('empty-cargo-drivers').textContent = nearData.stats.driversWithEmptyCargo;
-    document.getElementById('empty-cargo-percentage').textContent = 
-        `${nearData.stats.driversWithEmptyCargoPercentage}%`;
+    // Update key metrics with data attributes for animations
+    const totalRespondents = document.getElementById('total-respondents');
+    totalRespondents.setAttribute('data-value', nearData.stats.totalResponses);
+    totalRespondents.textContent = '0'; // Start at 0 for animation
     
-    document.getElementById('willing-drivers').textContent = nearData.stats.willingDrivers;
-    document.getElementById('willing-drivers-percentage').textContent = 
-        `${nearData.stats.willingDriversPercentage}%`;
+    const emptyCargoDrivers = document.getElementById('empty-cargo-drivers');
+    emptyCargoDrivers.setAttribute('data-value', nearData.stats.driversWithEmptyCargo);
+    emptyCargoDrivers.textContent = '0';
     
-    document.getElementById('willing-customers').textContent = nearData.stats.veryWillingCustomers;
-    document.getElementById('willing-customers-percentage').textContent = 
-        `${nearData.stats.veryWillingCustomersPercentage}%`;
+    const emptyCargoPercentage = document.getElementById('empty-cargo-percentage');
+    emptyCargoPercentage.setAttribute('data-value', nearData.stats.driversWithEmptyCargoPercentage);
+    emptyCargoPercentage.textContent = '0%';
+    
+    const willingDrivers = document.getElementById('willing-drivers');
+    willingDrivers.setAttribute('data-value', nearData.stats.willingDrivers);
+    willingDrivers.textContent = '0';
+    
+    const willingDriversPercentage = document.getElementById('willing-drivers-percentage');
+    willingDriversPercentage.setAttribute('data-value', nearData.stats.willingDriversPercentage);
+    willingDriversPercentage.textContent = '0%';
+    
+    const willingCustomers = document.getElementById('willing-customers');
+    willingCustomers.setAttribute('data-value', nearData.stats.veryWillingCustomers);
+    willingCustomers.textContent = '0';
+    
+    const willingCustomersPercentage = document.getElementById('willing-customers-percentage');
+    willingCustomersPercentage.setAttribute('data-value', nearData.stats.veryWillingCustomersPercentage);
+    willingCustomersPercentage.textContent = '0%';
     
     // Update key insight
     document.getElementById('key-insight').textContent = 
         `With ${nearData.stats.driversWithEmptyCargo} drivers reporting empty cargo trips and ${nearData.stats.willingDriversPercentage}% willing to deliver packages during these trips, 
         NEAR offers a significant opportunity to reduce empty miles while creating new revenue streams for transporters.`;
+    
+    // Add animation classes to metrics after a short delay
+    setTimeout(() => {
+        // Trigger scroll animations for all metric elements
+        setupDramaticMetricReveals();
+    }, 500);
     
     // Start general chart initialization
     if (typeof initializeCharts === "function") {

@@ -243,8 +243,11 @@ function setupDramaticMetricReveals() {
     const metrics = document.querySelectorAll('.metric-value, .metric-percentage');
     
     metrics.forEach(metric => {
+        // Get the data-value attribute 
+        const finalValue = parseInt(metric.getAttribute('data-value') || "0");
+        if (isNaN(finalValue) || finalValue === 0) return; // Skip if no valid value
+        
         // Create dramatic number sequence
-        const finalValue = parseInt(metric.textContent);
         let values = [];
         
         // Generate a sequence of random numbers that converge to final value
@@ -253,14 +256,13 @@ function setupDramaticMetricReveals() {
             const distance = 1 - (i / 20); // Gets closer to 0 as i increases
             const variation = finalValue * distance * randomFactor;
             
-            values.push(Math.round(finalValue + variation));
+            values.push(Math.max(0, Math.round(finalValue + variation)));
         }
         
         // Add the final value at the end
         values.push(finalValue);
         
-        // Store original text and the sequence
-        metric.setAttribute('data-final-value', finalValue);
+        // Store the sequence
         metric.setAttribute('data-value-sequence', JSON.stringify(values));
     });
     
@@ -269,8 +271,12 @@ function setupDramaticMetricReveals() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const metric = entry.target;
-                const isPercentage = metric.textContent.includes('%');
-                const sequence = JSON.parse(metric.getAttribute('data-value-sequence'));
+                const isPercentage = metric.id.includes('percentage');
+                const sequenceAttr = metric.getAttribute('data-value-sequence');
+                
+                if (!sequenceAttr) return;
+                
+                const sequence = JSON.parse(sequenceAttr);
                 
                 let i = 0;
                 const interval = setInterval(() => {
@@ -279,6 +285,12 @@ function setupDramaticMetricReveals() {
                     i++;
                     if (i >= sequence.length) {
                         clearInterval(interval);
+                        
+                        // Set final value from data-value attribute
+                        const finalValue = metric.getAttribute('data-value');
+                        if (finalValue) {
+                            metric.textContent = isPercentage ? `${finalValue}%` : finalValue;
+                        }
                     }
                 }, 50); // Show a new number every 50ms
                 
