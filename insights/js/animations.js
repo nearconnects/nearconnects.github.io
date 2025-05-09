@@ -240,12 +240,34 @@ function setupParticleEffects() {
 
 // Special animation for metrics with a dramatic reveal
 function setupDramaticMetricReveals() {
+    console.log("Setting up dramatic metric reveals");
     const metrics = document.querySelectorAll('.metric-value, .metric-percentage');
     
+    // We'll keep track of which metrics we're animating
+    const animationsToRun = [];
+    
     metrics.forEach(metric => {
-        // Get the data-value attribute 
-        const finalValue = parseInt(metric.getAttribute('data-value') || "0");
-        if (isNaN(finalValue) || finalValue === 0) return; // Skip if no valid value
+        // Skip if showing Loading... message
+        if (metric.textContent.includes('Loading')) return;
+        
+        // Get current text content for the final value
+        const currentText = metric.textContent;
+        const isPercentage = currentText.includes('%');
+        
+        // Extract number from current text
+        let finalValueStr = currentText.replace(/[^0-9]/g, '');
+        
+        // Parse to number
+        const finalValue = parseInt(finalValueStr || "0");
+        if (isNaN(finalValue)) {
+            console.error('Invalid number value:', finalValueStr, 'from text', currentText);
+            return; // Skip if can't parse
+        }
+        
+        console.log(`Setting up animation for ${metric.id}: final value = ${finalValue}`);
+        
+        // Reset to 0 to prepare for animation
+        metric.textContent = isPercentage ? '0%' : '0';
         
         // Create dramatic number sequence
         let values = [];
@@ -262,8 +284,13 @@ function setupDramaticMetricReveals() {
         // Add the final value at the end
         values.push(finalValue);
         
-        // Store the sequence
-        metric.setAttribute('data-value-sequence', JSON.stringify(values));
+        // Save the animation data for this metric
+        animationsToRun.push({
+            element: metric,
+            sequence: values,
+            isPercentage: isPercentage,
+            finalValue: finalValue
+        });
     });
     
     // Set up intersection observer to trigger the animations
@@ -271,26 +298,25 @@ function setupDramaticMetricReveals() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const metric = entry.target;
-                const isPercentage = metric.id.includes('percentage');
-                const sequenceAttr = metric.getAttribute('data-value-sequence');
                 
-                if (!sequenceAttr) return;
+                // Find this metric in our animations list
+                const animation = animationsToRun.find(anim => anim.element === metric);
+                if (!animation) return;
                 
-                const sequence = JSON.parse(sequenceAttr);
+                console.log(`Starting animation for ${metric.id}`);
                 
+                // Start the animation
                 let i = 0;
                 const interval = setInterval(() => {
-                    metric.textContent = isPercentage ? `${sequence[i]}%` : sequence[i];
+                    const value = animation.sequence[i];
+                    metric.textContent = animation.isPercentage ? `${value}%` : value;
                     
                     i++;
-                    if (i >= sequence.length) {
+                    if (i >= animation.sequence.length) {
                         clearInterval(interval);
                         
-                        // Set final value from data-value attribute
-                        const finalValue = metric.getAttribute('data-value');
-                        if (finalValue) {
-                            metric.textContent = isPercentage ? `${finalValue}%` : finalValue;
-                        }
+                        // Make sure the final value is set correctly
+                        metric.textContent = animation.isPercentage ? `${animation.finalValue}%` : animation.finalValue;
                     }
                 }, 50); // Show a new number every 50ms
                 
@@ -298,7 +324,8 @@ function setupDramaticMetricReveals() {
             }
         });
     }, {
-        threshold: 0.5
+        threshold: 0.1,  // Trigger when 10% of the element is visible
+        rootMargin: '0px 0px -50px 0px'  // Trigger before it's fully in view
     });
     
     metrics.forEach(metric => {
