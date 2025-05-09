@@ -155,34 +155,29 @@ function calculateStats() {
 function updateUI() {
     if (!nearData.stats) return;
     
-    // Update key metrics with data attributes for animations
+    console.log("Updating UI with stats:", nearData.stats);
+    
+    // Update key metrics directly for initial display
     const totalRespondents = document.getElementById('total-respondents');
-    totalRespondents.setAttribute('data-value', nearData.stats.totalResponses);
-    totalRespondents.textContent = '0'; // Start at 0 for animation
+    totalRespondents.textContent = nearData.stats.totalResponses;
     
     const emptyCargoDrivers = document.getElementById('empty-cargo-drivers');
-    emptyCargoDrivers.setAttribute('data-value', nearData.stats.driversWithEmptyCargo);
-    emptyCargoDrivers.textContent = '0';
+    emptyCargoDrivers.textContent = nearData.stats.driversWithEmptyCargo;
     
     const emptyCargoPercentage = document.getElementById('empty-cargo-percentage');
-    emptyCargoPercentage.setAttribute('data-value', nearData.stats.driversWithEmptyCargoPercentage);
-    emptyCargoPercentage.textContent = '0%';
+    emptyCargoPercentage.textContent = `${nearData.stats.driversWithEmptyCargoPercentage}%`;
     
     const willingDrivers = document.getElementById('willing-drivers');
-    willingDrivers.setAttribute('data-value', nearData.stats.willingDrivers);
-    willingDrivers.textContent = '0';
+    willingDrivers.textContent = nearData.stats.willingDrivers;
     
     const willingDriversPercentage = document.getElementById('willing-drivers-percentage');
-    willingDriversPercentage.setAttribute('data-value', nearData.stats.willingDriversPercentage);
-    willingDriversPercentage.textContent = '0%';
+    willingDriversPercentage.textContent = `${nearData.stats.willingDriversPercentage}%`;
     
     const willingCustomers = document.getElementById('willing-customers');
-    willingCustomers.setAttribute('data-value', nearData.stats.veryWillingCustomers);
-    willingCustomers.textContent = '0';
+    willingCustomers.textContent = nearData.stats.veryWillingCustomers;
     
     const willingCustomersPercentage = document.getElementById('willing-customers-percentage');
-    willingCustomersPercentage.setAttribute('data-value', nearData.stats.veryWillingCustomersPercentage);
-    willingCustomersPercentage.textContent = '0%';
+    willingCustomersPercentage.textContent = `${nearData.stats.veryWillingCustomersPercentage}%`;
     
     // Update key insight
     document.getElementById('key-insight').textContent = 
@@ -192,8 +187,12 @@ function updateUI() {
     // Add animation classes to metrics after a short delay
     setTimeout(() => {
         // Trigger scroll animations for all metric elements
-        setupDramaticMetricReveals();
-    }, 500);
+        if (typeof setupDramaticMetricReveals === 'function') {
+            setupDramaticMetricReveals();
+        } else {
+            console.warn('setupDramaticMetricReveals function not available');
+        }
+    }, 1000);
     
     // Start general chart initialization
     if (typeof initializeCharts === "function") {
