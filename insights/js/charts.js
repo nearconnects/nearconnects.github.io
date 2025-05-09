@@ -160,15 +160,14 @@ function createDeliveryPreferenceChart() {
     
     const ctx = document.getElementById('delivery-preference-chart').getContext('2d');
     
-    // Start with zero values for animation
-    const animatedData = [...preferenceData.counts].map(() => 0);
-    
-    const chart = new Chart(ctx, {
+    // Create chart with initial empty data
+    // Animation will be triggered by scroll detection in customer-animations.js
+    new Chart(ctx, {
         type: 'pie',
         data: {
             labels: preferenceData.labels,
             datasets: [{
-                data: animatedData, // Start with zeros for animation
+                data: [...preferenceData.counts].map(() => 0), // Start with zeros for later animation
                 backgroundColor: greenColors,
                 borderColor: 'white',
                 borderWidth: 2
@@ -202,11 +201,8 @@ function createDeliveryPreferenceChart() {
         }
     });
     
-    // Animate the pie chart segments growing from 0 to their real values
-    setTimeout(() => {
-        chart.data.datasets[0].data = preferenceData.counts;
-        chart.update();
-    }, 200);
+    // Animation will be controlled by the scroll detection
+    // in customer-animations.js (animateChartById function)
 }
 
 function createWillingnessLevelChart() {
@@ -215,21 +211,20 @@ function createWillingnessLevelChart() {
     
     const ctx = document.getElementById('willingness-level-chart').getContext('2d');
     
-    // Start with zero values for animation
-    const animatedData = [...willingnessData.counts].map(() => 0);
-    
     // Create gradient for better visuals
     const gradient = ctx.createLinearGradient(0, 0, 0, 300);
     gradient.addColorStop(0, '#10B981');  // Light green at top
     gradient.addColorStop(1, '#047857');  // Darker green at bottom
     
-    const chart = new Chart(ctx, {
+    // Create chart with initial empty data
+    // Animation will be triggered by scroll detection in customer-animations.js
+    new Chart(ctx, {
         type: 'bar',
         data: {
             labels: willingnessData.labels,
             datasets: [{
                 label: 'Number of Customers',
-                data: animatedData,  // Start with zeros for animation
+                data: [...willingnessData.counts].map(() => 0),  // Start with zeros for later animation
                 backgroundColor: gradient,
                 borderColor: 'white',
                 borderWidth: 1,
@@ -261,11 +256,8 @@ function createWillingnessLevelChart() {
         }
     });
     
-    // Animate the bars growing from 0 to their real values
-    setTimeout(() => {
-        chart.data.datasets[0].data = willingnessData.counts;
-        chart.update();
-    }, 200);
+    // Animation will be controlled by the scroll detection
+    // in customer-animations.js (animateChartById function)
 }
 
 function createPackageFrequencyChart() {
@@ -274,21 +266,20 @@ function createPackageFrequencyChart() {
     
     const ctx = document.getElementById('package-frequency-chart').getContext('2d');
     
-    // Start with zero values for animation
-    const animatedData = [...freqData.counts].map(() => 0);
-    
     // Create gradient for better visuals
     const gradient = ctx.createLinearGradient(0, 0, 0, 300);
     gradient.addColorStop(0, '#059669');  // Light green at top
     gradient.addColorStop(1, '#047857');  // Darker green at bottom
     
-    const chart = new Chart(ctx, {
+    // Create chart with initial empty data
+    // Animation will be triggered by scroll detection in customer-animations.js
+    new Chart(ctx, {
         type: 'bar',
         data: {
             labels: freqData.labels,
             datasets: [{
                 label: 'Number of Customers',
-                data: animatedData,  // Start with zeros for animation
+                data: [...freqData.counts].map(() => 0),  // Start with zeros for later animation
                 backgroundColor: gradient,
                 borderColor: greenColors[0],
                 borderWidth: 1,
@@ -326,11 +317,8 @@ function createPackageFrequencyChart() {
         }
     });
     
-    // Animate the bars growing from 0 to their real values
-    setTimeout(() => {
-        chart.data.datasets[0].data = freqData.counts;
-        chart.update();
-    }, 400); // Slightly delayed compared to the other chart for staggered animation
+    // Animation will be controlled by the scroll detection
+    // in customer-animations.js (animateChartById function)
 }
 
 /**

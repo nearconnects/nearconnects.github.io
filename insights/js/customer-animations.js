@@ -3,6 +3,13 @@
  * Customer Preferences Animations and Statistics
  */
 
+// Track if charts have been animated yet
+const animatedCharts = {
+    'delivery-preference-chart': false,
+    'willingness-level-chart': false,
+    'package-frequency-chart': false
+};
+
 // Update Customer Stats when tab is active
 document.addEventListener('DOMContentLoaded', function() {
     // Wait for data to be loaded
@@ -10,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (nearData && nearData.stats) {
             clearInterval(checkData);
             initCustomerPreferences();
+            setupScrollAnimations();
         }
     }, 100);
     
@@ -17,7 +25,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const customerTab = document.querySelector('.tab-button[data-tab="customer-preferences"]');
     if (customerTab) {
         customerTab.addEventListener('click', function() {
-            setTimeout(updateCustomerStats, 200);
+            setTimeout(() => {
+                updateCustomerStats();
+                checkElementsInViewport(); // Check for visible charts when tab is clicked
+            }, 200);
         });
     }
 });
@@ -156,4 +167,86 @@ function resetAndAnimateElements(selector, baseDelay) {
             element.style.animation = `fadeInUp 0.6s ease forwards ${baseDelay + (index * 0.2)}s`;
         }, 50);
     });
+}
+
+// Setup scroll-based animations
+function setupScrollAnimations() {
+    // Listen for scroll events
+    window.addEventListener('scroll', function() {
+        checkElementsInViewport();
+    });
+    
+    // Also check on initial load (in case elements are already visible)
+    setTimeout(checkElementsInViewport, 500);
+}
+
+// Check if chart elements are in viewport to trigger animations
+function checkElementsInViewport() {
+    // All chart containers to check
+    const chartContainers = [
+        document.getElementById('delivery-preference-chart'),
+        document.getElementById('willingness-level-chart'),
+        document.getElementById('package-frequency-chart')
+    ];
+    
+    chartContainers.forEach(chart => {
+        if (chart && !animatedCharts[chart.id] && isElementInViewport(chart)) {
+            console.log(`${chart.id} is now in viewport - triggering animation`);
+            animatedCharts[chart.id] = true;
+            
+            // Trigger the appropriate chart animation
+            animateChartById(chart.id);
+        }
+    });
+}
+
+// Check if an element is visible in the viewport
+function isElementInViewport(el) {
+    const rect = el.getBoundingClientRect();
+    
+    return (
+        rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.bottom >= 0 &&
+        rect.left <= (window.innerWidth || document.documentElement.clientWidth) &&
+        rect.right >= 0
+    );
+}
+
+// Animate specific chart by ID
+function animateChartById(chartId) {
+    // Get the Chart.js instance for this canvas
+    const chartInstance = Chart.getChart(chartId);
+    
+    if (!chartInstance) {
+        console.warn(`No Chart.js instance found for ${chartId}`);
+        return;
+    }
+    
+    // Get original data from nearData
+    let originalData;
+    
+    switch(chartId) {
+        case 'delivery-preference-chart':
+            originalData = getDeliveryPreferenceData().counts;
+            break;
+        case 'willingness-level-chart':
+            originalData = getWillingnessLevelData().counts;
+            break;
+        case 'package-frequency-chart':
+            originalData = getPackageFrequencyData().counts;
+            break;
+        default:
+            console.warn(`Unknown chart ID: ${chartId}`);
+            return;
+    }
+    
+    // Reset to zeros for animation
+    chartInstance.data.datasets[0].data = originalData.map(() => 0);
+    chartInstance.update('none');
+    
+    // Then animate to actual values
+    setTimeout(() => {
+        chartInstance.data.datasets[0].data = originalData;
+        chartInstance.update();
+    }, 100);
 }
