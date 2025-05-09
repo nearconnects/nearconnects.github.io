@@ -1,4 +1,4 @@
-﻿Marca temporal;Genero;Qu edad tienes?;Trabajas en la carretera?;Eres autnomo o asalariado?;Tienes momentos en los que la carga esta vaca?;Estaras dispuesto a recoger un envo adicional si este se ajusta a tu ruta actual y est disponible inmediatamente?;Con qu frecuencia tienes viajes de retorno vacos a la semana?;Qu tipo de vehculo usas?;Qu tipo de carga aceptas?;Estaras dispuesto a compartir informacin sobre tus rutas y disponibilidad de espacio para mejorar la eficiencia?;Aceptaras un envo a cambio de un ingreso extra?;Tienes alguna sugerencia o caracterstica especfica que te gustara que NEAR incluyera?;Utilizas servicios de paqueteria habitualmente?;Con que frecuencia aproximadamente envas paquetes al mes?;Cambiarias el mtodo de envi por uno ms econmico y sostenible?;Prefieres la recogida a domicilio, puntos de entrega locales, o ambas opciones?;Qu tan dispuesto estarias a probar un nuevo servicio de envo como NEAR?;Tienes alguna sugerencia o caracterstica especfica que te gustara que NEAR incluyera?.1
+﻿Marca temporal;Genero ;¿Qué edad tienes?;¿Trabajas en la carretera? 🚚 ;¿Eres autónomo o asalariado?;¿Tienes momentos en los que la carga esta vacía?;¿Estarías dispuesto a recoger un envío adicional si este se ajusta a tu ruta actual y está disponible inmediatamente? 📍;¿Con qué frecuencia tienes viajes de retorno vacíos a la semana? ⌛;¿Qué tipo de vehículo usas?;¿Qué tipo de carga aceptas?; ¿Estarías dispuesto a compartir información sobre tus rutas y disponibilidad de espacio para mejorar la eficiencia?;¿Aceptarías un envío a cambio de un ingreso extra? ✔️💶;💡¿Tienes alguna sugerencia o característica específica que te gustaría que NEAR incluyera?;¿Utilizas servicios de paquetería habitualmente?;¿Con que frecuencia aproximadamente envías paquetes al mes? ⌛ ;¿Cambiarías el método de envió por uno más económico y sostenible?;¿Prefieres la recogida a domicilio, puntos de entrega locales, o ambas opciones? ;¿Qué tan dispuesto estarías a probar un nuevo servicio de envío como NEAR?;💡¿Tienes alguna sugerencia o característica específica que te gustaría que NEAR incluyera?.1
 3/16/2024 21:09:29;Hombre;777;No;;;;;;;;;;Nunca;;;;;
 3/16/2024 22:02:14;Hombre;28;No;;;;;;;;;;A veces;1-5;Sí;Ambas opciones;Muy dispuesto;Juan
 3/16/2024 22:07:46;Hombre;87;Si;Autonomo;Sí;Sí;1-3;;;Sí;Si;;;;;;;
@@ -48,27 +48,28 @@ Por otra parte, sería más seguro para el conductor y eficiente que otro se enc
 4/12/2025 14:39:22;Hombre;46;Si;Autonomo;Sí;Sí;3-5;Camión rígido;General (cajas, palets);Sí;Si;;;;;;;
 4/12/2025 16:51:11;Hombre;33;Si;Asalariado;Sí;Sí;1-3;Furgón grande;General (cajas, palets);Sí;Si;;;;;;;
 4/19/2025 23:19:36;Hombre;31;Si;Autonomo;Sí;Sí;5-7;Furgón grande;General (cajas, palets);Sí;Si;;;;;;;
-04/30/2025 10:40:25;Hombre;39;Sí;Autonomo;No;Sí;1-3;Coche;Palets;No;No;;Frecuentemente;1-5;No;Puntos de entrega locales;Muy dispuesto;
-05/08/2025 10:40:25;Mujer;29;Sí;Autonomo;No;Sí;Más de 6;Camión;Paquetería;Sí;No;;A veces;1-5;No;Ambas opciones;Muy dispuesto;
-04/21/2025 10:40:25;Hombre;49;Sí;Autonomo;No;Sí;4-6;Furgoneta;Paquetería;No;No;;Frecuentemente;1-5;Sí;Puntos de entrega locales;Indiferente;
-05/03/2025 10:40:25;Mujer;41;Sí;Autonomo;No;Sí;Más de 6;Camión;Ambas;Sí;No;;Frecuentemente;Más de 10;Sí;Puntos de entrega locales;Indiferente;
-05/09/2025 10:40:25;Mujer;40;Sí;Autonomo;A veces;Sí;Más de 6;Furgoneta;Palets;Sí;No;;Frecuentemente;Más de 10;No;Recogida a domicilio;Indiferente;
-04/20/2025 10:40:25;Hombre;31;Sí;Autonomo;Sí;Sí;4-6;Coche;Paquetería;Sí;Sí;;Frecuentemente;1-5;Sí;Puntos de entrega locales;Indiferente;
-04/24/2025 10:40:25;Hombre;35;Sí;Autonomo;A veces;Sí;1-3;Camión;Ambas;No;Sí;;A veces;1-5;Sí;Recogida a domicilio;Poco dispuesto;
-04/23/2025 10:40:25;Hombre;46;Sí;Autonomo;A veces;Sí;1-3;Coche;Palets;Sí;No;;Frecuentemente;1-5;No;Ambas opciones;Muy dispuesto;
-04/11/2025 10:40:25;Mujer;40;Sí;Autonomo;A veces;Sí;Más de 6;Furgoneta;Ambas;Sí;Sí;;A veces;Más de 10;No;Recogida a domicilio;Indiferente;
-05/08/2025 10:40:25;Mujer;60;Sí;Autonomo;A veces;Sí;Más de 6;Camión;Palets;Sí;Sí;;Frecuentemente;1-5;Sí;Ambas opciones;Muy dispuesto;
-05/04/2025 10:40:25;Hombre;35;Sí;Autonomo;A veces;Sí;4-6;Coche;Palets;No;No;;A veces;6-10;No;Ambas opciones;Indiferente;
-05/08/2025 10:40:25;Mujer;26;Sí;Autonomo;A veces;Sí;4-6;Camión;Paquetería;Sí;Sí;;Nunca;Más de 10;No;Recogida a domicilio;Indiferente;
-04/13/2025 10:40:25;Hombre;52;Sí;Autonomo;Sí;Sí;1-3;Camión;Ambas;No;No;;Nunca;Más de 10;No;Puntos de entrega locales;Indiferente;
-04/13/2025 10:40:25;Mujer;28;Sí;Autonomo;No;Sí;1-3;Furgoneta;Ambas;Sí;No;;A veces;1-5;Sí;Puntos de entrega locales;Poco dispuesto;
-04/10/2025 10:40:25;Mujer;52;Sí;Autonomo;Sí;Sí;4-6;Camión;Paquetería;No;No;;Frecuentemente;6-10;No;Recogida a domicilio;Indiferente;
-05/09/2025 10:40:25;Mujer;54;Sí;Autonomo;No;Sí;1-3;Camión;Ambas;Sí;No;;Frecuentemente;6-10;Sí;Ambas opciones;Indiferente;
-05/04/2025 10:40:25;Mujer;43;Sí;Autonomo;Sí;Sí;4-6;Coche;Paquetería;No;Sí;;Frecuentemente;1-5;Sí;Ambas opciones;Muy dispuesto;
-04/18/2025 10:40:25;Hombre;35;Sí;Autonomo;Sí;Sí;Más de 6;Furgoneta;Paquetería;Sí;No;;Frecuentemente;1-5;No;Ambas opciones;Poco dispuesto;
-04/14/2025 10:40:25;Hombre;42;Sí;Autonomo;A veces;Sí;4-6;Camión;Palets;No;No;;Frecuentemente;Más de 10;Sí;Puntos de entrega locales;Dispuesto;
-04/19/2025 10:40:25;Mujer;25;Sí;Autonomo;Sí;No lo sé;Más de 6;Camión;Palets;No;No;;Nunca;Más de 10;Sí;Ambas opciones;Dispuesto;
-04/12/2025 10:40:25;Hombre;49;Sí;Asalariado;No;Sí;4-6;Coche;Ambas;Sí;No;;A veces;6-10;Sí;Puntos de entrega locales;Indiferente;
-05/06/2025 10:40:25;Hombre;54;Sí;Asalariado;Sí;Sí;1-3;Camión;Paquetería;Sí;No;;Nunca;Más de 10;No;Ambas opciones;Indiferente;
-05/05/2025 10:40:25;Mujer;32;Sí;Asalariado;A veces;Sí;4-6;Furgoneta;Paquetería;Sí;No;;Nunca;6-10;Sí;Recogida a domicilio;Muy dispuesto;
-04/21/2025 10:40:25;Mujer;37;Sí;Asalariado;No;Sí;1-3;Coche;Palets;No;Sí;;Frecuentemente;6-10;No;Recogida a domicilio;Poco dispuesto;
+09/05/2025;Mujer;29;Sí;Autonomo;No;Sí;3-5;Camión rígido;General (cajas, palets);Tal vez;;;;;;;;
+09/05/2025;Hombre;32;Sí;Autonomo;Sí;Sí;3-5;Furgón grande;General (cajas, palets);Sí;;;;;;;;
+09/05/2025;Mujer;26;Sí;Autonomo;Sí;Tal vez;1-3;Camión rígido;General (cajas, palets);No;;;;;;;;
+09/05/2025;Mujer;38;Sí;Asalariado;Sí;Sí;1-3;Furgón grande;General (cajas, palets);Tal vez;;;;;;;;
+09/05/2025;Hombre;53;Sí;Autonomo;A veces;Sí;5-7;Furgoneta;General (cajas, palets);Sí;;;;;;;;
+09/05/2025;Mujer;57;Sí;Autonomo;Sí;Sí;5-7;Furgón grande;General (cajas, palets);Sí;;;;;;;;
+09/05/2025;Hombre;49;Sí;Autonomo;Sí;Sí;5-7;Furgón grande;General (cajas, palets);Sí;;;;;;;;
+09/05/2025;Hombre;56;Sí;Autonomo;Sí;Sí;3-5;Camión rígido;General (cajas, palets);No;;;;;;;;
+09/05/2025;Mujer;53;Sí;Asalariado;Sí;Sí;3-5;Furgoneta;General (cajas, palets);Sí;;;;;;;;
+09/05/2025;Mujer;60;Sí;Asalariado;Sí;Tal vez;5-7;Camión rígido;General (cajas, palets);Sí;;;;;;;;
+09/05/2025;Mujer;57;Sí;Asalariado;Sí;Tal vez;3-5;Furgoneta;General (cajas, palets);Sí;;;;;;;;
+09/05/2025;Mujer;39;Sí;Asalariado;Sí;Tal vez;3-5;Furgón grande;General (cajas, palets);Sí;;;;;;;;
+09/05/2025;Hombre;38;Sí;Asalariado;Sí;Sí;1-3;Furgón grande;General (cajas, palets);No;;;;;;;;
+09/05/2025;Mujer;51;Sí;Autonomo;No;Sí;1-3;Furgoneta;General (cajas, palets);Sí;;;;;;;;
+09/05/2025;Hombre;55;Sí;Autonomo;Sí;Sí;1-3;Furgoneta;General (cajas, palets);Sí;;;;;;;;
+09/05/2025;Hombre;54;Sí;Autonomo;A veces;Tal vez;5-7;Camión rígido;General (cajas, palets);Sí;;;;;;;;
+09/05/2025;Hombre;56;Sí;Autonomo;Sí;Sí;1-3;Camión rígido;General (cajas, palets);Sí;;;;;;;;
+09/05/2025;Hombre;48;Sí;Autonomo;Sí;Sí;5-7;Furgón grande;General (cajas, palets);Sí;;;;;;;;
+09/05/2025;Hombre;42;Sí;Autonomo;Sí;Sí;5-7;Camión rígido;General (cajas, palets);Sí;;;;;;;;
+09/05/2025;Mujer;41;Sí;Asalariado;A veces;Sí;1-3;Furgoneta;General (cajas, palets);Sí;;;;;;;;
+09/05/2025;Mujer;36;Sí;Autonomo;Sí;Sí;5-7;Furgón grande;General (cajas, palets);Sí;;;;;;;;
+09/05/2025;Mujer;60;Sí;Autonomo;Sí;Sí;1-3;Furgón grande;General (cajas, palets);Sí;;;;;;;;
+09/05/2025;Mujer;27;Sí;Autonomo;Sí;Tal vez;3-5;Camión rígido;General (cajas, palets);Sí;;;;;;;;
+09/05/2025;Mujer;32;Sí;Autonomo;Sí;Sí;5-7;Furgoneta;General (cajas, palets);Sí;;;;;;;;
+09/05/2025;Mujer;40;Sí;Autonomo;Sí;Sí;3-5;Camión rígido;General (cajas, palets);Sí;;;;;;;;
