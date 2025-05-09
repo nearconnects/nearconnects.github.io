@@ -160,94 +160,118 @@
                         during return trips. By connecting drivers with available space to customers needing delivery services, we create 
                         a win-win situation that benefits all stakeholders while reducing environmental impact.</p>
                     </div>
-                    <div class="business-opportunity">
-                        <div class="charts-grid">
-                            <div class="chart-container">
-                                <h3>Market Readiness - Drivers</h3>
-                                <canvas id="driver-readiness-chart"></canvas>
-                            </div>
-                            <div class="chart-container">
-                                <h3>Market Readiness - Customers</h3>
-                                <canvas id="customer-readiness-chart"></canvas>
-                            </div>
-                            <div class="chart-container">
-                                <h3>Opportunity Score</h3>
-                                <canvas id="opportunity-score-chart"></canvas>
+                    
+                    <!-- Market Readiness Section -->
+                    <div class="market-opportunity-section">
+                        <div class="section-header">
+                            <h3>Market Readiness</h3>
+                            <div class="section-divider"></div>
+                        </div>
+                        <div class="section-content">
+                            <div class="readiness-gauges">
+                                <div class="readiness-gauge">
+                                    <h4>Drivers Willing to Participate</h4>
+                                    <div class="gauge-container">
+                                        <canvas id="driver-readiness-chart"></canvas>
+                                        <div class="gauge-value driver">
+                                            <span id="driver-readiness-value">0.0%</span>
+                                            <span class="delta positive">▲ 31.8</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="readiness-gauge">
+                                    <h4>Customers Willing to Use Service</h4>
+                                    <div class="gauge-container">
+                                        <canvas id="customer-readiness-chart"></canvas>
+                                        <div class="gauge-value customer">
+                                            <span id="customer-readiness-value">0.0%</span>
+                                            <span class="delta positive">▲ 25.5</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        
-                        <!-- Additional Business KPIs Section -->
-                        <div id="additional-kpis" class="mt-8 bg-white rounded-lg p-6 shadow-sm">
-                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Advanced Business KPIs</h3>
-                            
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <!-- Market Potential KPI -->
-                                <div class="bg-gray-50 p-4 rounded-lg">
-                                    <div class="flex justify-between items-center mb-2">
-                                        <span class="text-sm font-medium text-gray-600">Market Potential</span>
-                                        <span class="text-2xl">📈</span>
+                    </div>
+                    
+                    <!-- Market Match Analysis Section -->
+                    <div class="market-opportunity-section">
+                        <div class="section-header">
+                            <h3>Market Match Analysis</h3>
+                            <div class="section-divider"></div>
+                        </div>
+                        <div class="section-content market-match">
+                            <div class="market-chart">
+                                <h4>Weekly Supply vs Demand</h4>
+                                <canvas id="supply-demand-chart"></canvas>
+                            </div>
+                            <div class="market-metrics">
+                                <h4>Market Efficiency Potential:</h4>
+                                <div class="efficiency-meter">
+                                    <div class="efficiency-bar">
+                                        <div class="efficiency-value" style="width: 0%"></div>
                                     </div>
-                                    <div class="relative pt-1">
-                                        <div class="overflow-hidden h-2 text-xs flex rounded bg-gray-200">
-                                            <div id="market-potential-bar" 
-                                                class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500" 
-                                                style="width: 0%">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex justify-between mt-1">
-                                        <span class="text-xs text-gray-500">Score</span>
-                                        <span id="market-potential-value" class="text-xs font-bold text-gray-800">0/100</span>
+                                    <div class="efficiency-label">
+                                        <span id="efficiency-percentage">0%</span>
                                     </div>
                                 </div>
                                 
-                                <!-- Network Effect KPI -->
-                                <div class="bg-gray-50 p-4 rounded-lg">
-                                    <div class="flex justify-between items-center mb-2">
-                                        <span class="text-sm font-medium text-gray-600">Network Effect</span>
-                                        <span class="text-2xl">🔄</span>
-                                    </div>
-                                    <div class="relative pt-1">
-                                        <div class="overflow-hidden h-2 text-xs flex rounded bg-gray-200">
-                                            <div id="network-effect-bar" 
-                                                class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500" 
-                                                style="width: 0%">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex justify-between mt-1">
-                                        <span class="text-xs text-gray-500">Score</span>
-                                        <span id="network-effect-value" class="text-xs font-bold text-gray-800">0/100</span>
-                                    </div>
-                                </div>
-                                
-                                <!-- Sustainability Impact KPI -->
-                                <div class="bg-gray-50 p-4 rounded-lg">
-                                    <div class="flex justify-between items-center mb-2">
-                                        <span class="text-sm font-medium text-gray-600">Sustainability Impact</span>
-                                        <span class="text-2xl">🌱</span>
-                                    </div>
-                                    <div class="relative pt-1">
-                                        <div class="overflow-hidden h-2 text-xs flex rounded bg-gray-200">
-                                            <div id="sustainability-impact-bar" 
-                                                class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-500" 
-                                                style="width: 0%">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex justify-between mt-1">
-                                        <span class="text-xs text-gray-500">Score</span>
-                                        <span id="sustainability-impact-value" class="text-xs font-bold text-gray-800">0/100</span>
-                                    </div>
+                                <div class="market-data">
+                                    <p>Our survey data reveals significant potential for optimizing logistics:</p>
+                                    <ul>
+                                        <li><strong>Supply:</strong> <span id="empty-trips-count">240</span> empty trips available weekly</li>
+                                        <li><strong>Demand:</strong> <span id="packages-count">122</span> packages needing delivery weekly</li>
+                                        <li><strong>Match Rate:</strong> <span id="match-rate">122</span> potential matches</li>
+                                    </ul>
                                 </div>
                             </div>
-                            
-                            <!-- Business Insight Box -->
-                            <div class="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-100">
-                                <h4 class="text-sm font-semibold text-blue-800 mb-2">NEAR Business Insight</h4>
-                                <p id="business-insight-advanced" class="text-sm text-blue-700">
-                                    Analyzing market conditions...
-                                </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Value Proposition Section -->
+                    <div class="market-opportunity-section">
+                        <div class="section-header">
+                            <h3><span class="highlight">💡</span> Key Value Proposition</h3>
+                            <div class="section-divider"></div>
+                        </div>
+                        <div class="section-content value-proposition">
+                            <div class="value-grid">
+                                <div class="value-item drivers">
+                                    <h4>For Drivers</h4>
+                                    <p>Generate additional income during otherwise unprofitable empty trips</p>
+                                </div>
+                                <div class="value-item customers">
+                                    <h4>For Customers</h4>
+                                    <p>Enjoy reduced costs through shared transportation resources</p>
+                                </div>
+                                <div class="value-item environmental">
+                                    <h4>Environmental Impact</h4>
+                                    <p>Create sustainability benefits by optimizing vehicle usage and reducing emissions</p>
+                                </div>
+                                <div class="value-item logistics">
+                                    <h4>Logistics Efficiency</h4>
+                                    <p>Achieve network efficiency through intelligent route optimization</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Opportunity Score Section -->
+                    <div class="market-opportunity-section">
+                        <div class="section-header">
+                            <h3>Overall Opportunity Score</h3>
+                            <div class="section-divider"></div>
+                        </div>
+                        <div class="section-content opportunity">
+                            <div class="opportunity-gauge">
+                                <canvas id="opportunity-score-chart"></canvas>
+                                <div class="opportunity-value">
+                                    <span id="opportunity-score-value">0</span>
+                                    <span class="opportunity-scale">/100</span>
+                                </div>
+                            </div>
+                            <div class="opportunity-insight">
+                                <h4><span class="highlight">💼</span> Business Insight:</h4>
+                                <p id="business-insight">Based on our analysis of market readiness and supply-demand match potential, NEAR presents a compelling business opportunity with significant growth potential. The data indicates strong willingness from both drivers and customers to participate in a shared logistics platform.</p>
                             </div>
                         </div>
                     </div>

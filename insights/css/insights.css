@@ -211,90 +211,314 @@
     line-height: 1.6;
 }
 
-/* Business Opportunity KPI Enhancements */
-.business-opportunity {
-    padding-bottom: 1rem;
-}
-
-.business-opportunity .charts-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.business-opportunity .chart-container {
+/* Business Opportunity Analysis Enhancements */
+.market-opportunity-section {
+    margin-bottom: 3rem;
     background-color: white;
     border-radius: 12px;
     padding: 1.5rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.business-opportunity .chart-container:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-}
-
-.business-opportunity .chart-container h3 {
-    color: #1E3A8A;
-    margin-bottom: 1.5rem;
-    font-weight: 600;
-}
-
-.business-opportunity .chart-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, #1E40AF, #3B82F6);
-}
-
-/* Additional KPIs Section */
-#additional-kpis {
-    animation: fadeIn 0.8s ease-in-out;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    animation: fadeIn 0.6s ease-out;
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-#additional-kpis h3 {
-    color: #1E3A8A;
+.section-header {
     margin-bottom: 1.5rem;
+}
+
+.section-header h3 {
+    color: #1E3A8A;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.section-divider {
+    height: 3px;
+    background: linear-gradient(90deg, #1E40AF, #3B82F6, #60A5FA);
+    border-radius: 2px;
+    width: 100%;
+}
+
+.highlight {
+    color: #1E40AF;
+    font-size: 1.2em;
+}
+
+/* Market Readiness Gauge Styles */
+.readiness-gauges {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.readiness-gauge {
+    width: calc(50% - 1rem);
+    min-width: 300px;
+    text-align: center;
+}
+
+.readiness-gauge h4 {
+    color: #374151;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+.gauge-container {
+    position: relative;
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+    height: 170px;
+}
+
+.gauge-value {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: #1E3A8A;
+}
+
+.gauge-value.driver {
+    color: #1E40AF;
+}
+
+.gauge-value.customer {
+    color: #047857;
+}
+
+.gauge-value .delta {
+    display: block;
+    font-size: 0.9rem;
     font-weight: 600;
 }
 
-#additional-kpis .bg-gray-50 {
+.delta.positive {
+    color: #10B981;
+}
+
+.delta.negative {
+    color: #EF4444;
+}
+
+/* Market Match Analysis Styles */
+.section-content.market-match {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.market-chart {
+    flex: 1;
+    min-width: 300px;
+}
+
+.market-chart h4 {
+    color: #374151;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-weight: 500;
+}
+
+.market-metrics {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.market-metrics h4 {
+    color: #374151;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.efficiency-meter {
+    margin: 1.5rem 0;
+}
+
+.efficiency-bar {
+    height: 12px;
+    background-color: #E5E7EB;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.efficiency-value {
+    height: 100%;
+    background: linear-gradient(90deg, #F59E0B, #FBBF24);
+    border-radius: 6px;
+    transition: width 1.5s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.efficiency-label {
+    text-align: right;
+    font-weight: 600;
+    color: #F59E0B;
+}
+
+.market-data {
+    background-color: #F9FAFB;
+    padding: 1.2rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.market-data p {
+    margin-bottom: 0.8rem;
+}
+
+.market-data ul {
+    padding-left: 1.2rem;
+}
+
+.market-data li {
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+.market-data li strong {
+    color: #1E3A8A;
+}
+
+/* Value Proposition Styles */
+.value-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.2rem;
+}
+
+.value-item {
+    background-color: #F9FAFB;
+    padding: 1.2rem;
+    border-radius: 8px;
+    border-top: 3px solid;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-#additional-kpis .bg-gray-50:hover {
+.value-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* KPI Progress Bars */
-#additional-kpis .h-2 {
-    height: 0.5rem !important;
-    border-radius: 1rem;
-    overflow: hidden;
+.value-item.drivers {
+    border-top-color: #3B82F6;
 }
 
-#additional-kpis .h-2 > div {
-    height: 100%;
-    transition: width 1.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+.value-item.customers {
+    border-top-color: #10B981;
+}
+
+.value-item.environmental {
+    border-top-color: #84CC16;
+}
+
+.value-item.logistics {
+    border-top-color: #8B5CF6;
+}
+
+.value-item h4 {
+    color: #374151;
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+}
+
+.value-item p {
+    color: #4B5563;
+    line-height: 1.5;
+}
+
+/* Opportunity Score Styles */
+.section-content.opportunity {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2rem;
+}
+
+.opportunity-gauge {
+    width: 250px;
+    height: 150px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.opportunity-value {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-weight: 700;
+    font-size: 2.2rem;
+    color: #10B981;
+}
+
+.opportunity-scale {
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+.opportunity-insight {
+    flex: 1;
+    min-width: 300px;
+}
+
+.opportunity-insight h4 {
+    color: #1E3A8A;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.opportunity-insight p {
+    color: #4B5563;
+    line-height: 1.6;
+    padding: 0.8rem;
+    background-color: #F0F9FF;
+    border-radius: 8px;
+    border-left: 4px solid #3B82F6;
 }
 
 /* Business Insight Box */
 #business-insight {
-    line-height: 1.7;
-    min-height: 70px;
+    animation: fadeInText 1s ease;
+}
+
+@keyframes fadeInText {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .readiness-gauge {
+        width: 100%;
+    }
+    
+    .section-content.market-match,
+    .section-content.opportunity {
+        flex-direction: column;
+    }
+    
+    .value-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* ---- Conclusion Section ---- */
