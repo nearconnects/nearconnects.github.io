@@ -169,13 +169,15 @@ function createVehicleTypeChart() {
     });
 }
 
-// Customer preference charts
+// Customer preference charts with animation
 function createDeliveryPreferenceChart() {
     const preferenceData = getDeliveryPreferenceData();
     if (!preferenceData) return;
     
     const ctx = document.getElementById('delivery-preference-chart').getContext('2d');
-    new Chart(ctx, {
+    
+    // Create chart with animation
+    const chart = new Chart(ctx, {
         type: 'pie',
         data: {
             labels: preferenceData.labels,
@@ -183,13 +185,23 @@ function createDeliveryPreferenceChart() {
                 data: preferenceData.counts,
                 backgroundColor: greenColors,
                 borderColor: 'white',
-                borderWidth: 2
+                borderWidth: 2,
+                // Add animation effects
+                hoverOffset: 20,
+                // Start with zero values for animation
+                _originalData: [...preferenceData.counts]
             }]
         },
         options: {
             plugins: {
                 legend: {
-                    position: 'bottom'
+                    position: 'bottom',
+                    labels: {
+                        font: {
+                            size: 14
+                        },
+                        padding: 15
+                    }
                 },
                 tooltip: {
                     callbacks: {
@@ -200,13 +212,30 @@ function createDeliveryPreferenceChart() {
                             const percentage = Math.round((context.raw / total) * 100);
                             return `${label}: ${value} (${percentage}%)`;
                         }
-                    }
+                    },
+                    bodyFont: {
+                        size: 14
+                    },
+                    padding: 12
                 }
             },
             responsive: true,
-            maintainAspectRatio: true
+            maintainAspectRatio: true,
+            animation: {
+                animateRotate: true,
+                animateScale: true,
+                duration: 2000,
+                easing: 'easeOutElastic'
+            }
         }
     });
+    
+    // Add a slight delay before chart appears for dramatic effect
+    setTimeout(() => {
+        // Add slide-in and shadow effect to the chart container
+        const chartContainer = document.querySelector('#delivery-preference-chart').parentNode;
+        chartContainer.classList.add('animated-chart');
+    }, 300);
 }
 
 function createWillingnessLevelChart() {
@@ -631,22 +660,35 @@ function createSupplyDemandChart(kpis) {
     animateEfficiencyMeter(kpis.efficiencyScore);
 }
 
-// Opportunity Score Gauge
+// Opportunity Score Gauge - Enhanced Version with Modern UI
 function createOpportunityScoreChart(kpis) {
     const ctx = document.getElementById('opportunity-score-chart').getContext('2d');
     if (!ctx) return;
     
+    // Get score value and color
+    const scoreValue = kpis.opportunityScore;
+    let scoreColor = getOpportunityColor(scoreValue);
+    
+    // Create gradient for a more modern look
+    const gradientFill = ctx.createLinearGradient(0, 0, 400, 0);
+    gradientFill.addColorStop(0, scoreColor);
+    // Create a slightly brighter version for the gradient
+    const brighterColor = adjustColorBrightness(scoreColor, 40);
+    gradientFill.addColorStop(1, brighterColor);
+    
+    // Create the enhanced gauge chart
     const opportunityChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
             datasets: [{
                 data: [0, 100 - 0], // Start at 0
-                backgroundColor: [getOpportunityColor(kpis.opportunityScore), '#F3F4F6'],
-                borderWidth: 0
+                backgroundColor: [gradientFill, '#EBEDF2'], // Lighter background
+                borderWidth: 0,
+                borderRadius: 15 // Rounded ends for modern look
             }]
         },
         options: {
-            cutout: '70%',
+            cutout: '80%', // Thinner arc for modern look
             circumference: 180,
             rotation: 270,
             responsive: true,
@@ -662,13 +704,74 @@ function createOpportunityScoreChart(kpis) {
         }
     });
     
-    // Animate opportunity score gauge
-    animateGauge(opportunityChart, kpis.opportunityScore, 'opportunity-score-value', '', true);
+    // Draw scale markers (0, 25, 50, 75, 100)
+    setTimeout(() => {
+        const canvas = document.getElementById('opportunity-score-chart');
+        if (!canvas) return;
+        
+        // Add the "/100" display format
+        const valueElement = document.getElementById('opportunity-score-value');
+        if (valueElement) {
+            valueElement.innerHTML = '0'; // Will be updated by animation
+            const scaleElement = document.querySelector('.opportunity-scale');
+            if (scaleElement) {
+                scaleElement.style.fontSize = '1rem';
+                scaleElement.style.opacity = '0.7';
+                scaleElement.style.fontWeight = 'normal';
+                scaleElement.style.color = '#6B7280';
+            }
+        }
+        
+        // Add decorative arc shadow for depth
+        const wrapper = canvas.parentElement;
+        if (wrapper) {
+            wrapper.style.position = 'relative';
+            wrapper.style.overflow = 'visible';
+            
+            // Add a subtle glow/shadow effect to make the gauge pop
+            const glow = document.createElement('div');
+            glow.style.position = 'absolute';
+            glow.style.width = '80%';
+            glow.style.height = '40%';
+            glow.style.top = '0';
+            glow.style.left = '10%';
+            glow.style.borderRadius = '100%';
+            glow.style.background = 'radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%)';
+            glow.style.zIndex = '1';
+            wrapper.appendChild(glow);
+        }
+    }, 100);
+    
+    // Animate opportunity score gauge with smooth progression
+    animateGauge(opportunityChart, scoreValue, 'opportunity-score-value', '', true);
     
     // Update business insight with typing animation
     setTimeout(() => {
         typeBusinessInsight(generateBusinessInsight(kpis));
     }, 1000);
+    
+    return opportunityChart;
+}
+
+// Helper function to adjust color brightness
+function adjustColorBrightness(hex, percent) {
+    // Convert hex to RGB
+    hex = hex.replace(/^\s*#|\s*$/g, '');
+    if(hex.length == 3) {
+        hex = hex.replace(/(.)/g, '$1$1');
+    }
+    
+    let r = parseInt(hex.substring(0, 2), 16);
+    let g = parseInt(hex.substring(2, 4), 16);
+    let b = parseInt(hex.substring(4, 6), 16);
+    
+    // Adjust brightness
+    r = Math.min(255, Math.max(0, r + percent));
+    g = Math.min(255, Math.max(0, g + percent));
+    b = Math.min(255, Math.max(0, b + percent));
+    
+    // Convert back to hex
+    return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
 }
 
 // Helper Functions for Animations
