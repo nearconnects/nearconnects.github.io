@@ -7,7 +7,9 @@
 const animatedDriverCharts = {
     'employment-type-chart': false,
     'empty-trips-chart': false,
-    'vehicle-types-chart': false
+    'vehicle-types-chart': false,
+    // Ensure all possible chart IDs are covered
+    'vehicle-type-chart': false   // Some places might use this ID instead
 };
 
 // Execute animations when DOM is loaded
@@ -338,36 +340,50 @@ function adjustColor(color, percent) {
 
 // Check if driver charts are in viewport to trigger animations
 function checkDriverChartsInViewport() {
+    // Log the available charts for debugging
+    const allCharts = document.querySelectorAll('#driver-insights canvas');
+    console.log('Available charts in Driver Insights:', Array.from(allCharts).map(c => c.id));
+    
     // All chart containers to check
     const chartContainers = [
         document.getElementById('employment-type-chart'),
         document.getElementById('empty-trips-chart'),
-        document.getElementById('vehicle-types-chart')
+        document.getElementById('vehicle-type-chart')  // Ensure this matches the actual ID
     ];
     
     // Get all chart containers in driver insights
     const driverChartContainers = document.querySelectorAll('#driver-insights .chart-container');
     
     // Animate each chart container when in viewport
-    driverChartContainers.forEach(container => {
+    driverChartContainers.forEach((container, index) => {
         if (container && isElementInViewport(container)) {
             // Add animation class if not already animated
             if (container.style.opacity === '0') {
                 // Add fade-in class for proper animation with delays
                 container.classList.add('fade-in');
-                container.style.animation = 'fadeInUp 0.8s ease forwards';
+                container.style.animation = `fadeInUp 0.8s ease forwards ${index * 0.2}s`;
+                container.style.opacity = '1'; // Mark as animated
                 
                 // Log that we're animating this container
                 console.log('Animating driver chart container:', container);
                 
                 // Find the canvas inside this container
                 const canvas = container.querySelector('canvas');
-                if (canvas && !animatedDriverCharts[canvas.id] && canvas.id) {
-                    // Mark as animated
-                    animatedDriverCharts[canvas.id] = true;
+                if (canvas && canvas.id) {
+                    console.log(`Found canvas with ID: ${canvas.id}`);
                     
-                    // Trigger chart-specific animation
-                    animateDriverChartById(canvas.id);
+                    // Check if already animated
+                    if (!animatedDriverCharts[canvas.id]) {
+                        // Mark as animated
+                        animatedDriverCharts[canvas.id] = true;
+                        
+                        // Trigger chart-specific animation with delay
+                        setTimeout(() => {
+                            animateDriverChartById(canvas.id);
+                        }, 300 + (index * 200)); // Stagger the chart animations
+                    }
+                } else {
+                    console.warn('Canvas element not found or missing ID in container:', container);
                 }
             }
         }
@@ -396,18 +412,34 @@ function animateDriverChartById(chartId) {
         return;
     }
     
-    // Store the original data
+    console.log(`Animating chart: ${chartId}`);
+    
+    // Store the original data and animation state
     const originalData = [...chartInstance.data.datasets[0].data];
+    const originalAnimation = {...chartInstance.options.animation};
     
-    // Reset to zeros for animation
+    // First set data to zero
     chartInstance.data.datasets[0].data = originalData.map(() => 0);
-    chartInstance.update('none');
     
-    // Then animate to actual values
+    // Disable animation for the reset
+    chartInstance.options.animation = false;
+    chartInstance.update();
+    
+    // Then restore animation and animate to the actual values
     setTimeout(() => {
+        // Restore and enhance animation
+        chartInstance.options.animation = {
+            duration: 1500,
+            easing: 'easeOutQuart'
+        };
+        
+        // Apply the actual data to trigger animation
         chartInstance.data.datasets[0].data = originalData;
+        
+        // Force chart update with animation
         chartInstance.update();
-    }, 100);
+        console.log(`Chart animation started for ${chartId}`);
+    }, 200);
 }
 
 // Export functions for use in other modules
