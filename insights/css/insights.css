@@ -211,6 +211,92 @@
     line-height: 1.6;
 }
 
+/* Business Opportunity KPI Enhancements */
+.business-opportunity {
+    padding-bottom: 1rem;
+}
+
+.business-opportunity .charts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.business-opportunity .chart-container {
+    background-color: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.business-opportunity .chart-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.business-opportunity .chart-container h3 {
+    color: #1E3A8A;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.business-opportunity .chart-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #1E40AF, #3B82F6);
+}
+
+/* Additional KPIs Section */
+#additional-kpis {
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#additional-kpis h3 {
+    color: #1E3A8A;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+#additional-kpis .bg-gray-50 {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#additional-kpis .bg-gray-50:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* KPI Progress Bars */
+#additional-kpis .h-2 {
+    height: 0.5rem !important;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+#additional-kpis .h-2 > div {
+    height: 100%;
+    transition: width 1.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* Business Insight Box */
+#business-insight {
+    line-height: 1.7;
+    min-height: 70px;
+}
+
 /* ---- Conclusion Section ---- */
 .conclusion-section {
     padding: 4rem 0;
@@ -311,6 +397,14 @@
     
     .charts-grid {
         grid-template-columns: 1fr;
+    }
+    
+    .business-opportunity .charts-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    #additional-kpis .grid-cols-1 {
+        grid-template-columns: 1fr !important;
     }
     
     .takeaways {
