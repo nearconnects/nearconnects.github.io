@@ -257,6 +257,25 @@ nav {
     width: 100%;
 }
 
+/* Data Insights link style */
+.insights-link {
+    color: var(--primary-color) !important;
+    font-weight: 600 !important;
+    position: relative;
+}
+
+.insights-link:after {
+    content: '📊' !important;
+    margin-left: 5px;
+    font-size: 0.9em;
+    background-color: transparent !important;
+    height: auto !important;
+    width: auto !important;
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+}
+
 .cta-buttons {
     display: flex;
     gap: var(--spacing-md);
