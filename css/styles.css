@@ -1195,30 +1195,28 @@ nav {
 }
 
 .hero-split {
-    text-align: center;
+    text-align: left;
     background-color: transparent;
     max-width: 1000px;
-    padding: 0 2rem;
-    margin: 0 auto;
+    padding: 0;
 }
 
 .hero-tagline {
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
 }
 
 .tagline-top {
     font-size: 5rem;
     font-weight: 800;
     color: #0a84ff;
-    line-height: 1.1;
-    margin-bottom: 0.5rem;
+    line-height: 1;
 }
 
 .tagline-bottom {
     font-size: 5rem;
     font-weight: 800;
     color: white;
-    line-height: 1.1;
+    line-height: 1;
 }
 
 .hero-subtitle {
