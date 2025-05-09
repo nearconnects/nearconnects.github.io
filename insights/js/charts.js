@@ -7,25 +7,16 @@
 const blueColors = ['#1E40AF', '#1D4ED8', '#3B82F6', '#60A5FA', '#93C5FD'];
 const greenColors = ['#065F46', '#047857', '#10B981', '#34D399', '#6EE7B7'];
 const mixedColors = ['#1E40AF', '#0369A1', '#047857', '#B45309', '#A21CAF'];
-const amberColors = ['#B45309', '#D97706', '#F59E0B', '#FBBF24', '#FCD34D'];
-const grayColors = ['#374151', '#4B5563', '#6B7280', '#9CA3AF', '#D1D5DB'];
-
-// Chart.js default colors
-const chartColors = {
-    blue: '#3B82F6',
-    green: '#10B981',
-    amber: '#F59E0B',
-    red: '#EF4444',
-    purple: '#8B5CF6',
-    gray: '#9CA3AF'
-};
 
 // Create charts when data is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    // Iniciar las gráficas inmediatamente con datos predefinidos
-    setTimeout(() => {
-        initializeCharts();
-    }, 200);
+    // Poll until nearData is available
+    const checkData = setInterval(() => {
+        if (nearData && nearData.stats) {
+            clearInterval(checkData);
+            initializeCharts();
+        }
+    }, 100);
 });
 
 function initializeCharts() {
@@ -35,12 +26,8 @@ function initializeCharts() {
     createDeliveryPreferenceChart();
     createWillingnessLevelChart();
     createPackageFrequencyChart();
-    
-    // Auto-select the first tab on load
-    const firstTabButton = document.querySelector('.tab-button');
-    if (firstTabButton) {
-        firstTabButton.click();
-    }
+    createReadinessGaugeCharts();
+    createOpportunityScoreChart();
 }
 
 // Driver analysis charts
@@ -166,39 +153,27 @@ function createVehicleTypeChart() {
     });
 }
 
-// Customer preference charts with animation
+// Customer preference charts
 function createDeliveryPreferenceChart() {
     const preferenceData = getDeliveryPreferenceData();
     if (!preferenceData) return;
     
     const ctx = document.getElementById('delivery-preference-chart').getContext('2d');
-    
-    // Comenzamos con datos en cero para animar
-    const animationData = [...preferenceData.counts].map(() => 0);
-    
-    // Create chart with animation
-    const chart = new Chart(ctx, {
+    new Chart(ctx, {
         type: 'pie',
         data: {
             labels: preferenceData.labels,
             datasets: [{
-                data: animationData, // Iniciamos con ceros
+                data: preferenceData.counts,
                 backgroundColor: greenColors,
                 borderColor: 'white',
-                borderWidth: 2,
-                hoverOffset: 20
+                borderWidth: 2
             }]
         },
         options: {
             plugins: {
                 legend: {
-                    position: 'bottom',
-                    labels: {
-                        font: {
-                            size: 14
-                        },
-                        padding: 15
-                    }
+                    position: 'bottom'
                 },
                 tooltip: {
                     callbacks: {
@@ -209,59 +184,13 @@ function createDeliveryPreferenceChart() {
                             const percentage = Math.round((context.raw / total) * 100);
                             return `${label}: ${value} (${percentage}%)`;
                         }
-                    },
-                    bodyFont: {
-                        size: 14
-                    },
-                    padding: 12
+                    }
                 }
             },
             responsive: true,
-            maintainAspectRatio: true,
-            cutout: '0%', // Asegurarse de que sea un pie chart completo
-            animation: {
-                animateRotate: true,
-                animateScale: true,
-                duration: 1500,
-                easing: 'easeOutCirc'
-            }
+            maintainAspectRatio: true
         }
     });
-    
-    // Crear una animación manual desde ceros hasta los valores reales
-    setTimeout(() => {
-        // Actualizar los datos gradualmente para una animación más suave
-        const steps = 20;
-        let currentStep = 0;
-        
-        const interval = setInterval(() => {
-            currentStep++;
-            
-            // Calcular valores intermedios
-            const newData = preferenceData.counts.map((value, index) => {
-                return Math.round((value * currentStep) / steps);
-            });
-            
-            // Actualizar dataset
-            chart.data.datasets[0].data = newData;
-            chart.update('none'); // Actualizar sin animación para evitar problemas
-            
-            if (currentStep >= steps) {
-                clearInterval(interval);
-                // Asegurarnos de que los valores finales son exactos
-                chart.data.datasets[0].data = preferenceData.counts;
-                chart.update();
-                
-                // Añadir efecto de sombra y animación al contenedor
-                const chartContainer = document.querySelector('#delivery-preference-chart').parentNode;
-                chartContainer.classList.add('animated-chart');
-            }
-        }, 50);
-    }, 500);
-    
-    // Añadir clase específica para la animación del gráfico circular
-    const chartContainer = document.querySelector('#delivery-preference-chart').parentNode;
-    chartContainer.classList.add('pie-chart-container');
 }
 
 function createWillingnessLevelChart() {
@@ -269,17 +198,13 @@ function createWillingnessLevelChart() {
     if (!willingnessData) return;
     
     const ctx = document.getElementById('willingness-level-chart').getContext('2d');
-    
-    // Comenzamos con datos en cero para animar
-    const animationData = [...willingnessData.counts].map(() => 0);
-    
-    const chart = new Chart(ctx, {
+    new Chart(ctx, {
         type: 'bar',
         data: {
             labels: willingnessData.labels,
             datasets: [{
                 label: 'Number of Customers',
-                data: animationData, // Iniciamos con ceros
+                data: willingnessData.counts,
                 backgroundColor: greenColors,
                 borderColor: 'white',
                 borderWidth: 1
@@ -301,48 +226,9 @@ function createWillingnessLevelChart() {
                 }
             },
             responsive: true,
-            maintainAspectRatio: true,
-            animation: {
-                duration: 1500,
-                easing: 'easeOutQuart'
-            }
+            maintainAspectRatio: true
         }
     });
-    
-    // Crear una animación manual desde ceros hasta los valores reales
-    setTimeout(() => {
-        // Actualizar los datos gradualmente para una animación más suave
-        const steps = 20;
-        let currentStep = 0;
-        
-        const interval = setInterval(() => {
-            currentStep++;
-            
-            // Calcular valores intermedios
-            const newData = willingnessData.counts.map((value, index) => {
-                return Math.round((value * currentStep) / steps);
-            });
-            
-            // Actualizar dataset
-            chart.data.datasets[0].data = newData;
-            chart.update('none'); // Actualizar sin animación para evitar problemas
-            
-            if (currentStep >= steps) {
-                clearInterval(interval);
-                // Asegurarnos de que los valores finales son exactos
-                chart.data.datasets[0].data = willingnessData.counts;
-                chart.update();
-                
-                // Añadir efecto de sombra y animación al contenedor
-                const chartContainer = document.querySelector('#willingness-level-chart').parentNode;
-                chartContainer.classList.add('animated-chart');
-            }
-        }, 50);
-    }, 500);
-    
-    // Añadir clase específica para la animación del gráfico
-    const chartContainer = document.querySelector('#willingness-level-chart').parentNode;
-    chartContainer.classList.add('bar-chart-container');
 }
 
 function createPackageFrequencyChart() {
@@ -350,17 +236,13 @@ function createPackageFrequencyChart() {
     if (!freqData) return;
     
     const ctx = document.getElementById('package-frequency-chart').getContext('2d');
-    
-    // Comenzamos con datos en cero para animar
-    const animationData = [...freqData.counts].map(() => 0);
-    
-    const chart = new Chart(ctx, {
+    new Chart(ctx, {
         type: 'bar',
         data: {
             labels: freqData.labels,
             datasets: [{
                 label: 'Number of Customers',
-                data: animationData, // Iniciamos con ceros
+                data: freqData.counts,
                 backgroundColor: greenColors[1],
                 borderColor: greenColors[0],
                 borderWidth: 1
@@ -388,48 +270,9 @@ function createPackageFrequencyChart() {
                 }
             },
             responsive: true,
-            maintainAspectRatio: true,
-            animation: {
-                duration: 1500,
-                easing: 'easeOutQuart'
-            }
+            maintainAspectRatio: true
         }
     });
-    
-    // Crear una animación manual desde ceros hasta los valores reales
-    setTimeout(() => {
-        // Actualizar los datos gradualmente para una animación más suave
-        const steps = 20;
-        let currentStep = 0;
-        
-        const interval = setInterval(() => {
-            currentStep++;
-            
-            // Calcular valores intermedios
-            const newData = freqData.counts.map((value, index) => {
-                return Math.round((value * currentStep) / steps);
-            });
-            
-            // Actualizar dataset
-            chart.data.datasets[0].data = newData;
-            chart.update('none'); // Actualizar sin animación para evitar problemas
-            
-            if (currentStep >= steps) {
-                clearInterval(interval);
-                // Asegurarnos de que los valores finales son exactos
-                chart.data.datasets[0].data = freqData.counts;
-                chart.update();
-                
-                // Añadir efecto de sombra y animación al contenedor
-                const chartContainer = document.querySelector('#package-frequency-chart').parentNode;
-                chartContainer.classList.add('animated-chart');
-            }
-        }, 50);
-    }, 500);
-    
-    // Añadir clase específica para la animación del gráfico
-    const chartContainer = document.querySelector('#package-frequency-chart').parentNode;
-    chartContainer.classList.add('bar-chart-container');
 }
 
 /**
@@ -772,35 +615,22 @@ function createSupplyDemandChart(kpis) {
     animateEfficiencyMeter(kpis.efficiencyScore);
 }
 
-// Opportunity Score Gauge - Enhanced Version with Modern UI
+// Opportunity Score Gauge
 function createOpportunityScoreChart(kpis) {
     const ctx = document.getElementById('opportunity-score-chart').getContext('2d');
     if (!ctx) return;
     
-    // Get score value and color
-    const scoreValue = kpis.opportunityScore;
-    let scoreColor = getOpportunityColor(scoreValue);
-    
-    // Create gradient for a more modern look
-    const gradientFill = ctx.createLinearGradient(0, 0, 400, 0);
-    gradientFill.addColorStop(0, scoreColor);
-    // Create a slightly brighter version for the gradient
-    const brighterColor = adjustColorBrightness(scoreColor, 40);
-    gradientFill.addColorStop(1, brighterColor);
-    
-    // Create the enhanced gauge chart
     const opportunityChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
             datasets: [{
                 data: [0, 100 - 0], // Start at 0
-                backgroundColor: [gradientFill, '#EBEDF2'], // Lighter background
-                borderWidth: 0,
-                borderRadius: 15 // Rounded ends for modern look
+                backgroundColor: [getOpportunityColor(kpis.opportunityScore), '#F3F4F6'],
+                borderWidth: 0
             }]
         },
         options: {
-            cutout: '80%', // Thinner arc for modern look
+            cutout: '70%',
             circumference: 180,
             rotation: 270,
             responsive: true,
@@ -816,74 +646,13 @@ function createOpportunityScoreChart(kpis) {
         }
     });
     
-    // Draw scale markers (0, 25, 50, 75, 100)
-    setTimeout(() => {
-        const canvas = document.getElementById('opportunity-score-chart');
-        if (!canvas) return;
-        
-        // Add the "/100" display format
-        const valueElement = document.getElementById('opportunity-score-value');
-        if (valueElement) {
-            valueElement.innerHTML = '0'; // Will be updated by animation
-            const scaleElement = document.querySelector('.opportunity-scale');
-            if (scaleElement) {
-                scaleElement.style.fontSize = '1rem';
-                scaleElement.style.opacity = '0.7';
-                scaleElement.style.fontWeight = 'normal';
-                scaleElement.style.color = '#6B7280';
-            }
-        }
-        
-        // Add decorative arc shadow for depth
-        const wrapper = canvas.parentElement;
-        if (wrapper) {
-            wrapper.style.position = 'relative';
-            wrapper.style.overflow = 'visible';
-            
-            // Add a subtle glow/shadow effect to make the gauge pop
-            const glow = document.createElement('div');
-            glow.style.position = 'absolute';
-            glow.style.width = '80%';
-            glow.style.height = '40%';
-            glow.style.top = '0';
-            glow.style.left = '10%';
-            glow.style.borderRadius = '100%';
-            glow.style.background = 'radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%)';
-            glow.style.zIndex = '1';
-            wrapper.appendChild(glow);
-        }
-    }, 100);
-    
-    // Animate opportunity score gauge with smooth progression
-    animateGauge(opportunityChart, scoreValue, 'opportunity-score-value', '', true);
+    // Animate opportunity score gauge
+    animateGauge(opportunityChart, kpis.opportunityScore, 'opportunity-score-value', '', true);
     
     // Update business insight with typing animation
     setTimeout(() => {
         typeBusinessInsight(generateBusinessInsight(kpis));
     }, 1000);
-    
-    return opportunityChart;
-}
-
-// Helper function to adjust color brightness
-function adjustColorBrightness(hex, percent) {
-    // Convert hex to RGB
-    hex = hex.replace(/^\s*#|\s*$/g, '');
-    if(hex.length == 3) {
-        hex = hex.replace(/(.)/g, '$1$1');
-    }
-    
-    let r = parseInt(hex.substring(0, 2), 16);
-    let g = parseInt(hex.substring(2, 4), 16);
-    let b = parseInt(hex.substring(4, 6), 16);
-    
-    // Adjust brightness
-    r = Math.min(255, Math.max(0, r + percent));
-    g = Math.min(255, Math.max(0, g + percent));
-    b = Math.min(255, Math.max(0, b + percent));
-    
-    // Convert back to hex
-    return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
 }
 
 // Helper Functions for Animations
@@ -1028,32 +797,29 @@ function typeBusinessInsight(text) {
 function drawGaugeCenter(ctx, text, label) {
     if (!ctx || !ctx.canvas) return;
     
-    // Need to wait for the chart to render before drawing the text
-    setTimeout(() => {
-        const width = ctx.canvas.width;
-        const height = ctx.canvas.height;
-        
-        ctx.save();
-        ctx.textBaseline = 'middle';
-        ctx.textAlign = 'center';
-        
-        // Clear previous text
-        ctx.clearRect(width * 0.3, height * 0.55, width * 0.4, height * 0.4);
-        
-        // Value text
-        ctx.font = 'bold 22px Arial';
-        ctx.fillStyle = '#1E3A8A';
-        ctx.fillText(text, width / 2, height * 0.65);
-        
-        // Label text (if provided)
-        if (label) {
-            ctx.font = '12px Arial';
-            ctx.fillStyle = '#6B7280';
-            ctx.fillText(label, width / 2, height * 0.8);
-        }
-        
-        ctx.restore();
-    }, 50);
+    const width = ctx.canvas.width;
+    const height = ctx.canvas.height;
+    
+    ctx.save();
+    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'center';
+    
+    // Clear previous text
+    ctx.clearRect(width * 0.3, height * 0.55, width * 0.4, height * 0.4);
+    
+    // Value text
+    ctx.font = 'bold 22px Arial';
+    ctx.fillStyle = '#1E3A8A';
+    ctx.fillText(text, width / 2, height * 0.65);
+    
+    // Label text (if provided)
+    if (label) {
+        ctx.font = '12px Arial';
+        ctx.fillStyle = '#6B7280';
+        ctx.fillText(label, width / 2, height * 0.8);
+    }
+    
+    ctx.restore();
 }
 
 // Get color for opportunity score based on value
