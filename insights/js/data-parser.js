@@ -155,34 +155,72 @@ function calculateStats() {
 function updateUI() {
     if (!nearData.stats) return;
     
-    // Update key metrics
-    document.getElementById('total-respondents').textContent = nearData.stats.totalResponses;
-    document.getElementById('empty-cargo-drivers').textContent = nearData.stats.driversWithEmptyCargo;
-    document.getElementById('empty-cargo-percentage').textContent = 
-        `${nearData.stats.driversWithEmptyCargoPercentage}%`;
+    console.log("Updating UI with stats:", nearData.stats);
     
-    document.getElementById('willing-drivers').textContent = nearData.stats.willingDrivers;
-    document.getElementById('willing-drivers-percentage').textContent = 
-        `${nearData.stats.willingDriversPercentage}%`;
+    // Use animated counters instead of direct text updates
+    if (typeof animateNumberWithCommas === "function") {
+        // Animate the main KPI metrics with comma formatting
+        animateNumberWithCommas('total-respondents', nearData.stats.totalResponses, 1800);
+        animateNumberWithCommas('empty-cargo-drivers', nearData.stats.driversWithEmptyCargo, 1800);
+        animateNumberWithCommas('willing-drivers', nearData.stats.willingDrivers, 1800);
+        animateNumberWithCommas('willing-customers', nearData.stats.veryWillingCustomers, 1800);
+        
+        // Animate percentages with % suffix
+        animateNumber('empty-cargo-percentage', nearData.stats.driversWithEmptyCargoPercentage, 1800, '%');
+        animateNumber('willing-drivers-percentage', nearData.stats.willingDriversPercentage, 1800, '%');
+        animateNumber('willing-customers-percentage', nearData.stats.veryWillingCustomersPercentage, 1800, '%');
+    } else {
+        // Fallback to direct updates if animation function is not available
+        document.getElementById('total-respondents').textContent = nearData.stats.totalResponses;
+        document.getElementById('empty-cargo-drivers').textContent = nearData.stats.driversWithEmptyCargo;
+        document.getElementById('empty-cargo-percentage').textContent = 
+            `${nearData.stats.driversWithEmptyCargoPercentage}%`;
+        
+        document.getElementById('willing-drivers').textContent = nearData.stats.willingDrivers;
+        document.getElementById('willing-drivers-percentage').textContent = 
+            `${nearData.stats.willingDriversPercentage}%`;
+        
+        document.getElementById('willing-customers').textContent = nearData.stats.veryWillingCustomers;
+        document.getElementById('willing-customers-percentage').textContent = 
+            `${nearData.stats.veryWillingCustomersPercentage}%`;
+    }
     
-    document.getElementById('willing-customers').textContent = nearData.stats.veryWillingCustomers;
-    document.getElementById('willing-customers-percentage').textContent = 
-        `${nearData.stats.veryWillingCustomersPercentage}%`;
-    
-    // Update key insight
-    document.getElementById('key-insight').textContent = 
-        `With ${nearData.stats.driversWithEmptyCargo} drivers reporting empty cargo trips and ${nearData.stats.willingDriversPercentage}% willing to deliver packages during these trips, 
-        NEAR offers a significant opportunity to reduce empty miles while creating new revenue streams for transporters.`;
+    // Update key insight with a delayed animation to ensure numbers are shown first
+    setTimeout(() => {
+        // Create the insight text
+        const insightText = `With ${nearData.stats.driversWithEmptyCargo} drivers reporting empty cargo trips and ${nearData.stats.willingDriversPercentage}% willing to deliver packages during these trips, NEAR offers a significant opportunity to reduce empty miles while creating new revenue streams for transporters.`;
+        
+        // Get the insight element
+        const insightElement = document.getElementById('key-insight');
+        
+        // First clear it
+        insightElement.textContent = '';
+        
+        // Then animate the text typing
+        let i = 0;
+        const typingSpeed = 20; // milliseconds per character
+        
+        function typeChar() {
+            if (i < insightText.length) {
+                insightElement.textContent += insightText.charAt(i);
+                i++;
+                setTimeout(typeChar, typingSpeed);
+            }
+        }
+        
+        // Start typing animation
+        typeChar();
+    }, 1000);
     
     // Start general chart initialization
     if (typeof initializeCharts === "function") {
-        setTimeout(initializeCharts, 100);
+        setTimeout(initializeCharts, 400);
     }
     
     // Also initialize business opportunity if that tab is active
     const activeTabContent = document.querySelector('.tab-content.active');
     if (activeTabContent && activeTabContent.id === 'business-opportunity' && typeof initBusinessOpportunityCharts === "function") {
-        setTimeout(initBusinessOpportunityCharts, 300);
+        setTimeout(initBusinessOpportunityCharts, 500);
     } else {
         // Set up first-time initialization for business opportunity charts when tab is clicked
         const businessTab = document.querySelector('.tab-button[data-tab="business-opportunity"]');
