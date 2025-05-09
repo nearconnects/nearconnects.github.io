@@ -3,6 +3,24 @@
  * Insights Dashboard CSS
  */
 
+/* ---- Navigation Adjustments ---- */
+.nav-menu {
+    display: flex;
+    justify-content: center;
+    gap: 2rem; /* Increase spacing between nav items */
+}
+
+.nav-menu li {
+    padding: 0 0.5rem; /* Add padding to nav items */
+}
+
+/* Fix navbar spacing for smaller item count */
+@media (min-width: 992px) {
+    .nav-menu {
+        margin-right: 2rem; /* Add margin to the right of the nav menu */
+    }
+}
+
 /* ---- Hero Section ---- */
 .insights-hero {
     background-color: #061023;
