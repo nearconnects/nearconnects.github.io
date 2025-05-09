@@ -1,0 +1,319 @@
+/* 
+ * NEAR - Never Empty Again on Return
+ * Insights Dashboard CSS
+ */
+
+/* ---- Hero Section ---- */
+.insights-hero {
+    background-color: #061023;
+    background-image: url('../../assets/network-bg.svg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 100px 0 60px;
+    text-align: center;
+    position: relative;
+}
+
+.insights-hero:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.insights-hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.insights-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.insights-hero p {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* ---- Key Metrics Section ---- */
+.key-metrics-section {
+    padding: 4rem 0;
+    background-color: #f9fafb;
+}
+
+.key-metrics-section h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #1E3A8A;
+    font-size: 2.2rem;
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.metric-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.metric-card:hover {
+    transform: translateY(-5px);
+}
+
+.metric-icon {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.metric-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: #4B5563;
+}
+
+.metric-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1E3A8A;
+    margin-bottom: 0.5rem;
+}
+
+.metric-percentage {
+    font-size: 1.2rem;
+    color: #10B981;
+}
+
+.insights-summary {
+    margin-top: 3rem;
+    background-color: #EFF6FF;
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.insights-summary i {
+    font-size: 2.5rem;
+    color: #1E40AF;
+}
+
+.insights-summary p {
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+/* ---- Tabs Section ---- */
+.insights-tabs-section {
+    padding: 4rem 0;
+    background-color: white;
+}
+
+.tabs-container {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.tabs-header {
+    display: flex;
+    background-color: #F3F4F6;
+}
+
+.tab-button {
+    padding: 1.2rem 1.5rem;
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    flex: 1;
+    text-align: center;
+    color: #4B5563;
+    transition: all 0.3s ease;
+}
+
+.tab-button:hover {
+    background-color: #E5E7EB;
+}
+
+.tab-button.active {
+    background-color: #DBEAFE;
+    color: #1E40AF;
+    font-weight: 600;
+}
+
+.tab-content {
+    display: none;
+    padding: 2rem;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.tab-content h2 {
+    margin-bottom: 2rem;
+    color: #1E3A8A;
+    font-size: 1.8rem;
+}
+
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.chart-container {
+    background-color: #F9FAFB;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.chart-container h3 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #374151;
+    font-size: 1.2rem;
+}
+
+.opportunity-intro {
+    background-color: #EFF6FF;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.opportunity-intro h3 {
+    color: #1E40AF;
+    margin-bottom: 1rem;
+}
+
+.opportunity-intro p {
+    line-height: 1.6;
+}
+
+/* ---- Conclusion Section ---- */
+.conclusion-section {
+    padding: 4rem 0;
+    background-color: #1E3A8A;
+    color: white;
+}
+
+.conclusion-section h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 2.2rem;
+}
+
+.conclusion-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.conclusion-content > p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.takeaways {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.takeaway {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.takeaway-icon {
+    font-size: 1.5rem;
+    color: #10B981;
+}
+
+.takeaway-text h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.takeaway-text p {
+    font-size: 0.95rem;
+    opacity: 0.9;
+    line-height: 1.5;
+}
+
+.next-steps {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.next-steps h3 {
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.next-steps ol {
+    padding-left: 1.5rem;
+}
+
+.next-steps li {
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .insights-hero h1 {
+        font-size: 2.2rem;
+    }
+    
+    .insights-hero p {
+        font-size: 1rem;
+    }
+    
+    .metric-value {
+        font-size: 2rem;
+    }
+    
+    .tabs-header {
+        flex-direction: column;
+    }
+    
+    .tab-button {
+        padding: 1rem;
+    }
+    
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .takeaways {
+        grid-template-columns: 1fr;
+    }
+}
