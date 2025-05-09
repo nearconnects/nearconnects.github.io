@@ -173,20 +173,20 @@ function createDeliveryPreferenceChart() {
     
     const ctx = document.getElementById('delivery-preference-chart').getContext('2d');
     
+    // Comenzamos con datos en cero para animar
+    const animationData = [...preferenceData.counts].map(() => 0);
+    
     // Create chart with animation
     const chart = new Chart(ctx, {
         type: 'pie',
         data: {
             labels: preferenceData.labels,
             datasets: [{
-                data: preferenceData.counts,
+                data: animationData, // Iniciamos con ceros
                 backgroundColor: greenColors,
                 borderColor: 'white',
                 borderWidth: 2,
-                // Add animation effects
-                hoverOffset: 20,
-                // Start with zero values for animation
-                _originalData: [...preferenceData.counts]
+                hoverOffset: 20
             }]
         },
         options: {
@@ -218,21 +218,50 @@ function createDeliveryPreferenceChart() {
             },
             responsive: true,
             maintainAspectRatio: true,
+            cutout: '0%', // Asegurarse de que sea un pie chart completo
             animation: {
                 animateRotate: true,
                 animateScale: true,
-                duration: 2000,
-                easing: 'easeOutElastic'
+                duration: 1500,
+                easing: 'easeOutCirc'
             }
         }
     });
     
-    // Add a slight delay before chart appears for dramatic effect
+    // Crear una animación manual desde ceros hasta los valores reales
     setTimeout(() => {
-        // Add slide-in and shadow effect to the chart container
-        const chartContainer = document.querySelector('#delivery-preference-chart').parentNode;
-        chartContainer.classList.add('animated-chart');
-    }, 300);
+        // Actualizar los datos gradualmente para una animación más suave
+        const steps = 20;
+        let currentStep = 0;
+        
+        const interval = setInterval(() => {
+            currentStep++;
+            
+            // Calcular valores intermedios
+            const newData = preferenceData.counts.map((value, index) => {
+                return Math.round((value * currentStep) / steps);
+            });
+            
+            // Actualizar dataset
+            chart.data.datasets[0].data = newData;
+            chart.update('none'); // Actualizar sin animación para evitar problemas
+            
+            if (currentStep >= steps) {
+                clearInterval(interval);
+                // Asegurarnos de que los valores finales son exactos
+                chart.data.datasets[0].data = preferenceData.counts;
+                chart.update();
+                
+                // Añadir efecto de sombra y animación al contenedor
+                const chartContainer = document.querySelector('#delivery-preference-chart').parentNode;
+                chartContainer.classList.add('animated-chart');
+            }
+        }, 50);
+    }, 500);
+    
+    // Añadir clase específica para la animación del gráfico circular
+    const chartContainer = document.querySelector('#delivery-preference-chart').parentNode;
+    chartContainer.classList.add('pie-chart-container');
 }
 
 function createWillingnessLevelChart() {
