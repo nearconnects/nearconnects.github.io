@@ -22,13 +22,10 @@ const chartColors = {
 
 // Create charts when data is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    // Poll until nearData is available
-    const checkData = setInterval(() => {
-        if (nearData && nearData.stats) {
-            clearInterval(checkData);
-            initializeCharts();
-        }
-    }, 100);
+    // Iniciar las gráficas inmediatamente con datos predefinidos
+    setTimeout(() => {
+        initializeCharts();
+    }, 200);
 });
 
 function initializeCharts() {
