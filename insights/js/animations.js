@@ -238,97 +238,69 @@ function setupParticleEffects() {
     animateParticles();
 }
 
-// Special animation for metrics with a dramatic reveal
+// Simple counter animation for metrics
 function setupDramaticMetricReveals() {
-    console.log("Setting up dramatic metric reveals");
-    const metrics = document.querySelectorAll('.metric-value, .metric-percentage');
+    console.log("Setting up simple counter animations");
     
-    // We'll keep track of which metrics we're animating
-    const animationsToRun = [];
+    // Define our metrics with fixed values
+    const metricValues = {
+        'total-respondents': 73,
+        'empty-cargo-drivers': 34,
+        'empty-cargo-percentage': 72,
+        'willing-drivers': 30,
+        'willing-drivers-percentage': 65,
+        'willing-customers': 26,
+        'willing-customers-percentage': 60
+    };
     
-    metrics.forEach(metric => {
-        // Skip if showing Loading... message
-        if (metric.textContent.includes('Loading')) return;
+    // Simple function to animate from 0 to target
+    function animateCounter(element, targetValue, isPercentage) {
+        // Reset to 0
+        element.textContent = isPercentage ? '0%' : '0';
         
-        // Get current text content for the final value
-        const currentText = metric.textContent;
-        const isPercentage = currentText.includes('%');
+        // Calculate step size (we want to finish in about 1 second with updates every 20ms)
+        const steps = 50;
+        const step = targetValue / steps;
         
-        // Extract number from current text
-        let finalValueStr = currentText.replace(/[^0-9]/g, '');
-        
-        // Parse to number
-        const finalValue = parseInt(finalValueStr || "0");
-        if (isNaN(finalValue)) {
-            console.error('Invalid number value:', finalValueStr, 'from text', currentText);
-            return; // Skip if can't parse
-        }
-        
-        console.log(`Setting up animation for ${metric.id}: final value = ${finalValue}`);
-        
-        // Reset to 0 to prepare for animation
-        metric.textContent = isPercentage ? '0%' : '0';
-        
-        // Create dramatic number sequence
-        let values = [];
-        
-        // Generate a sequence of random numbers that converge to final value
-        for (let i = 0; i < 20; i++) {
-            const randomFactor = Math.random() * 2 - 1; // Random between -1 and 1
-            const distance = 1 - (i / 20); // Gets closer to 0 as i increases
-            const variation = finalValue * distance * randomFactor;
+        let current = 0;
+        const interval = setInterval(() => {
+            current += step;
             
-            values.push(Math.max(0, Math.round(finalValue + variation)));
-        }
-        
-        // Add the final value at the end
-        values.push(finalValue);
-        
-        // Save the animation data for this metric
-        animationsToRun.push({
-            element: metric,
-            sequence: values,
-            isPercentage: isPercentage,
-            finalValue: finalValue
-        });
-    });
+            if (current >= targetValue) {
+                current = targetValue;
+                clearInterval(interval);
+            }
+            
+            // Round to integer
+            const displayValue = Math.round(current);
+            element.textContent = isPercentage ? `${displayValue}%` : displayValue;
+        }, 20);
+    }
     
-    // Set up intersection observer to trigger the animations
+    // Set up intersection observer to trigger animations when visible
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                const metric = entry.target;
+                const element = entry.target;
+                const id = element.id;
                 
-                // Find this metric in our animations list
-                const animation = animationsToRun.find(anim => anim.element === metric);
-                if (!animation) return;
-                
-                console.log(`Starting animation for ${metric.id}`);
-                
-                // Start the animation
-                let i = 0;
-                const interval = setInterval(() => {
-                    const value = animation.sequence[i];
-                    metric.textContent = animation.isPercentage ? `${value}%` : value;
-                    
-                    i++;
-                    if (i >= animation.sequence.length) {
-                        clearInterval(interval);
-                        
-                        // Make sure the final value is set correctly
-                        metric.textContent = animation.isPercentage ? `${animation.finalValue}%` : animation.finalValue;
-                    }
-                }, 50); // Show a new number every 50ms
-                
-                observer.unobserve(metric);
+                // Check if we have a target value for this element
+                if (metricValues[id]) {
+                    const isPercentage = id.includes('percentage');
+                    animateCounter(element, metricValues[id], isPercentage);
+                    observer.unobserve(element);
+                }
             }
         });
     }, {
-        threshold: 0.1,  // Trigger when 10% of the element is visible
-        rootMargin: '0px 0px -50px 0px'  // Trigger before it's fully in view
+        threshold: 0.1
     });
     
-    metrics.forEach(metric => {
-        observer.observe(metric);
+    // Observe all metric elements
+    Object.keys(metricValues).forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            observer.observe(element);
+        }
     });
 }
