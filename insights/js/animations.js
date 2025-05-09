@@ -275,8 +275,19 @@ function enhanceGaugeAnimation(canvasId, targetValue, duration = 1500, options =
         chartInstance.data.datasets[0].backgroundColor[0] = primaryColor;
     }
     
-    // Make the background color more transparent for better contrast
-    chartInstance.data.datasets[0].backgroundColor[1] = 'rgba(229, 231, 235, 0.25)';
+    // Make the background color more elegant (replace black with a soft gradient)
+    // Get matching background color based on gauge type
+    let bgColor = 'rgba(229, 231, 235, 0.5)'; // Default light gray
+    
+    if (canvasId === 'driver-readiness-chart') {
+        bgColor = 'rgba(219, 234, 254, 0.3)'; // Very light blue
+    } else if (canvasId === 'customer-readiness-chart') {
+        bgColor = 'rgba(209, 250, 229, 0.3)'; // Very light green
+    } else if (canvasId === 'opportunity-score-chart') {
+        bgColor = 'rgba(207, 250, 254, 0.3)'; // Very light cyan
+    }
+    
+    chartInstance.data.datasets[0].backgroundColor[1] = bgColor;
     
     // Add enhanced shadow effect for 3D look
     chartInstance.options.elements = {
