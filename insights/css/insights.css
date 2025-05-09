@@ -232,19 +232,20 @@
     opacity: 0;
     transform: translateY(20px);
     transition: none; /* Prevent any automatic transitions */
+    /* Make sure other animations don't apply */
+    animation: none !important;
 }
 
-/* Apply staggered delays when animation is added through JS */
-#driver-insights .chart-container.animated.fade-in:nth-child(1) {
-    animation-delay: 0.2s;
+/* Only apply animation when explicitly activated with this class */
+#driver-insights .chart-container.animate-now {
+    animation: fadeInUp 0.8s ease forwards;
+    opacity: 1;
 }
 
-#driver-insights .chart-container.animated.fade-in:nth-child(2) {
-    animation-delay: 0.4s;
-}
-
-#driver-insights .chart-container.animated.fade-in:nth-child(3) {
-    animation-delay: 0.6s;
+/* Remove any automatic animations from chart containers */
+#driver-insights .chart-container:hover {
+    transform: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 @keyframes fadeInUp {

@@ -357,34 +357,38 @@ function checkDriverChartsInViewport() {
     // Animate each chart container when in viewport
     driverChartContainers.forEach((container, index) => {
         if (container && isElementInViewport(container)) {
-            // Add animation class if not already animated
+            // Only proceed if this container hasn't been animated yet
             if (container.style.opacity === '0') {
-                // Add fade-in class for proper animation with delays
-                container.classList.add('fade-in');
-                container.style.animation = `fadeInUp 0.8s ease forwards ${index * 0.2}s`;
-                container.style.opacity = '1'; // Mark as animated
+                console.log(`Container ${index} is in viewport and ready to animate`);
                 
-                // Log that we're animating this container
-                console.log('Animating driver chart container:', container);
-                
-                // Find the canvas inside this container
-                const canvas = container.querySelector('canvas');
-                if (canvas && canvas.id) {
-                    console.log(`Found canvas with ID: ${canvas.id}`);
+                // Use a timeout for staggered entry
+                setTimeout(() => {
+                    // Apply animation class first
+                    container.classList.add('animate-now');
+                    container.style.opacity = '1'; // Ensure visible
                     
-                    // Check if already animated
-                    if (!animatedDriverCharts[canvas.id]) {
-                        // Mark as animated
-                        animatedDriverCharts[canvas.id] = true;
+                    // Log animation
+                    console.log(`Animating container ${index}`);
+                    
+                    // Find the canvas inside this container
+                    const canvas = container.querySelector('canvas');
+                    if (canvas && canvas.id) {
+                        console.log(`Found canvas with ID: ${canvas.id}`);
                         
-                        // Trigger chart-specific animation with delay
-                        setTimeout(() => {
-                            animateDriverChartById(canvas.id);
-                        }, 300 + (index * 200)); // Stagger the chart animations
+                        // Check if chart data already animated
+                        if (!animatedDriverCharts[canvas.id]) {
+                            // Mark as animated
+                            animatedDriverCharts[canvas.id] = true;
+                            
+                            // Wait for container animation to finish before animating chart data
+                            setTimeout(() => {
+                                animateDriverChartById(canvas.id);
+                            }, 500); // Wait for the container animation to be almost complete
+                        }
+                    } else {
+                        console.warn('Canvas element not found or missing ID in container:', container);
                     }
-                } else {
-                    console.warn('Canvas element not found or missing ID in container:', container);
-                }
+                }, index * 300); // Stagger each container by 300ms
             }
         }
     });
@@ -412,34 +416,52 @@ function animateDriverChartById(chartId) {
         return;
     }
     
-    console.log(`Animating chart: ${chartId}`);
+    console.log(`Animating chart data for: ${chartId}`);
     
-    // Store the original data and animation state
-    const originalData = [...chartInstance.data.datasets[0].data];
-    const originalAnimation = {...chartInstance.options.animation};
-    
-    // First set data to zero
-    chartInstance.data.datasets[0].data = originalData.map(() => 0);
-    
-    // Disable animation for the reset
-    chartInstance.options.animation = false;
-    chartInstance.update();
-    
-    // Then restore animation and animate to the actual values
-    setTimeout(() => {
-        // Restore and enhance animation
-        chartInstance.options.animation = {
-            duration: 1500,
-            easing: 'easeOutQuart'
-        };
+    try {
+        // Store the original data
+        const originalData = [...chartInstance.data.datasets[0].data];
         
-        // Apply the actual data to trigger animation
-        chartInstance.data.datasets[0].data = originalData;
+        // Save original animation settings
+        let originalAnimation = false;
+        if (chartInstance.options && chartInstance.options.animation) {
+            originalAnimation = {...chartInstance.options.animation};
+        }
         
-        // Force chart update with animation
-        chartInstance.update();
-        console.log(`Chart animation started for ${chartId}`);
-    }, 200);
+        // Reset data to zero first
+        chartInstance.data.datasets[0].data = originalData.map(() => 0);
+        
+        // Turn off animation for the reset
+        if (!chartInstance.options) chartInstance.options = {};
+        chartInstance.options.animation = false;
+        chartInstance.update('none'); // Use 'none' mode to prevent any animation
+        
+        // Then animate to the real values after a short delay
+        setTimeout(() => {
+            // Enhanced animation settings
+            chartInstance.options.animation = {
+                duration: 1500,
+                easing: 'easeOutQuart',
+                delay: 100
+            };
+            
+            // Set the real data back
+            chartInstance.data.datasets[0].data = originalData;
+            
+            // Force update with animation
+            chartInstance.update();
+            console.log(`Chart data animation started for ${chartId}`);
+        }, 300);
+    } catch (error) {
+        console.error(`Error animating chart ${chartId}:`, error);
+        
+        // Fallback - just show the data without animation
+        try {
+            chartInstance.update();
+        } catch (e) {
+            console.error("Fallback update also failed:", e);
+        }
+    }
 }
 
 // Export functions for use in other modules
