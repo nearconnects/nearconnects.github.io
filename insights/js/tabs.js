@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabContents = document.querySelectorAll('.tab-content');
     
+    // Track if business opportunity tab has been initialized
+    let businessOpportunityInitialized = false;
+    
     // Add click event listener to tab buttons
     tabButtons.forEach(button => {
         button.addEventListener('click', function() {
@@ -21,6 +24,16 @@ document.addEventListener('DOMContentLoaded', function() {
             // Add active class to clicked button and corresponding content
             this.classList.add('active');
             document.getElementById(tabName).classList.add('active');
+            
+            // Initialize business opportunity charts if this tab is selected
+            if (tabName === 'business-opportunity' && !businessOpportunityInitialized) {
+                setTimeout(() => {
+                    if (typeof initBusinessOpportunityCharts === 'function') {
+                        initBusinessOpportunityCharts();
+                        businessOpportunityInitialized = true;
+                    }
+                }, 100);
+            }
         });
     });
     

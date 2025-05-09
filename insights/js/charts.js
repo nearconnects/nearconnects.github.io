@@ -288,12 +288,22 @@ function createPackageFrequencyChart() {
  * - Network Effect Potential
  * - Sustainability Impact
  */
+/**
+ * Business Opportunity KPI Calculator
+ * 
+ * This calculates advanced business opportunity metrics based on survey data,
+ * using principles from market analysis and business intelligence.
+ */
 function calculateBusinessOpportunityKPIs() {
     if (!nearData || !nearData.stats) return {
-        driverReadiness: 65,
-        customerReadiness: 60,
-        opportunityScore: 75,
-        marketPotential: 68,
+        driverReadiness: 82,
+        customerReadiness: 68,
+        opportunityScore: 85,
+        efficiencyScore: 78,
+        supplyPerWeek: 240,
+        demandPerWeek: 122,
+        matchRate: 122,
+        marketPotential: 75,
         networkEffectScore: 82,
         sustainabilityImpact: 70
     };
@@ -310,8 +320,8 @@ function calculateBusinessOpportunityKPIs() {
     
     // 1. Driver Market Readiness (weighted average of key driver metrics)
     const driverReadiness = Math.round(
-        (driversWithEmptyCargoPercentage * 0.4) +  // Empty cargo availability
-        (willingDriversPercentage * 0.6)           // Willingness to participate
+        (driversWithEmptyCargoPercentage * 0.35) +    // Empty cargo availability
+        (willingDriversPercentage * 0.65)             // Willingness to participate
     );
     
     // 2. Customer Market Readiness (weighted score based on willingness)
@@ -320,7 +330,24 @@ function calculateBusinessOpportunityKPIs() {
         ((customerCount / Math.max(1, totalResponses)) * 100 * 0.2)  // Market representation
     );
     
-    // 3. Market Potential (based on matching possibilities)
+    // 3. Calculate weekly supply (empty trips available)
+    // Average 5 trips per driver per week with empty cargo percentage
+    const emptyTripsPerDriver = 5 * (driversWithEmptyCargoPercentage / 100);
+    const supplyPerWeek = Math.round(driverCount * emptyTripsPerDriver);
+    
+    // 4. Calculate weekly demand (packages needing delivery)
+    // Average 3 packages per customer per week with willingness percentage
+    const packagesPerCustomer = 3 * (veryWillingCustomersPercentage / 100);
+    const demandPerWeek = Math.round(customerCount * packagesPerCustomer);
+    
+    // 5. Calculate match rate (potential matches)
+    const matchRate = Math.min(supplyPerWeek, demandPerWeek);
+    
+    // 6. Efficiency score
+    const utilizationRate = Math.min(1, demandPerWeek / Math.max(1, supplyPerWeek));
+    const efficiencyScore = Math.round(utilizationRate * 100);
+    
+    // 7. Market Potential
     const marketSize = Math.min(100, ((driverCount + customerCount) / 50) * 30);
     const matchPotential = (driversWithEmptyCargoPercentage * willingDriversPercentage * 
                           veryWillingCustomersPercentage) / 100;
@@ -329,9 +356,9 @@ function calculateBusinessOpportunityKPIs() {
         (marketSize * 0.4)
     ));
     
-    // 4. Network Effect Score (grows with participant numbers)
+    // 8. Network Effect Score
     const participantBalance = 1 - Math.abs((driverCount - customerCount) / 
-                                          Math.max(1, driverCount + customerCount));
+                                         Math.max(1, driverCount + customerCount));
     const networkMultiplier = Math.min(1.5, 1 + ((driverCount + customerCount) / 150));
     const networkEffectScore = Math.round(Math.min(100,
         (networkMultiplier * 50) + 
@@ -339,26 +366,31 @@ function calculateBusinessOpportunityKPIs() {
         20 // Base score
     ));
     
-    // 5. Sustainability Impact (environmental benefit potential)
+    // 9. Sustainability Impact
     const emptyTripReduction = (driversWithEmptyCargoPercentage * willingDriversPercentage) / 100;
     const sustainabilityImpact = Math.round(Math.min(100, 
         (emptyTripReduction * 70) + 
         ((driverCount / Math.max(1, driverCount + customerCount)) * 100 * 0.3)
     ));
     
-    // 6. TOTAL Opportunity Score (weighted combination of all KPIs)
+    // 10. TOTAL Opportunity Score
     const opportunityScore = Math.round(
         (driverReadiness * 0.20) + 
-        (customerReadiness * 0.20) + 
-        (marketPotential * 0.25) + 
+        (customerReadiness * 0.15) + 
+        (efficiencyScore * 0.15) + 
+        (marketPotential * 0.20) + 
         (networkEffectScore * 0.15) + 
-        (sustainabilityImpact * 0.20)
+        (sustainabilityImpact * 0.15)
     );
     
     return {
         driverReadiness,
         customerReadiness,
         opportunityScore,
+        efficiencyScore,
+        supplyPerWeek,
+        demandPerWeek,
+        matchRate,
         marketPotential,
         networkEffectScore,
         sustainabilityImpact
@@ -443,131 +475,196 @@ function createAnimatedGaugeChart(canvasId, value, label, color, additionalText 
     return chart;
 }
 
-// Business opportunity charts
-function createReadinessGaugeCharts() {
-    // Get KPI values from our algorithm
+// Initialize Business Opportunity Charts
+function initBusinessOpportunityCharts() {
     const kpis = calculateBusinessOpportunityKPIs();
     
-    // Driver readiness gauge
+    createReadinessGaugeCharts(kpis);
+    createSupplyDemandChart(kpis);
+    createOpportunityScoreChart(kpis);
+    updateMarketMetrics(kpis);
+}
+
+// Market Readiness Gauge Charts
+function createReadinessGaugeCharts(kpis) {
+    // Driver Readiness Gauge
     const driverCtx = document.getElementById('driver-readiness-chart').getContext('2d');
+    if (!driverCtx) return;
+    
     const driverChart = new Chart(driverCtx, {
         type: 'doughnut',
         data: {
-            labels: ['Ready', 'Not Ready'],
             datasets: [{
-                data: [0, 100], // Start at 0 for animation
-                backgroundColor: [blueColors[1], '#E5E7EB'],
+                data: [0, 100 - 0], // Start at 0
+                backgroundColor: ['#2563EB', '#F3F4F6'],
                 borderWidth: 0
             }]
         },
         options: {
+            cutout: '75%',
             circumference: 180,
             rotation: 270,
-            cutout: '70%',
-            plugins: {
-                legend: {
-                    display: false
-                },
-                tooltip: {
-                    enabled: false
-                }
-            },
             responsive: true,
-            maintainAspectRatio: true
+            maintainAspectRatio: true,
+            animation: {
+                animateRotate: false,
+                animateScale: false
+            },
+            plugins: {
+                tooltip: { enabled: false },
+                legend: { display: false }
+            }
         }
     });
     
-    // Customer readiness gauge
+    // Customer Readiness Gauge
     const customerCtx = document.getElementById('customer-readiness-chart').getContext('2d');
+    if (!customerCtx) return;
+    
     const customerChart = new Chart(customerCtx, {
         type: 'doughnut',
         data: {
-            labels: ['Ready', 'Not Ready'],
             datasets: [{
-                data: [0, 100], // Start at 0 for animation
-                backgroundColor: [greenColors[1], '#E5E7EB'],
+                data: [0, 100 - 0], // Start at 0
+                backgroundColor: ['#059669', '#F3F4F6'],
                 borderWidth: 0
             }]
         },
         options: {
+            cutout: '75%',
             circumference: 180,
             rotation: 270,
-            cutout: '70%',
+            responsive: true,
+            maintainAspectRatio: true,
+            animation: {
+                animateRotate: false,
+                animateScale: false
+            },
+            plugins: {
+                tooltip: { enabled: false },
+                legend: { display: false }
+            }
+        }
+    });
+    
+    // Animate gauges
+    animateGauge(driverChart, kpis.driverReadiness, 'driver-readiness-value');
+    animateGauge(customerChart, kpis.customerReadiness, 'customer-readiness-value');
+}
+
+// Supply vs Demand Chart
+function createSupplyDemandChart(kpis) {
+    const ctx = document.getElementById('supply-demand-chart').getContext('2d');
+    if (!ctx) return;
+    
+    const chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Empty Trips\n(Supply)', 'Packages\n(Demand)'],
+            datasets: [{
+                data: [0, 0], // Start at 0
+                backgroundColor: ['#3B82F6', '#10B981'],
+                borderRadius: 6,
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        display: true,
+                        color: '#E5E7EB'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Weekly Volume',
+                        color: '#6B7280',
+                        font: {
+                            size: 12
+                        }
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    }
+                }
+            },
             plugins: {
                 legend: {
                     display: false
                 },
                 tooltip: {
-                    enabled: false
+                    callbacks: {
+                        label: function(context) {
+                            return `${context.raw} per week`;
+                        }
+                    }
                 }
-            },
-            responsive: true,
-            maintainAspectRatio: true
+            }
         }
     });
     
-    // Add initial text in center
-    drawGaugeCenter(driverCtx, `0%`, 'Driver Readiness');
-    drawGaugeCenter(customerCtx, `0%`, 'Customer Readiness');
+    // Animate the chart
+    animateBarChart(chart, [kpis.supplyPerWeek, kpis.demandPerWeek]);
     
-    // Animate the gauges with smooth transitions
-    animateChart(driverChart, driverCtx, kpis.driverReadiness, '%', 'Driver Readiness');
-    animateChart(customerChart, customerCtx, kpis.customerReadiness, '%', 'Customer Readiness');
-    
-    // Update KPI metrics
-    updateKPIMetrics(kpis);
+    // Update efficiency meter
+    animateEfficiencyMeter(kpis.efficiencyScore);
 }
 
-function createOpportunityScoreChart() {
-    // Get KPI values from our algorithm
-    const kpis = calculateBusinessOpportunityKPIs();
-    
-    // Opportunity score gauge
+// Opportunity Score Gauge
+function createOpportunityScoreChart(kpis) {
     const ctx = document.getElementById('opportunity-score-chart').getContext('2d');
-    const chart = new Chart(ctx, {
+    if (!ctx) return;
+    
+    const opportunityChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: ['Opportunity', 'Remaining'],
             datasets: [{
-                data: [0, 100], // Start at 0 for animation
-                backgroundColor: [
-                    getOpportunityColor(kpis.opportunityScore),
-                    '#E5E7EB'
-                ],
+                data: [0, 100 - 0], // Start at 0
+                backgroundColor: [getOpportunityColor(kpis.opportunityScore), '#F3F4F6'],
                 borderWidth: 0
             }]
         },
         options: {
+            cutout: '70%',
             circumference: 180,
             rotation: 270,
-            cutout: '70%',
-            plugins: {
-                legend: {
-                    display: false
-                },
-                tooltip: {
-                    enabled: false
-                }
-            },
             responsive: true,
-            maintainAspectRatio: true
+            maintainAspectRatio: true,
+            animation: {
+                animateRotate: false,
+                animateScale: false
+            },
+            plugins: {
+                tooltip: { enabled: false },
+                legend: { display: false }
+            }
         }
     });
     
-    // Add initial empty text in center
-    drawGaugeCenter(ctx, '0/100', 'Opportunity Score');
+    // Animate opportunity score gauge
+    animateGauge(opportunityChart, kpis.opportunityScore, 'opportunity-score-value', '', true);
     
-    // Animate opportunity score 
-    animateChart(chart, ctx, kpis.opportunityScore, '/100', 'Opportunity Score');
+    // Update business insight with typing animation
+    setTimeout(() => {
+        typeBusinessInsight(generateBusinessInsight(kpis));
+    }, 1000);
 }
 
-// Helper function to animate a chart from 0 to target value
-function animateChart(chart, ctx, targetValue, suffix = '%', label) {
+// Helper Functions for Animations
+
+// Animate gauge charts
+function animateGauge(chart, targetValue, valueElementId, suffix = '%', isOpportunityScore = false) {
     let currentValue = 0;
     const duration = 1500; // 1.5 seconds
-    const interval = 16; // ~60fps
-    const steps = Math.ceil(duration / interval);
-    const increment = targetValue / steps;
+    const fps = 60;
+    const frames = duration / (1000 / fps);
+    const increment = targetValue / frames;
+    const valueElement = document.getElementById(valueElementId);
     
     const animation = setInterval(() => {
         currentValue += increment;
@@ -577,67 +674,182 @@ function animateChart(chart, ctx, targetValue, suffix = '%', label) {
             clearInterval(animation);
         }
         
-        // Update chart data
-        chart.data.datasets[0].data = [
-            Math.round(currentValue), 
-            100 - Math.round(currentValue)
-        ];
-        chart.update('none'); // Update without animation
+        // Update chart
+        chart.data.datasets[0].data = [Math.round(currentValue), 100 - Math.round(currentValue)];
+        chart.update('none');
         
-        // Update center text
-        drawGaugeCenter(ctx, `${Math.round(currentValue)}${suffix}`, label);
-    }, interval);
+        // Update value display
+        if (valueElement) {
+            if (isOpportunityScore) {
+                valueElement.textContent = Math.round(currentValue);
+            } else {
+                valueElement.textContent = Math.round(currentValue) + suffix;
+            }
+        }
+    }, 1000 / fps);
 }
 
-// Update KPI metrics in UI
-function updateKPIMetrics(kpis) {
-    // Start by updating the insight text
-    updateBusinessInsight(kpis);
-    
-    // Animate the KPI progress bars
-    setTimeout(() => {
-        animateKPIBar('market-potential', kpis.marketPotential);
-        animateKPIBar('network-effect', kpis.networkEffectScore);
-        animateKPIBar('sustainability-impact', kpis.sustainabilityImpact);
-    }, 800);
-}
-
-// Animate individual KPI bar
-function animateKPIBar(id, value) {
-    const bar = document.getElementById(`${id}-bar`);
-    const valueDisplay = document.getElementById(`${id}-value`);
-    
-    if (!bar || !valueDisplay) return;
-    
-    // Set the color based on value
-    bar.className = `shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center ${getKPIColorClass(value)}`;
-    
-    // Animate width and counter
-    let currentWidth = 0;
-    let currentValue = 0;
+// Animate bar chart
+function animateBarChart(chart, targetValues) {
+    const currentValues = [0, 0];
     const duration = 1500; // 1.5 seconds
-    const interval = 16; // ~60fps
-    const steps = duration / interval;
-    const widthIncrement = value / steps;
-    const valueIncrement = value / steps;
+    const fps = 60;
+    const frames = duration / (1000 / fps);
+    const increments = targetValues.map(val => val / frames);
     
     const animation = setInterval(() => {
-        currentWidth += widthIncrement;
-        currentValue += valueIncrement;
+        let complete = true;
         
-        const displayWidth = Math.min(value, Math.round(currentWidth));
-        const displayValue = Math.min(value, Math.round(currentValue));
+        for (let i = 0; i < targetValues.length; i++) {
+            currentValues[i] += increments[i];
+            
+            if (currentValues[i] < targetValues[i]) {
+                complete = false;
+            } else {
+                currentValues[i] = targetValues[i];
+            }
+        }
         
-        bar.style.width = `${displayWidth}%`;
-        valueDisplay.textContent = `${displayValue}/100`;
+        // Update chart data
+        chart.data.datasets[0].data = currentValues.map(Math.round);
+        chart.update('none');
         
-        if (displayWidth >= value) {
+        if (complete) {
             clearInterval(animation);
         }
-    }, interval);
+    }, 1000 / fps);
 }
 
-// Animate KPI bars with counting effect
+// Animate efficiency meter
+function animateEfficiencyMeter(targetValue) {
+    const efficiencyBar = document.querySelector('.efficiency-value');
+    const efficiencyLabel = document.getElementById('efficiency-percentage');
+    
+    if (!efficiencyBar || !efficiencyLabel) return;
+    
+    let currentValue = 0;
+    const duration = 1500; // 1.5 seconds
+    const fps = 60;
+    const frames = duration / (1000 / fps);
+    const increment = targetValue / frames;
+    
+    const animation = setInterval(() => {
+        currentValue += increment;
+        
+        if (currentValue >= targetValue) {
+            currentValue = targetValue;
+            clearInterval(animation);
+        }
+        
+        // Update bar width and label
+        efficiencyBar.style.width = `${Math.round(currentValue)}%`;
+        efficiencyLabel.textContent = `${Math.round(currentValue)}%`;
+    }, 1000 / fps);
+}
+
+// Update market metrics
+function updateMarketMetrics(kpis) {
+    // Update supply, demand and match rate values
+    const supplyElement = document.getElementById('empty-trips-count');
+    const demandElement = document.getElementById('packages-count');
+    const matchElement = document.getElementById('match-rate');
+    
+    if (supplyElement) supplyElement.textContent = kpis.supplyPerWeek;
+    if (demandElement) demandElement.textContent = kpis.demandPerWeek;
+    if (matchElement) matchElement.textContent = kpis.matchRate;
+}
+
+// Generate business insight text based on KPIs
+function generateBusinessInsight(kpis) {
+    if (kpis.opportunityScore >= 80) {
+        return `Based on our analysis of ${kpis.driverReadiness}% driver readiness and ${kpis.customerReadiness}% customer readiness, NEAR presents an exceptional business opportunity. The platform can efficiently match ${kpis.matchRate} deliveries per week, creating significant value for all participants while reducing environmental impact.`;
+    } else if (kpis.opportunityScore >= 65) {
+        return `NEAR shows strong potential with ${kpis.driverReadiness}% driver market readiness. With weekly supply of ${kpis.supplyPerWeek} empty trips and demand for ${kpis.demandPerWeek} packages, there is a solid foundation for a successful logistics optimization platform.`;
+    } else {
+        return `Our analysis indicates a developing opportunity with ${kpis.customerReadiness}% customer readiness. The current market efficiency potential of ${kpis.efficiencyScore}% suggests focusing on driver acquisition strategies to improve matchmaking capabilities.`;
+    }
+}
+
+// Animated typing effect for business insight
+function typeBusinessInsight(text) {
+    const insightElement = document.getElementById('business-insight');
+    if (!insightElement) return;
+    
+    // Clear current text
+    insightElement.textContent = '';
+    
+    // Type effect
+    let i = 0;
+    const speed = 20; // typing speed in ms
+    
+    function type() {
+        if (i < text.length) {
+            insightElement.textContent += text.charAt(i);
+            i++;
+            setTimeout(type, speed);
+        }
+    }
+    
+    type();
+}
+
+// Helper function to draw gauge chart center text
+function drawGaugeCenter(ctx, text, label) {
+    if (!ctx || !ctx.canvas) return;
+    
+    const width = ctx.canvas.width;
+    const height = ctx.canvas.height;
+    
+    ctx.save();
+    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'center';
+    
+    // Clear previous text
+    ctx.clearRect(width * 0.3, height * 0.55, width * 0.4, height * 0.4);
+    
+    // Value text
+    ctx.font = 'bold 22px Arial';
+    ctx.fillStyle = '#1E3A8A';
+    ctx.fillText(text, width / 2, height * 0.65);
+    
+    // Label text (if provided)
+    if (label) {
+        ctx.font = '12px Arial';
+        ctx.fillStyle = '#6B7280';
+        ctx.fillText(label, width / 2, height * 0.8);
+    }
+    
+    ctx.restore();
+}
+
+// Get color for opportunity score based on value
+function getOpportunityColor(score) {
+    if (score >= 80) {
+        return '#10B981'; // Green for high scores
+    } else if (score >= 65) {
+        return '#3B82F6'; // Blue for mid scores
+    } else {
+        return '#F59E0B'; // Amber for lower scores
+    }
+}
+
+// Initialize charts when full data is loaded
+function initializeCharts() {
+    createEmploymentTypeChart();
+    createEmptyTripsChart();
+    createVehicleTypeChart();
+    createDeliveryPreferenceChart();
+    createWillingnessLevelChart();
+    createPackageFrequencyChart();
+    
+    // Auto-select the first tab on load
+    const firstTabButton = document.querySelector('.tab-button');
+    if (firstTabButton) {
+        firstTabButton.click();
+    }
+}
+
+// Animate KPI bars with counting effect (Not used in current design but kept for reference)
 function animateKPIBars(kpiMetrics, kpis) {
     kpiMetrics.forEach(kpi => {
         const bar = document.getElementById(`${kpi.id}-bar`);
@@ -727,32 +939,3 @@ function getKPIColorClass(value) {
     return 'bg-red-500';
 }
 
-// Helper function to draw text in the center of gauge charts
-function drawGaugeCenter(ctx, text, label) {
-    const canvas = ctx.canvas;
-    const width = canvas.width;
-    const height = canvas.height;
-    
-    // Need to wait for the chart to render
-    setTimeout(() => {
-        ctx.restore();
-        ctx.font = "bold 24px 'Poppins', sans-serif";
-        ctx.textBaseline = "middle";
-        ctx.textAlign = "center";
-        ctx.fillStyle = "#1E3A8A";
-        ctx.fillText(text, width / 2, height * 0.7);
-        
-        ctx.font = "14px 'Poppins', sans-serif";
-        ctx.fillStyle = "#6B7280";
-        ctx.fillText(label, width / 2, height * 0.85);
-        ctx.save();
-    }, 100);
-}
-
-// Get color based on opportunity score
-function getOpportunityColor(score) {
-    if (score >= 80) return '#10B981'; // Green
-    if (score >= 60) return '#3B82F6'; // Blue
-    if (score >= 40) return '#F59E0B'; // Yellow
-    return '#EF4444'; // Red
-}
