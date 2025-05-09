@@ -234,18 +234,29 @@
     transition: none; /* Prevent any automatic transitions */
     /* Make sure other animations don't apply */
     animation: none !important;
+    /* Render above other elements during animation */
+    position: relative;
+    z-index: 2;
 }
 
 /* Only apply animation when explicitly activated with this class */
 #driver-insights .chart-container.animate-now {
-    animation: fadeInUp 0.8s ease forwards;
+    animation: fadeInUp 0.6s ease-out forwards;
     opacity: 1;
+    will-change: transform, opacity; /* Optimize for animation */
 }
 
 /* Remove any automatic animations from chart containers */
 #driver-insights .chart-container:hover {
     transform: none;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Improve animation fluidity with GPU acceleration */
+#driver-insights canvas {
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    -webkit-font-smoothing: subpixel-antialiased;
 }
 
 @keyframes fadeInUp {

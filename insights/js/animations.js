@@ -51,6 +51,20 @@ function setupDriverScrollAnimations() {
         container.style.transform = 'translateY(20px)';
         // Remove any animation that might be applied
         container.style.animation = 'none';
+        
+        // Ensure charts inside are also hidden initially
+        const canvas = container.querySelector('canvas');
+        if (canvas && canvas.id) {
+            const chart = Chart.getChart(canvas.id);
+            if (chart) {
+                // Store original data for later animation
+                chart._originalData = [...chart.data.datasets[0].data];
+                
+                // Reset to zero for animation
+                chart.data.datasets[0].data = chart._originalData.map(() => 0);
+                chart.update('none');
+            }
+        }
     });
     
     // Listen for scroll events
@@ -69,6 +83,16 @@ function setupDriverScrollAnimations() {
                     container.style.opacity = '0';
                     container.style.transform = 'translateY(20px)';
                     container.style.animation = 'none';
+                    
+                    // Reset chart data
+                    const canvas = container.querySelector('canvas');
+                    if (canvas && canvas.id) {
+                        const chart = Chart.getChart(canvas.id);
+                        if (chart && chart._originalData) {
+                            chart.data.datasets[0].data = chart._originalData.map(() => 0);
+                            chart.update('none');
+                        }
+                    }
                 }
             });
             
@@ -361,34 +385,26 @@ function checkDriverChartsInViewport() {
             if (container.style.opacity === '0') {
                 console.log(`Container ${index} is in viewport and ready to animate`);
                 
-                // Use a timeout for staggered entry
-                setTimeout(() => {
-                    // Apply animation class first
-                    container.classList.add('animate-now');
-                    container.style.opacity = '1'; // Ensure visible
+                // Apply animation class immediately
+                container.classList.add('animate-now');
+                container.style.opacity = '1'; // Ensure visible
+                
+                // Find the canvas inside this container
+                const canvas = container.querySelector('canvas');
+                if (canvas && canvas.id) {
+                    console.log(`Found canvas with ID: ${canvas.id}`);
                     
-                    // Log animation
-                    console.log(`Animating container ${index}`);
-                    
-                    // Find the canvas inside this container
-                    const canvas = container.querySelector('canvas');
-                    if (canvas && canvas.id) {
-                        console.log(`Found canvas with ID: ${canvas.id}`);
+                    // Check if chart data already animated
+                    if (!animatedDriverCharts[canvas.id]) {
+                        // Mark as animated
+                        animatedDriverCharts[canvas.id] = true;
                         
-                        // Check if chart data already animated
-                        if (!animatedDriverCharts[canvas.id]) {
-                            // Mark as animated
-                            animatedDriverCharts[canvas.id] = true;
-                            
-                            // Wait for container animation to finish before animating chart data
-                            setTimeout(() => {
-                                animateDriverChartById(canvas.id);
-                            }, 500); // Wait for the container animation to be almost complete
-                        }
-                    } else {
-                        console.warn('Canvas element not found or missing ID in container:', container);
+                        // Animate chart immediately with the container
+                        animateDriverChartById(canvas.id);
                     }
-                }, index * 300); // Stagger each container by 300ms
+                } else {
+                    console.warn('Canvas element not found or missing ID in container:', container);
+                }
             }
         }
     });
@@ -436,22 +452,20 @@ function animateDriverChartById(chartId) {
         chartInstance.options.animation = false;
         chartInstance.update('none'); // Use 'none' mode to prevent any animation
         
-        // Then animate to the real values after a short delay
-        setTimeout(() => {
-            // Enhanced animation settings
-            chartInstance.options.animation = {
-                duration: 1500,
-                easing: 'easeOutQuart',
-                delay: 100
-            };
-            
-            // Set the real data back
-            chartInstance.data.datasets[0].data = originalData;
-            
-            // Force update with animation
-            chartInstance.update();
-            console.log(`Chart data animation started for ${chartId}`);
-        }, 300);
+        // Then animate to the real values immediately
+        // Enhanced animation settings
+        chartInstance.options.animation = {
+            duration: 1200,
+            easing: 'easeOutQuart',
+            delay: 0
+        };
+        
+        // Set the real data back
+        chartInstance.data.datasets[0].data = originalData;
+        
+        // Force update with animation
+        chartInstance.update();
+        console.log(`Chart data animation started for ${chartId}`);
     } catch (error) {
         console.error(`Error animating chart ${chartId}:`, error);
         
