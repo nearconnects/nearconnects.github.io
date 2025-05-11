@@ -1,0 +1,291 @@
+ implementación de GSAP con ScrollTrigger y Observer está cerca, pero se complica demasiado moviendo cada panel individualmente y usando un end: "+=300%" fijo. Esto provoca que la sección no se “pinee” el tiempo necesario ni los paneles no se comporten a pantalla completa como un verdadero carrusel vertical. La clave es:
+
+Pinear la sección exactamente tantos vh como slides tengas, calculándolo dinámicamente con totalPanels × window.innerHeight en end para garantizar que el “pin” cubra todos los panels 
+GSAP
+.
+
+Trasladar todo el contenedor (.swipe-section) en lugar de cada panel por separado; así sólo animas un único elemento con yPercent: -100 * index 
+GSAP
+.
+
+Desactivar el Observer en el momento exacto tras la última slide, volviendo al scroll nativo de la página 
+GSAP
+.
+
+Con estos ajustes, tendrás un carrusel vertical “full-screen” fluido y sencillo, sin lógica excesiva de visibilidad para cada panel.
+
+1. Problemas detectados
+end: "+=300%" está hardcodeado, pero si cambias el número de panels o la altura de la ventana, deja de funcionar correctamente 
+GSAP
+.
+
+Animación panel a panel: usar gsap.to(currentPanel) y luego gsap.fromTo(nextPanel) añade complejidad innecesaria. Es más robusto mover el contenedor completo.
+
+Observer no se desactiva puntualmente: con la lógica actual puede quedarse enganchado o desactivarse en momentos erróneos.
+
+2. Solución propuesta
+Pinear la sección durante totalPanels × 100vh usando:
+
+js
+Copiar
+Editar
+end: "+=" + (totalPanels * window.innerHeight)
+Animar el contenedor .swipe-section con un único tween:
+
+js
+Copiar
+Editar
+gsap.to(swipeSection, {
+  yPercent: -100 * index,
+  duration: 0.7,
+  ease: "power2.inOut",
+  onStart: () => isAnimating = true,
+  onComplete: () => {
+    currentIndex = index;
+    isAnimating = false;
+  }
+});
+Desactivar Observer y ScrollTrigger justo tras la última slide:
+
+js
+Copiar
+Editar
+if (index === totalPanels - 1) {
+  observer.disable();
+  scrollTrigger.kill();
+}
+CSS mínimo para .swipe-section y .panel:
+
+css
+Copiar
+Editar
+.swipe-section {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+.swipe-section .panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  visibility: visible;
+  opacity: 0; /* inicial */
+}
+.swipe-section .panel.active {
+  opacity: 1;
+  transition: opacity 0.6s;
+}
+3. Código corregido
+insights.html
+html
+Copiar
+Editar
+<div class="swipe-section">
+  <section class="panel">Total Respondents – 73</section>
+  <section class="panel">Drivers with Empty Cargo – 34 (72%)</section>
+  <section class="panel">Drivers Willing to Deliver – 30 (65%)</section>
+  <section class="panel">Very Willing Customers – 26 (60%)</section>
+</div>
+<div class="insights-summary" style="opacity:0; transform:translateY(30px)">
+  <!-- Tu resumen aquí -->
+</div>
+insights.css
+css
+Copiar
+Editar
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+body { font-family: 'Poppins', sans-serif; margin:0; }
+.swipe-section {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+.swipe-section .panel {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: #f9fafd;
+  opacity: 0;
+  transform: translateY(30px);
+}
+.insights-summary {
+  padding: 2rem;
+  background: #fff;
+  text-align: center;
+}
+scroll-metrics.js
+js
+Copiar
+Editar
+document.addEventListener('DOMContentLoaded', () => {
+  gsap.registerPlugin(ScrollTrigger, Observer);
+
+  const swipeSection = document.querySelector('.swipe-section');
+  const panels = gsap.utils.toArray('.swipe-section .panel');
+  const totalPanels = panels.length;
+  let currentIndex = 0, isAnimating = false;
+
+  // Pinea la sección para abarcar todos los panels
+  const scrollTrigger = ScrollTrigger.create({
+    trigger: swipeSection,
+    pin: true,
+    start: 'top top',
+    end: '+=' + (totalPanels * window.innerHeight),
+    anticipatePin: 1
+  });
+
+  // Muestra el primer panel
+  gsap.to(panels[0], { opacity:1, y:0, duration:0.7, delay:0.3 });
+
+  const observer = Observer.create({
+    target: window,
+    type: 'wheel,touch',
+    onChange(self) {
+      if (isAnimating) return;
+      const dir = self.deltaY > 0 ? 1 : -1;
+      const newIndex = currentIndex + dir;
+
+      if (newIndex === totalPanels) {
+        // Ultimo panel: retomamos scroll normal
+        observer.disable();
+        scrollTrigger.kill();
+        gsap.to('.insights-summary', { opacity:1, y:0, duration:0.5, delay:0.3 });
+        return;
+      }
+      if (newIndex < 0 || newIndex >= totalPanels) return;
+
+      isAnimating = true;
+      gsap.to(swipeSection, {
+        yPercent: -100 * newIndex,
+        duration: 0.7,
+        ease: 'power2.inOut',
+        onComplete() {
+          currentIndex = newIndex;
+          isAnimating = false;
+        }
+      });
+    },
+    wheelSpeed: -1,
+    dragMinimum: 10
+  });
+});
+Con estos cambios:
+
+La sección se pinea el tiempo justo (dinámico) para cubrir todas las slides 
+GSAP
+.
+
+El contenedor se mueve entero con un solo tween, simplificando la lógica 
+GSAP
+.
+
+El Observer se desactiva tras la última slide, devolviendo el scroll natural 
+GSAP
+.
+
+De esta forma tendrás un carrusel vertical a pantalla completa, sin complicaciones extra ni sección horizontal al final. ¡Dale un vistazo!
+
+
+
+Fuentes
+
+
+
+
+
+
+Tú dijiste:
+a parte de esto, cuando hago scroll down no hace nada, los scrolls estan funcionando mal 
+
+
+ChatGPT Plus
+
+Pensó durante 5 segundos
+Vale, lo estás liando porque el Observer no está bloqueando el scroll nativo y tu “pin” acaba antes de tiempo. Te propongo este ajuste:
+
+1. CSS: evita el scroll nativo dentro de la sección
+css
+Copiar
+Editar
+body, html {
+  overscroll-behavior: none; /* detiene el bounce/scroll por defecto */
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+.swipe-section {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  overscroll-behavior: contain; /* mantiene todo el scroll dentro */
+}
+2. JS: usa ScrollTrigger.observe en vez de Observer.create y bloquea el scroll
+js
+Copiar
+Editar
+document.addEventListener('DOMContentLoaded', () => {
+  gsap.registerPlugin(ScrollTrigger);
+
+  const swipeSection = document.querySelector('.swipe-section');
+  const panels = gsap.utils.toArray('.swipe-section .panel');
+  const total = panels.length;
+  let idx = 0, animando = false;
+
+  // Pin dinámico: n panels × viewport
+  ScrollTrigger.create({
+    trigger: swipeSection,
+    pin: true,
+    start: 'top top',
+    end: '+=' + (total * window.innerHeight),
+    anticipatePin: 1
+  });
+
+  // Primer panel visible
+  gsap.set(panels, { opacity: 0, y: 30 });
+  gsap.to(panels[0], { opacity: 1, y: 0, duration: 0.7, delay: 0.2 });
+
+  // Observador de scroll dentro de la sección
+  ScrollTrigger.observe({
+    target: swipeSection,
+    type: 'wheel,touch,pointer',
+    preventDefault: true,       // bloquea el scroll nativo
+    onUp:    () => cambiar(idx - 1),
+    onDown:  () => cambiar(idx + 1),
+    tolerance: 10,
+  });
+
+  function cambiar(nuevo) {
+    if (animando || nuevo < 0) return;
+    if (nuevo >= total) {
+      // fin del carousel: desbloquea ScrollTrigger y deja continuar
+      ScrollTrigger.getAll().forEach(st => st.kill());
+      return;
+    }
+    animando = true;
+    gsap.to(swipeSection, {
+      yPercent: -100 * nuevo,
+      duration: 0.7,
+      ease: 'power2.inOut',
+      onComplete() {
+        idx = nuevo;
+        animando = false;
+      }
+    });
+  }
+});
+¿Por qué funciona mejor?
+overscroll-behavior evita que el scroll nativo “se cuele” dentro de tu carrusel.
+
+ScrollTrigger.observe con preventDefault: true detiene el wheel/touch normal y solo deja pasar tus callbacks.
+
+El “pin” dura justo totalPanels × altura de ventana, nada de +="300%".
+
+Solo mueves un contenedor (.swipe-section) en lugar de animar panel a panel.
+
+Con esto, scroll down dentro de .swipe-section siempre disparará tu onDown, y avanzará slide tras slide sin quedarse pillado. ¡Pruébalo y me cuentas!

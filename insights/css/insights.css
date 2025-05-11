@@ -81,31 +81,29 @@
 /* ----------------------------------------
    GSAP SWIPE SECTION - VERTICAL FULL SCREEN CAROUSEL
    ---------------------------------------- */
+body, html {
+    overscroll-behavior: none; /* detiene el bounce/scroll por defecto */
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 .swipe-section {
     position: relative;
     width: 100%;
     height: 100vh;
     overflow: hidden;
+    overscroll-behavior: contain; /* mantiene todo el scroll dentro */
 }
 
 .panel {
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative;
     width: 100%;
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #f9fafd;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-
-.panel.visible {
-    opacity: 1;
-    transform: translateY(0);
 }
 
 .panel-content {
@@ -117,6 +115,14 @@
     text-align: center;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     font-family: 'Poppins', sans-serif;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.panel.active .panel-content {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .metric-icon {
@@ -168,44 +174,10 @@
     font-weight: 300;
 }
 
-/* Hide panels by default, first one will be shown by JS */
-#panel1, #panel2, #panel3, #panel4 {
-    visibility: hidden;
-}
-
-#panel1 {
-    z-index: 1;
-}
-
-/* Special animation for entering and leaving */
-.panel.entering {
-    animation: slideInUp 0.7s forwards;
-}
-
-.panel.leaving {
-    animation: slideOutUp 0.7s forwards;
-}
-
-@keyframes slideInUp {
-    from {
-        transform: translateY(100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-@keyframes slideOutUp {
-    from {
-        transform: translateY(0);
-        opacity: 1;
-    }
-    to {
-        transform: translateY(-100%);
-        opacity: 0;
-    }
+.insights-summary {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
 /* General utility classes */

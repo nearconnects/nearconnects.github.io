@@ -4,151 +4,111 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Initialize GSAP Carousel (scripts are already loaded in the HTML)
-  initGSAPCarousel();
+  // Añadir un console.log para verificar la carga
+  console.log("Inicializando carrusel vertical con GSAP");
   
-  function initGSAPCarousel() {
-    // Register GSAP plugins
-    gsap.registerPlugin(ScrollTrigger, Observer);
+  gsap.registerPlugin(ScrollTrigger);
 
-    const swipeSection = document.querySelector('.swipe-section');
-    const panels = document.querySelectorAll('.panel');
-    const totalPanels = panels.length;
+  const swipeSection = document.querySelector('.swipe-section');
+  const panels = gsap.utils.toArray('.panel');
+  const totalPanels = panels.length;
+  
+  console.log(`Encontrados ${totalPanels} paneles en el carrusel`);
+  
+  let idx = 0, animando = false;
+
+  // Configurar el primer panel como activo
+  gsap.set(panels[0], { className: '+=active' });
+  
+  // Crear el ScrollTrigger con pin dinámico basado en el número de paneles
+  const scrollTrigger = ScrollTrigger.create({
+    trigger: swipeSection,
+    pin: true,
+    start: 'top top',
+    end: '+=' + (totalPanels * window.innerHeight),
+    anticipatePin: 1
+  });
+  
+  // Observador de scroll dentro de la sección
+  ScrollTrigger.observe({
+    target: swipeSection,
+    type: 'wheel,touch,pointer',
+    preventDefault: true,     // bloquea el scroll nativo
+    onUp: () => cambiarPanel(idx - 1),
+    onDown: () => cambiarPanel(idx + 1),
+    tolerance: 10
+  });
+  
+  // Función para cambiar entre paneles
+  function cambiarPanel(nuevo) {
+    // Validación básica
+    if (animando || nuevo < 0) return;
     
-    // Set initial state
-    let currentIndex = 0;
-    let isAnimating = false;
+    // Si llegamos al final, desactivar ScrollTrigger y continuar con el scroll normal
+    if (nuevo >= totalPanels) {
+      console.log("Fin del carrusel - desactivando ScrollTrigger");
+      ScrollTrigger.getAll().forEach(st => st.kill());
+      
+      // Mostrar el resumen final
+      gsap.to('.insights-summary', { 
+        opacity: 1, 
+        y: 0, 
+        duration: 0.5, 
+        delay: 0.3 
+      });
+      
+      return;
+    }
     
-    // Make panels visible (they start with visibility:hidden in CSS)
-    panels.forEach(panel => {
-      panel.style.visibility = 'visible';
-      panel.style.opacity = '0';
-    });
+    animando = true;
     
-    // Show first panel initially
-    gsap.to(panels[0], {
-      opacity: 1,
-      y: 0,
+    // Quitar clase active del panel actual
+    panels[idx].classList.remove('active');
+    
+    // Mover todo el contenedor
+    gsap.to(swipeSection, {
+      yPercent: -100 * nuevo,
       duration: 0.7,
-      delay: 0.3
-    });
-    
-    // Create ScrollTrigger
-    const scrollTrigger = ScrollTrigger.create({
-      trigger: swipeSection,
-      pin: true,
-      start: "top top",
-      end: "+=300%",
-      pinSpacing: true,
-      scrub: false,
-      snap: false,
-      anticipatePin: 1
-    });
-    
-    // Observer for scroll direction
-    const observer = Observer.create({
-      target: window,
-      type: "wheel,touch",
-      onChange: (self) => {
-        // Only respond if not currently animating
-        if (!isAnimating) {
-          const direction = self.deltaY > 0 ? 1 : -1;
-          
-          // If scrolling down and not at the last panel
-          if (direction > 0 && currentIndex < totalPanels - 1) {
-            isAnimating = true;
-            gotoPanel(currentIndex + 1);
-          } 
-          // If scrolling up and not at the first panel
-          else if (direction < 0 && currentIndex > 0) {
-            isAnimating = true;
-            gotoPanel(currentIndex - 1);
-          } 
-          // If at the last panel and scrolling down, disable observer to resume normal scroll
-          else if (direction > 0 && currentIndex === totalPanels - 1) {
-            completeCarousel();
-          }
-        }
-      },
-      wheelSpeed: -1,
-      dragMinimum: 10
-    });
-    
-    // Function to navigate to a specific panel
-    function gotoPanel(index) {
-      if (index < 0 || index >= totalPanels || index === currentIndex) {
-        isAnimating = false;
-        return;
-      }
-      
-      const currentPanel = panels[currentIndex];
-      const nextPanel = panels[index];
-      
-      // Direction of movement
-      const movingDown = index > currentIndex;
-      
-      // Hide scroll indicator once user has started scrolling
-      if (currentIndex === 0 && movingDown) {
-        const scrollIndicator = document.querySelector('.scroll-indicator');
-        if (scrollIndicator) {
-          gsap.to(scrollIndicator, {
+      ease: 'power2.inOut',
+      onStart: () => {
+        // Agregar clase active al nuevo panel con un pequeño retraso
+        setTimeout(() => {
+          panels[nuevo].classList.add('active');
+        }, 200);
+        
+        // Ocultar indicador de scroll después del primer movimiento
+        if (idx === 0) {
+          gsap.to('.scroll-indicator', {
             opacity: 0,
             duration: 0.3,
             onComplete: () => {
-              scrollIndicator.classList.add('hidden');
+              document.querySelector('.scroll-indicator')?.classList.add('hidden');
             }
           });
         }
+      },
+      onComplete: () => {
+        idx = nuevo;
+        animando = false;
       }
-      
-      // Animate current panel out
-      gsap.to(currentPanel, {
-        yPercent: movingDown ? -100 : 100,
-        opacity: 0,
-        duration: 0.7,
-        ease: "power2.inOut"
-      });
-      
-      // Position and animate next panel in
-      gsap.fromTo(nextPanel, 
-        { 
-          yPercent: movingDown ? 100 : -100,
-          opacity: 0 
-        },
-        {
-          yPercent: 0,
-          opacity: 1,
-          duration: 0.7,
-          ease: "power2.inOut",
-          onComplete: () => {
-            currentIndex = index;
-            isAnimating = false;
-          }
-        }
-      );
-    }
-    
-    // Function to complete carousel and return to normal scrolling
-    function completeCarousel() {
-      // Unpin the section
-      scrollTrigger.kill();
-      
-      // Disable observer
-      observer.disable();
-      
-      // Make insights summary visible
-      const insightsSummary = document.querySelector('.insights-summary');
-      if (insightsSummary) {
-        gsap.to(insightsSummary, {
-          opacity: 1,
-          y: 0,
-          duration: 0.5,
-          delay: 0.3
-        });
-      }
-      
-      // Add a class to the swipe section to handle clean-up
-      swipeSection.classList.add('carousel-completed');
-    }
+    });
   }
+  
+  // Asegurarse de que el primer panel sea visible inicialmente
+  setTimeout(() => {
+    panels[0].classList.add('active');
+  }, 300);
+  
+  // Ajustar ScrollTrigger cuando cambia el tamaño de la ventana
+  window.addEventListener('resize', () => {
+    ScrollTrigger.getAll().forEach(st => st.kill());
+    
+    ScrollTrigger.create({
+      trigger: swipeSection,
+      pin: true,
+      start: 'top top',
+      end: '+=' + (totalPanels * window.innerHeight),
+      anticipatePin: 1
+    });
+  });
 });
