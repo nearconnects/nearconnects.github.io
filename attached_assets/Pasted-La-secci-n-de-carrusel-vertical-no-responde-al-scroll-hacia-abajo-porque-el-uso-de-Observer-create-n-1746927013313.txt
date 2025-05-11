@@ -1,0 +1,199 @@
+La sección de carrusel vertical no responde al scroll hacia abajo porque el uso de Observer.create no intercepta los eventos de rueda nativa salvo que se emplee ScrollTrigger.observe con preventDefault: true 
+GreenSock
+. Además, el pin de ScrollTrigger está configurado con un end estático en lugar de calcularse dinámicamente como totalPanels × window.innerHeight, lo que provoca que la sección deje de estar fijada antes de mostrar todos los panels 
+GSAP
+. También falta aplicar la propiedad CSS overscroll-behavior en <body> y en .swipe-section para evitar que el navegador hijackee el scroll durante la sección pineada 
+MDN Web Docs
+. Para resolverlo, se propone usar ScrollTrigger.observe, un end dinámico, bloquear el scroll nativo con CSS y animar un único tween en el contenedor completo, desactivando el Observer al llegar al último slide 
+GreenSock
+.
+
+Problema Actual
+Observer.create no bloquea el scroll nativo, por lo que onDown y onUp no se disparan de forma consistente al hacer scroll 
+GreenSock
+.
+
+El parámetro end: "+=300%" está hardcodeado y no adapta su duración al número real de panels ni a la altura de la ventana 
+GSAP
+.
+
+La sección .swipe-section no contiene el scroll interno porque carece de overscroll-behavior: contain, permitiendo que el navegador moje scroll chaining 
+MDN Web Docs
+.
+
+Se animan paneles individualmente con múltiples tweens, en lugar de mover todo el contenedor, añadiendo complejidad innecesaria 
+GreenSock
+.
+
+Análisis de Causas
+1. ScrollTrigger.observe vs Observer.create
+GSAP expone ScrollTrigger.observe() como un acceso directo a Observer.create(), pero con la ventaja de integrarse automáticamente con ScrollTrigger y permitir preventDefault para bloquear el scroll nativo 
+GreenSock
+.
+
+2. Fin del pin estático
+Cuando el end se fija en un valor estático, el pin termina antes o después de lo necesario, generando inconsistencias en el flujo de las slides 
+GSAP
+.
+
+3. Scroll chaining del navegador
+Sin overscroll-behavior: contain, al llegar al límite de .swipe-section el navegador propaga el scroll al contenedor padre, invalidando la lógica del carrusel 
+MDN Web Docs
+.
+
+4. Complejidad de animaciones
+Animar cada panel por separado (tweens de salida y entrada) multiplica callbacks y complicaciones de estado, en lugar de usar un solo tween que mueva el contenedor 
+GreenSock
+.
+
+Solución Propuesta
+Pinear la sección durante totalPanels × window.innerHeight usando:
+
+js
+Copiar
+Editar
+end: '+=' + (totalPanels * window.innerHeight)
+Esto asegura que la sección permanezca fijada hasta mostrar todos los slides 
+GreenSock
+.
+
+Bloquear el scroll nativo agregado en CSS:
+
+css
+Copiar
+Editar
+body, html {
+  overscroll-behavior: none;
+}
+.swipe-section {
+  overscroll-behavior: contain;
+}
+Con ello, todo el scroll dentro de .swipe-section quedará bajo control de GSAP 
+MDN Web Docs
+.
+
+Usar ScrollTrigger.observe en lugar de Observer.create, con preventDefault: true para capturar todos los eventos de rueda, touch y pointer:
+
+js
+Copiar
+Editar
+ScrollTrigger.observe({
+  target: swipeSection,
+  type: 'wheel,touch,pointer',
+  preventDefault: true,
+  onUp:    () => gotoPanel(idx - 1),
+  onDown:  () => gotoPanel(idx + 1),
+  tolerance: 10
+});
+Esto garantiza que cada scroll dispare un único tween en la dirección adecuada 
+GreenSock
+.
+
+Animar el contenedor completo .swipe-section con un solo tween:
+
+js
+Copiar
+Editar
+gsap.to(swipeSection, {
+  yPercent: -100 * nuevoIndex,
+  duration: 0.7,
+  ease: 'power2.inOut',
+  onComplete: () => { idx = nuevoIndex; animando = false; }
+});
+Simplifica la gestión de estado y evita animaciones duplicadas 
+GreenSock
+.
+
+Desactivar Observer y ScrollTrigger al mostrar el último panel:
+
+js
+Copiar
+Editar
+if (nuevoIndex === totalPanels - 1) {
+  observer.kill();
+  scrollTrigger.kill();
+}
+Permite retomar el scroll nativo para el resto de la página 
+GreenSock
+.
+
+Implementación Detallada
+CSS (insights.css)
+css
+Copiar
+Editar
+body, html {
+  overscroll-behavior: none; /* bloquea scroll nativo fuera */
+  margin: 0; padding: 0;
+}
+.swipe-section {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  overscroll-behavior: contain; /* scroll solo dentro */
+}
+.swipe-section .panel {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100vh;
+  display: flex; justify-content: center; align-items: center;
+  background: #f9fafd;
+}
+.insights-summary {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.5s, transform 0.5s;
+}
+JavaScript (scroll-metrics.js)
+js
+Copiar
+Editar
+document.addEventListener('DOMContentLoaded', () => {
+  gsap.registerPlugin(ScrollTrigger);
+
+  const swipeSection = document.querySelector('.swipe-section');
+  const panels       = gsap.utils.toArray('.swipe-section .panel');
+  const totalPanels  = panels.length;
+  let idx = 0, animando = false;
+
+  // Pin dinámico
+  const scrollTrigger = ScrollTrigger.create({
+    trigger: swipeSection,
+    pin: true,
+    start: 'top top',
+    end: '+=' + (totalPanels * window.innerHeight),
+    anticipatePin: 1
+  });
+
+  // Primer panel
+  gsap.set(panels[0], { opacity: 1 });
+
+  // Observer integrado en ScrollTrigger
+  const observer = ScrollTrigger.observe({
+    target: swipeSection,
+    type: 'wheel,touch,pointer',
+    preventDefault: true,
+    tolerance: 10,
+    onUp:   () => cambiarPanel(idx - 1),
+    onDown: () => cambiarPanel(idx + 1)
+  });
+
+  function cambiarPanel(nuevoIndex) {
+    if (animando || nuevoIndex < 0) return;
+    if (nuevoIndex >= totalPanels) {
+      observer.kill();
+      scrollTrigger.kill();
+      gsap.to('.insights-summary', { opacity:1, y:0, duration:0.5, delay:0.3 });
+      return;
+    }
+    animando = true;
+    gsap.to(swipeSection, {
+      yPercent: -100 * nuevoIndex,
+      duration: 0.7,
+      ease: 'power2.inOut',
+      onComplete() {
+        idx = nuevoIndex;
+        animando = false;
+      }
+    });
+  }
+});
+Con estos ajustes, el scroll down iniciará la transición entre slides de forma fiable y la sección quedará marcada en pantalla hasta completar el carrusel, tras lo cual el scroll volverá a la normalidad.

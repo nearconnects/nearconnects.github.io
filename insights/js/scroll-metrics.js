@@ -4,23 +4,23 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Añadir un console.log para verificar la carga
   console.log("Inicializando carrusel vertical con GSAP");
   
   gsap.registerPlugin(ScrollTrigger);
 
   const swipeSection = document.querySelector('.swipe-section');
-  const panels = gsap.utils.toArray('.panel');
+  const panels = gsap.utils.toArray('.swipe-section .panel');
   const totalPanels = panels.length;
   
   console.log(`Encontrados ${totalPanels} paneles en el carrusel`);
   
   let idx = 0, animando = false;
 
-  // Configurar el primer panel como activo
-  gsap.set(panels[0], { className: '+=active' });
+  // Configurar los paneles inicialmente
+  gsap.set(panels, { opacity: 0 });
+  gsap.set(panels[0], { opacity: 1 });
   
-  // Crear el ScrollTrigger con pin dinámico basado en el número de paneles
+  // Pin dinámico: exactamente totalPanels × altura de ventana
   const scrollTrigger = ScrollTrigger.create({
     trigger: swipeSection,
     pin: true,
@@ -29,29 +29,30 @@ document.addEventListener('DOMContentLoaded', () => {
     anticipatePin: 1
   });
   
-  // Observador de scroll dentro de la sección
-  ScrollTrigger.observe({
+  // Observer integrado en ScrollTrigger (no Observer.create)
+  const observer = ScrollTrigger.observe({
     target: swipeSection,
     type: 'wheel,touch,pointer',
-    preventDefault: true,     // bloquea el scroll nativo
+    preventDefault: true,     // Bloquea el scroll nativo mientras estamos en la sección
+    tolerance: 10,
     onUp: () => cambiarPanel(idx - 1),
-    onDown: () => cambiarPanel(idx + 1),
-    tolerance: 10
+    onDown: () => cambiarPanel(idx + 1)
   });
   
   // Función para cambiar entre paneles
-  function cambiarPanel(nuevo) {
-    // Validación básica
-    if (animando || nuevo < 0) return;
+  function cambiarPanel(nuevoIndex) {
+    // Validaciones
+    if (animando || nuevoIndex < 0) return;
     
-    // Si llegamos al final, desactivar ScrollTrigger y continuar con el scroll normal
-    if (nuevo >= totalPanels) {
+    // Si llegamos al final, liberar ScrollTrigger y continuar scroll nativo
+    if (nuevoIndex >= totalPanels) {
       console.log("Fin del carrusel - desactivando ScrollTrigger");
-      ScrollTrigger.getAll().forEach(st => st.kill());
+      observer.kill();
+      scrollTrigger.kill();
       
       // Mostrar el resumen final
       gsap.to('.insights-summary', { 
-        opacity: 1, 
+        opacity: 1,
         y: 0, 
         duration: 0.5, 
         delay: 0.3 
@@ -62,53 +63,49 @@ document.addEventListener('DOMContentLoaded', () => {
     
     animando = true;
     
-    // Quitar clase active del panel actual
-    panels[idx].classList.remove('active');
+    // Ocultar indicador de scroll después del primer movimiento
+    if (idx === 0 && nuevoIndex > 0) {
+      gsap.to('.scroll-indicator', {
+        opacity: 0,
+        duration: 0.3,
+        onComplete: () => {
+          document.querySelector('.scroll-indicator')?.classList.add('hidden');
+        }
+      });
+    }
     
-    // Mover todo el contenedor
+    // Un solo tween que mueve todo el contenedor
     gsap.to(swipeSection, {
-      yPercent: -100 * nuevo,
+      yPercent: -100 * nuevoIndex,
       duration: 0.7,
       ease: 'power2.inOut',
-      onStart: () => {
-        // Agregar clase active al nuevo panel con un pequeño retraso
-        setTimeout(() => {
-          panels[nuevo].classList.add('active');
-        }, 200);
-        
-        // Ocultar indicador de scroll después del primer movimiento
-        if (idx === 0) {
-          gsap.to('.scroll-indicator', {
-            opacity: 0,
-            duration: 0.3,
-            onComplete: () => {
-              document.querySelector('.scroll-indicator')?.classList.add('hidden');
-            }
-          });
-        }
-      },
-      onComplete: () => {
-        idx = nuevo;
+      onComplete() {
+        idx = nuevoIndex;
         animando = false;
       }
     });
   }
   
-  // Asegurarse de que el primer panel sea visible inicialmente
-  setTimeout(() => {
-    panels[0].classList.add('active');
-  }, 300);
-  
   // Ajustar ScrollTrigger cuando cambia el tamaño de la ventana
   window.addEventListener('resize', () => {
     ScrollTrigger.getAll().forEach(st => st.kill());
     
-    ScrollTrigger.create({
+    const newScrollTrigger = ScrollTrigger.create({
       trigger: swipeSection,
       pin: true,
       start: 'top top',
       end: '+=' + (totalPanels * window.innerHeight),
       anticipatePin: 1
+    });
+    
+    // Recrear el observer también para mantener la consistencia
+    const newObserver = ScrollTrigger.observe({
+      target: swipeSection,
+      type: 'wheel,touch,pointer',
+      preventDefault: true,
+      tolerance: 10,
+      onUp: () => cambiarPanel(idx - 1),
+      onDown: () => cambiarPanel(idx + 1)
     });
   });
 });
