@@ -1,0 +1,73 @@
+olvídate de Observer y de custom logic, y pásate a un timeline “scrub” con ScrollTrigger. De este modo, el scroll moverá el contenedor entero y nada quedará en blanco.
+
+1. Elimina estos estilos de tu CSS
+css
+Copiar
+Editar
+/* BORRA o comenta estas reglas: */
+html, body {
+  /* overscroll-behavior: none; */
+  /* height: 100%; */
+  /* margin: 0;
+  padding: 0; */
+}
+
+.key-metrics-section {
+  /* overflow: hidden; */
+}
+Estas reglas bloquean el scroll nativo y cortan la sección antes de tiempo.
+
+2. Asegúrate de que tu CSS para .swipe-section sea sólo esto (añade si falta):
+css
+Copiar
+Editar
+.swipe-section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.swipe-section .panel {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+3. Reemplaza todo tu JS por este bloque en scroll-metrics.js
+js
+Copiar
+Editar
+document.addEventListener('DOMContentLoaded', () => {
+  gsap.registerPlugin(ScrollTrigger);
+
+  const swipeSection = document.querySelector('.swipe-section');
+  const panels       = gsap.utils.toArray('.swipe-section .panel');
+  const panelCount   = panels.length;
+
+  // Prepara panels (opcional animación interna)
+  panels.forEach(p => gsap.set(p, { opacity: 1 }));
+
+  // Crea un tween que mueva TODO el contenedor verticalmente
+  gsap.to(swipeSection, {
+    yPercent: -100 * (panelCount - 1),
+    ease: 'none',
+    scrollTrigger: {
+      trigger: swipeSection,
+      start: 'top top',
+      end: () => '+=' + (panelCount * window.innerHeight),
+      pin: true,
+      scrub: 1,
+      // snap: 1 / (panelCount - 1), // descomenta si quieres “snap” entre paneles
+    }
+  });
+});
+¿Qué hace esto?
+Pinnea .swipe-section desde que toca el top, hasta panelCount × altura de la ventana.
+
+Mientras haces scroll, el contenedor se mueve con scrub:1 de forma suave (nada de lags ni blancos).
+
+Opcionalmente puedes activar snap para que se “enganche” a cada slide.
+
+Con estos tres pasos, el scroll down moverá inmediatamente los panels y no te quedará una página en blanco. Pruébalo y ya tendrás tu carrusel vertical funcionando al instante.
