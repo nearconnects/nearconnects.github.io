@@ -81,19 +81,11 @@
 /* ----------------------------------------
    GSAP SWIPE SECTION - VERTICAL FULL SCREEN CAROUSEL
    ---------------------------------------- */
-body, html {
-    overscroll-behavior: none; /* detiene el bounce/scroll por defecto */
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
-
 .swipe-section {
     position: relative;
     width: 100%;
     height: 100vh;
     overflow: hidden;
-    overscroll-behavior: contain; /* mantiene todo el scroll dentro */
 }
 
 .panel {
