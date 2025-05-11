@@ -28,6 +28,11 @@
 
         <!-- PapaParse for CSV parsing -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+        
+        <!-- GSAP and plugins for animation -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Observer.min.js"></script>
 
         <!-- Custom CSS -->
         <link rel="stylesheet" href="../css/styles.css" />
@@ -97,24 +102,55 @@
             <div class="container">
                 <h2>Key Market Insights</h2>
                 
-                <!-- Fullscreen Slides Section -->
-                <section id="scroll-insights">
-                    <div class="fullscreen-card" data-title="Total Respondents" data-value="73" data-desc="The total number of participants who completed our logistics optimization survey.">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="fullscreen-card" data-title="Drivers with Empty Cargo" data-value="34" data-percent="72%" data-desc="Drivers who returned with empty cargo space.">
-                        <i class="fas fa-truck"></i>
-                    </div>
-                    <div class="fullscreen-card" data-title="Drivers Willing to Deliver" data-value="30" data-percent="65%" data-desc="Drivers interested in participating in the NEAR delivery network.">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <div class="fullscreen-card" data-title="Very Willing Customers" data-value="26" data-percent="60%" data-desc="Customers very keen on using sustainable delivery options.">
-                        <i class="fas fa-thumbs-up"></i>
-                    </div>
-                </section>
-                
-                <!-- Horizontal Summary Cards (initially hidden) -->
-                <section id="horizontal-group" class="hidden"></section>
+                <!-- Swipe Section (GSAP controlled) -->
+                <div class="swipe-section">
+                    <section class="panel" id="panel1">
+                        <div class="panel-content">
+                            <div class="metric-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h3>Total Respondents</h3>
+                            <div class="metric-value">73</div>
+                            <p class="metric-desc">The total number of participants who completed our logistics optimization survey.</p>
+                        </div>
+                    </section>
+                    
+                    <section class="panel" id="panel2">
+                        <div class="panel-content">
+                            <div class="metric-icon">
+                                <i class="fas fa-truck"></i>
+                            </div>
+                            <h3>Drivers with Empty Cargo</h3>
+                            <div class="metric-value">34</div>
+                            <div class="metric-percentage">72%</div>
+                            <p class="metric-desc">Drivers who returned with empty cargo space.</p>
+                        </div>
+                    </section>
+                    
+                    <section class="panel" id="panel3">
+                        <div class="panel-content">
+                            <div class="metric-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <h3>Drivers Willing to Deliver</h3>
+                            <div class="metric-value">30</div>
+                            <div class="metric-percentage">65%</div>
+                            <p class="metric-desc">Drivers interested in participating in the NEAR delivery network.</p>
+                        </div>
+                    </section>
+                    
+                    <section class="panel" id="panel4">
+                        <div class="panel-content">
+                            <div class="metric-icon">
+                                <i class="fas fa-thumbs-up"></i>
+                            </div>
+                            <h3>Very Willing Customers</h3>
+                            <div class="metric-value">26</div>
+                            <div class="metric-percentage">60%</div>
+                            <p class="metric-desc">Customers very keen on using sustainable delivery options.</p>
+                        </div>
+                    </section>
+                </div>
                 
                 <div class="insights-summary">
                     <i class="fas fa-lightbulb"></i>
