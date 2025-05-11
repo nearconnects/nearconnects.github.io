@@ -11,48 +11,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // Register GSAP plugins
     gsap.registerPlugin(ScrollTrigger, Observer);
 
-    console.log("Initializing GSAP Carousel with ScrollTrigger and Observer");
-    
     const swipeSection = document.querySelector('.swipe-section');
     const panels = document.querySelectorAll('.panel');
     const totalPanels = panels.length;
-    
-    console.log(`Found ${totalPanels} panels in the swipe section`);
     
     // Set initial state
     let currentIndex = 0;
     let isAnimating = false;
     
-    // Setup initial panel states
-    panels.forEach((panel, i) => {
-      // All panels visible but with specific styles
+    // Make panels visible (they start with visibility:hidden in CSS)
+    panels.forEach(panel => {
       panel.style.visibility = 'visible';
-      
-      if (i === 0) {
-        // First panel is visible
-        gsap.set(panel, { 
-          zIndex: 10, 
-          opacity: 0,
-          y: 0,
-          yPercent: 0 
-        });
-      } else {
-        // Other panels are below and hidden
-        gsap.set(panel, { 
-          zIndex: 1, 
-          opacity: 0,
-          yPercent: 100 
-        });
-      }
+      panel.style.opacity = '0';
     });
     
-    // Animate first panel in with a nice entrance
+    // Show first panel initially
     gsap.to(panels[0], {
       opacity: 1,
       y: 0,
       duration: 0.7,
-      delay: 0.5,
-      ease: "power2.out"
+      delay: 0.3
     });
     
     // Create ScrollTrigger
@@ -70,49 +48,38 @@ document.addEventListener('DOMContentLoaded', () => {
     // Observer for scroll direction
     const observer = Observer.create({
       target: window,
-      type: "wheel,touch,scroll",
+      type: "wheel,touch",
       onChange: (self) => {
         // Only respond if not currently animating
         if (!isAnimating) {
-          // Get scroll direction from deltaY
           const direction = self.deltaY > 0 ? 1 : -1;
-          
-          // Debug the scroll event
-          console.log("Scroll detected, direction:", direction > 0 ? "down" : "up", "deltaY:", self.deltaY);
           
           // If scrolling down and not at the last panel
           if (direction > 0 && currentIndex < totalPanels - 1) {
             isAnimating = true;
-            console.log("Moving to next panel:", currentIndex + 1);
             gotoPanel(currentIndex + 1);
           } 
           // If scrolling up and not at the first panel
           else if (direction < 0 && currentIndex > 0) {
             isAnimating = true;
-            console.log("Moving to previous panel:", currentIndex - 1);
             gotoPanel(currentIndex - 1);
           } 
           // If at the last panel and scrolling down, disable observer to resume normal scroll
           else if (direction > 0 && currentIndex === totalPanels - 1) {
-            console.log("Completing carousel, last panel reached");
             completeCarousel();
           }
         }
       },
       wheelSpeed: -1,
-      dragMinimum: 5,
-      lockAxis: true
+      dragMinimum: 10
     });
     
     // Function to navigate to a specific panel
     function gotoPanel(index) {
-      // Validate index
       if (index < 0 || index >= totalPanels || index === currentIndex) {
         isAnimating = false;
         return;
       }
-      
-      console.log(`gotoPanel: from ${currentIndex} to ${index}`);
       
       const currentPanel = panels[currentIndex];
       const nextPanel = panels[index];
@@ -134,56 +101,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
       
-      // Ensure both panels are visible before animation
-      currentPanel.style.visibility = 'visible';
-      nextPanel.style.visibility = 'visible';
-      
-      // Make sure the new panel is ready to be shown (reset any ongoing animations)
-      gsap.killTweensOf(currentPanel);
-      gsap.killTweensOf(nextPanel);
-      
-      // Set initial positions
-      gsap.set(currentPanel, { 
-        zIndex: 5,
-        autoAlpha: 1,
-        y: 0,
-        yPercent: 0
-      });
-      
-      gsap.set(nextPanel, { 
-        zIndex: 10,
-        autoAlpha: 0,
-        yPercent: movingDown ? 100 : -100 
-      });
-      
-      // Create main animation timeline
-      const tl = gsap.timeline({
-        onComplete: () => {
-          currentIndex = index;
-          isAnimating = false;
-          
-          // Ensure proper z-index after animation
-          panels.forEach((panel, i) => {
-            panel.style.zIndex = i === index ? 10 : 1;
-          });
-          
-          console.log("Animation complete, new currentIndex:", currentIndex);
-        }
-      });
-      
-      // Add animations to timeline
-      tl.to(currentPanel, {
+      // Animate current panel out
+      gsap.to(currentPanel, {
         yPercent: movingDown ? -100 : 100,
-        autoAlpha: 0,
+        opacity: 0,
         duration: 0.7,
         ease: "power2.inOut"
-      })
-      .to(nextPanel, {
-        yPercent: 0,
-        autoAlpha: 1,
-        duration: 0.7,
-        ease: "power2.inOut"
-      }, "<"); // Start at the same time as previous animation
+      });
+      
+      // Position and animate next panel in
+      gsap.fromTo(nextPanel, 
+        { 
+          yPercent: movingDown ? 100 : -100,
+          opacity: 0 
+        },
+        {
+          yPercent: 0,
+          opacity: 1,
+          duration: 0.7,
+          ease: "power2.inOut",
+          onComplete: () => {
+            currentIndex = index;
+            isAnimating = false;
+          }
+        }
+      );
     }
     
     // Function to complete carousel and return to normal scrolling
