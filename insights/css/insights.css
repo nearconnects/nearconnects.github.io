@@ -63,9 +63,10 @@
 
 /* ---- Key Metrics Section ---- */
 .key-metrics-section {
-    padding: 4rem 0;
+    padding: 4rem 0 0;
     background-color: #f9fafb;
     position: relative;
+    overflow: hidden;
 }
 
 .key-metrics-section h2 {
@@ -74,20 +75,18 @@
     color: #1E3A8A;
     font-size: 2.2rem;
     font-weight: 600;
+    font-family: 'Poppins', sans-serif;
 }
 
-/* Fullscreen Cards */
-.fullscreen-cards {
+/* Fullscreen Slides */
+#scroll-insights {
     width: 100%;
     position: relative;
 }
 
-.fullscreen-card {
-    height: calc(100vh - 150px);
-    min-height: 500px;
+.slide {
+    height: 100vh;
     width: 100%;
-    margin: 0 auto;
-    padding: 2rem 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -96,16 +95,22 @@
     transition: opacity 0.8s ease, transform 0.8s ease;
     position: relative;
     scroll-snap-align: start;
+    scroll-margin-top: 80px;
 }
 
-.card-content {
+.slide.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.slide-content {
     background-color: #ffffff;
     max-width: 600px;
     width: 90%;
-    border-radius: 16px;
-    padding: 3rem 2rem;
+    border-radius: 20px;
+    padding: 3.5rem 2.5rem;
     text-align: center;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     position: relative;
     font-family: 'Poppins', sans-serif;
 }
@@ -113,58 +118,72 @@
 .metric-icon {
     font-size: 3rem;
     color: var(--primary-color);
-    margin-bottom: 1.5rem;
-    height: 80px;
-    width: 80px;
+    height: 90px;
+    width: 90px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 auto 1.5rem;
-    background-color: rgba(219, 234, 254, 0.3);
+    margin: 0 auto 2rem;
+    background-color: rgba(219, 234, 254, 0.4);
     border-radius: 50%;
+    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.15);
 }
 
-.fullscreen-card h3 {
-    font-size: 1.4rem;
+.slide h3 {
+    font-size: 1.5rem;
     margin-bottom: 1.5rem;
     color: #4B5563;
     font-weight: 500;
+    font-family: 'Poppins', sans-serif;
 }
 
 .metric-value {
-    font-size: 4rem;
+    font-size: 5rem;
     font-weight: 700;
     color: #1E3A8A;
     margin-bottom: 0.5rem;
     line-height: 1;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #1E3A8A, #3B82F6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .metric-percentage {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     color: #10B981;
     font-weight: 500;
     margin-bottom: 1.5rem;
+    font-family: 'Poppins', sans-serif;
 }
 
-.card-description {
+.slide-description {
     font-size: 1.1rem;
     color: #6B7280;
-    line-height: 1.6;
-    max-width: 400px;
-    margin: 1.5rem auto 0;
+    line-height: 1.7;
+    max-width: 450px;
+    margin: 2rem auto 0;
     font-weight: 300;
+    font-family: 'Poppins', sans-serif;
 }
 
-/* Horizontal Card Summary */
-.horizontal-cards-container {
+/* Horizontal Summary Section */
+#summary-horizontal {
     width: 100%;
-    padding: 1.5rem 0;
+    padding: 2rem 0;
+    margin: 2rem 0;
     opacity: 0;
     transform: translateY(30px);
     transition: all 0.7s ease;
-    position: relative;
-    z-index: 10;
-    margin-top: 2rem;
+    height: 0;
+    overflow: hidden;
+}
+
+#summary-horizontal.visible {
+    opacity: 1;
+    transform: translateY(0);
+    height: auto;
 }
 
 .horizontal-cards {
@@ -195,36 +214,36 @@
 }
 
 .horizontal-card {
-    min-width: 200px;
+    min-width: 190px;
     background-color: #ffffff;
-    border-radius: 12px;
-    padding: 1.2rem;
+    border-radius: 16px;
+    padding: 1.5rem;
     text-align: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     scroll-snap-align: start;
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 2px solid transparent;
+    font-family: 'Poppins', sans-serif;
 }
 
 .horizontal-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
 }
 
 .horizontal-card.active {
-    border-color: var(--primary-color);
+    border: 2px solid var(--primary-color);
 }
 
 .horizontal-card .metric-icon {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     height: 50px;
     width: 50px;
-    margin-bottom: 0.8rem;
+    margin-bottom: 1rem;
 }
 
 .horizontal-card .metric-value {
-    font-size: 2rem;
+    font-size: 2.2rem;
     margin-bottom: 0.3rem;
 }
 
@@ -232,12 +251,34 @@
     font-size: 0.9rem;
     color: #6B7280;
     font-weight: 400;
-    margin: 0;
+    margin: 0.5rem 0 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.horizontal-card .metric-percentage {
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+
+/* Animation for numbers */
+@keyframes countUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-number {
+    animation: countUp 0.5s ease forwards;
 }
 
 /* Scroll Indicator */
 .scroll-indicator {
-    position: absolute;
+    position: fixed;
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
@@ -246,6 +287,7 @@
     animation: bounce 2s infinite;
     opacity: 1;
     transition: opacity 0.5s ease;
+    z-index: 100;
 }
 
 .scroll-arrow {
@@ -256,35 +298,40 @@
 .scroll-text {
     font-size: 0.9rem;
     font-weight: 500;
+    font-family: 'Poppins', sans-serif;
 }
 
 @keyframes bounce {
     0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
+        transform: translateY(0) translateX(-50%);
     }
     40% {
-        transform: translateY(-10px);
+        transform: translateY(-10px) translateX(-50%);
     }
     60% {
-        transform: translateY(-5px);
+        transform: translateY(-5px) translateX(-50%);
     }
 }
 
 .scroll-indicator.hidden {
     opacity: 0;
+    pointer-events: none;
 }
 
+/* Insights Summary */
 .insights-summary {
-    margin-top: 3rem;
+    margin: 3rem auto;
+    max-width: 900px;
     background-color: #EFF6FF;
-    border-radius: 12px;
-    padding: 1.5rem;
+    border-radius: 16px;
+    padding: 1.8rem;
     display: flex;
     align-items: center;
     gap: 1.5rem;
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.5s ease, transform 0.5s ease;
+    box-shadow: 0 5px 20px rgba(59, 130, 246, 0.1);
 }
 
 .insights-summary.visible {
@@ -300,26 +347,39 @@
 .insights-summary p {
     font-size: 1.1rem;
     margin: 0;
+    line-height: 1.6;
+    font-family: 'Poppins', sans-serif;
 }
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
-    .fullscreen-card {
-        height: calc(100vh - 100px);
-        min-height: 400px;
+    .slide {
+        height: 100vh;
+        scroll-margin-top: 60px;
     }
     
-    .card-content {
+    .slide-content {
         padding: 2rem 1.5rem;
-        width: 95%;
+        width: 92%;
     }
     
     .metric-value {
-        font-size: 3rem;
+        font-size: 3.5rem;
     }
     
     .horizontal-card {
-        min-width: 170px;
+        min-width: 160px;
+        padding: 1.2rem;
+    }
+    
+    .horizontal-card .metric-value {
+        font-size: 1.8rem;
+    }
+    
+    .metric-icon {
+        height: 70px;
+        width: 70px;
+        font-size: 2.5rem;
     }
 }
 
