@@ -1,20 +1,23 @@
 /* 
  * NEAR - Never Empty Again on Return
- * Insights Dashboard CSS (limpio de scroll-métricas redundantes)
+ * Insights Dashboard CSS
  */
 
 /* ---- Navigation Adjustments ---- */
 .nav-menu {
     display: flex;
     justify-content: center;
-    gap: 2rem;
+    gap: 2rem; /* Increase spacing between nav items */
 }
+
 .nav-menu li {
-    padding: 0 0.5rem;
+    padding: 0 0.5rem; /* Add padding to nav items */
 }
+
+/* Fix navbar spacing for smaller item count */
 @media (min-width: 992px) {
     .nav-menu {
-        margin-right: 2rem;
+        margin-right: 2rem; /* Add margin to the right of the nav menu */
     }
 }
 
@@ -29,19 +32,29 @@
     text-align: center;
     position: relative;
 }
+
 .insights-hero:after {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: rgba(0, 0, 0, 0.5);
     z-index: 1;
 }
-.insights-hero-content { position: relative; z-index: 2; }
+
+.insights-hero-content {
+    position: relative;
+    z-index: 2;
+}
+
 .insights-hero h1 {
     font-size: 3rem;
     margin-bottom: 1rem;
     color: var(--primary-color);
 }
+
 .insights-hero p {
     font-size: 1.2rem;
     max-width: 800px;
@@ -50,167 +63,79 @@
 
 /* ---- Key Metrics Section ---- */
 .key-metrics-section {
-    padding: 4rem 0 0;
+    padding: 4rem 0;
     background-color: #f9fafb;
-    position: relative;
-    overflow: hidden;
 }
+
 .key-metrics-section h2 {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
     color: #1E3A8A;
     font-size: 2.2rem;
-    font-weight: 600;
-    font-family: 'Poppins', sans-serif;
 }
 
-/* ----------------------------------------
-   GSAP SWIPE SECTION – VERTICAL FULL SCREEN CAROUSEL
-   ---------------------------------------- */
-.swipe-section {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-}
-.panel {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f9fafd;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
 }
 
-/* Mantengo esta regla para si en algún punto quieres
-   usar una clase JS para visibilidad instantánea */
-.hidden {
-    display: none !important;
-}
-
-/* ---- Panel Content ---- */
-.panel-content {
-    background-color: #ffffff;
-    width: 90%;
-    max-width: 600px;
-    padding: 3rem 2rem;
-    border-radius: 20px;
+.metric-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 1.5rem;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
 }
+
+.metric-card:hover {
+    transform: translateY(-5px);
+}
+
 .metric-icon {
-    font-size: 3rem;
-    color: #2e5bff;
-    filter: drop-shadow(0 0 8px rgba(46, 91, 255, .3));
-    height: 90px; width: 90px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto 1.5rem;
-    background-color: rgba(46, 91, 255, 0.1);
-    border-radius: 50%;
-}
-.panel h3 {
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: #4B5563;
-    margin: 1rem 0;
-}
-.metric-value {
-    font-size: 5rem;
-    font-weight: 700;
-    color: #1E3A8A;
-    margin: 0.5rem 0;
-    line-height: 1;
-    background: linear-gradient(135deg, #1E3A8A, #3B82F6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-.metric-percentage {
-    font-size: 1.6rem;
-    color: #10B981;
-    font-weight: 500;
+    font-size: 2.5rem;
+    color: var(--primary-color);
     margin-bottom: 1rem;
 }
-.metric-desc {
+
+.metric-card h3 {
     font-size: 1.1rem;
-    color: #6B7280;
-    max-width: 450px;
-    margin: 1.5rem auto 0;
-    line-height: 1.6;
-    font-weight: 300;
+    margin-bottom: 1rem;
+    color: #4B5563;
 }
 
-/* ---- Insights Summary ---- */
+.metric-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1E3A8A;
+    margin-bottom: 0.5rem;
+}
+
+.metric-percentage {
+    font-size: 1.2rem;
+    color: #10B981;
+}
+
 .insights-summary {
-    margin: 3rem auto;
-    max-width: 900px;
+    margin-top: 3rem;
     background-color: #EFF6FF;
-    border-radius: 16px;
-    padding: 1.8rem;
+    border-radius: 12px;
+    padding: 1.5rem;
     display: flex;
     align-items: center;
     gap: 1.5rem;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    box-shadow: 0 5px 20px rgba(59, 130, 246, 0.1);
 }
-.insights-summary.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
+
 .insights-summary i {
     font-size: 2.5rem;
     color: #1E40AF;
 }
+
 .insights-summary p {
     font-size: 1.1rem;
     margin: 0;
-    line-height: 1.6;
-    font-family: 'Poppins', sans-serif;
-}
-
-/* ---- Resto de estilos generales y secciones (tabs, gráficos, etc.) sin tocar ---- */
-/* …todo lo demás de tu CSS original queda aquí intacto… */
-
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    .slide {
-        height: 100vh;
-        scroll-margin-top: 60px;
-    }
-    
-    .slide-content {
-        padding: 2rem 1.5rem;
-        width: 92%;
-    }
-    
-    .metric-value {
-        font-size: 3.5rem;
-    }
-    
-    .horizontal-card {
-        min-width: 160px;
-        padding: 1.2rem;
-    }
-    
-    .horizontal-card .metric-value {
-        font-size: 1.8rem;
-    }
-    
-    .metric-icon {
-        height: 70px;
-        width: 70px;
-        font-size: 2.5rem;
-    }
 }
 
 /* ---- Tabs Section ---- */
@@ -680,214 +605,6 @@
     font-weight: 600;
 }
 
-
-
-/* Mobile Responsive Styles */
-@media (max-width: 768px) {
-    .container {
-        width: 95%;
-        padding: 0 1rem;
-    }
-    
-    .panel-content {
-        width: 95%;
-        padding: 1.5rem 1rem;
-        margin: 0 auto;
-    }
-
-    .insights-hero {
-        padding: 60px 0 40px;
-    }
-
-    .tabs-header {
-        flex-direction: column;
-    }
-
-    .tab-button {
-        width: 100%;
-        border-radius: 0;
-    }
-
-    .charts-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-
-    .customer-stats {
-        flex-direction: column;
-    }
-
-    .stat-container {
-        width: 100%;
-        margin-bottom: 1rem;
-    }
-
-    .feedback-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .market-opportunity-section {
-        padding: 1rem;
-    }
-
-    .value-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .section-content.opportunity {
-        flex-direction: column;
-        padding: 1rem;
-    }
-
-    .takeaways {
-        grid-template-columns: 1fr;
-    }
-
-    .footer-links {
-        flex-direction: column;
-        gap: 2rem;
-    }
-
-    .footer-column {
-        width: 100%;
-    }
-
-    .metric-icon {
-        font-size: 2rem;
-        height: 70px;
-        width: 70px;
-    }
-
-    .metric-value {
-        font-size: 3rem;
-    }
-
-    .panel h3 {
-        font-size: 1.5rem;
-    }
-
-    .metric-desc {
-        font-size: 1rem;
-    }
-
-    .insights-summary {
-        flex-direction: column;
-        text-align: center;
-        padding: 1.2rem;
-    }
-
-    .insights-summary i {
-        margin-bottom: 1rem;
-    }
-
-    .insights-hero h1 {
-        font-size: 2.2rem;
-    }
-
-    .insights-hero p {
-        font-size: 1rem;
-    }
-
-    .tab-button {
-        padding: 0.8rem;
-        font-size: 0.9rem;
-    }
-
-    .chart-container {
-        height: 250px;
-    }
-
-    .readiness-gauge {
-        width: 100%;
-        min-width: auto;
-    }
-}
-
-/* Small Mobile Devices */
-@media (max-width: 480px) {
-    .panel-content {
-        width: 100%;
-        padding: 1rem 0.8rem;
-    }
-
-    .insights-hero h1 {
-        font-size: 1.8rem;
-    }
-
-    .insights-hero p {
-        font-size: 0.9rem;
-        padding: 0 1rem;
-    }
-
-    .metric-icon {
-        font-size: 1.8rem;
-        height: 60px;
-        width: 60px;
-    }
-
-    .metric-value {
-        font-size: 2.2rem;
-    }
-
-    .metric-desc {
-        font-size: 0.85rem;
-    }
-
-    .gauge-container {
-        height: 140px;
-    }
-
-    .opportunity-value {
-        font-size: 2rem;
-    }
-
-    .section-header h3 {
-        font-size: 1.3rem;
-    }
-
-    .opportunity-insight p {
-        font-size: 0.9rem;
-        padding: 1rem;
-    }
-
-    .nav-menu {
-        flex-direction: column;
-        width: 100%;
-        text-align: center;
-        gap: 1rem;
-    }
-
-    .takeaway {
-        padding: 1rem;
-    }
-
-    .next-steps {
-        padding: 1rem;
-    }
-
-    .next-steps li {
-        font-size: 0.9rem;
-    }
-}
-
-    .metric-value {
-        font-size: 2.5rem;
-    }
-
-    .metric-desc {
-        font-size: 0.9rem;
-    }
-
-    .insights-summary {
-        margin: 2rem auto;
-        padding: 1rem;
-    }
-
-    .insights-summary p {
-        font-size: 0.9rem;
-    }
-}
-
 .value-item p {
     color: #4B5563;
     line-height: 1.5;
@@ -1157,6 +874,7 @@
     margin-bottom: 0.8rem;
     line-height: 1.5;
 }
+
 /* Responsive Adjustments */
 @media (max-width: 768px) {
     .insights-hero h1 {
@@ -1194,5 +912,4 @@
     .takeaways {
         grid-template-columns: 1fr;
     }
-    
 }

@@ -2,7 +2,7 @@
 <html lang="es">
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>NEAR - Data Insights Dashboard</title>
         <meta
             name="description"
@@ -28,10 +28,6 @@
 
         <!-- PapaParse for CSV parsing -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-
-        <!-- GSAP and plugins for animation -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
         <!-- Custom CSS -->
         <link rel="stylesheet" href="../css/styles.css" />
@@ -99,67 +95,57 @@
         <!-- Key Metrics Section -->
         <section id="key-metrics" class="key-metrics-section">
             <div class="container">
-                <!-- Swipe Section (GSAP controlled) -->
-                <div class="swipe-section">
-                    <section class="panel" id="panel1">
-                        <div class="panel-content">
-                            <div class="metric-icon">
-                                <i class="fas fa-users"></i>
-                            </div>
-                            <h3>Total Respondents</h3>
-                            <div class="metric-value">73</div>
-                            <p class="metric-desc">
-                                The total number of participants who completed
-                                our logistics optimization survey.
-                            </p>
+                <h2>Key Market Insights</h2>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-users"></i>
                         </div>
-                    </section>
-
-                    <section class="panel" id="panel2">
-                        <div class="panel-content">
-                            <div class="metric-icon">
-                                <i class="fas fa-truck"></i>
-                            </div>
-                            <h3>Drivers with Empty Cargo</h3>
-                            <div class="metric-value">34</div>
-                            <div class="metric-percentage">72%</div>
-                            <p class="metric-desc">
-                                Drivers who returned with empty cargo space.
-                            </p>
+                        <h3>Total Respondents</h3>
+                        <div class="metric-value" id="total-respondents">
+                            Loading...
                         </div>
-                    </section>
-
-                    <section class="panel" id="panel3">
-                        <div class="panel-content">
-                            <div class="metric-icon">
-                                <i class="fas fa-check-circle"></i>
-                            </div>
-                            <h3>Drivers Willing to Deliver</h3>
-                            <div class="metric-value">30</div>
-                            <div class="metric-percentage">65%</div>
-                            <p class="metric-desc">
-                                Drivers interested in participating in the NEAR
-                                delivery network.
-                            </p>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-truck"></i>
                         </div>
-                    </section>
-
-                    <section class="panel" id="panel4">
-                        <div class="panel-content">
-                            <div class="metric-icon">
-                                <i class="fas fa-thumbs-up"></i>
-                            </div>
-                            <h3>Very Willing Customers</h3>
-                            <div class="metric-value">26</div>
-                            <div class="metric-percentage">60%</div>
-                            <p class="metric-desc">
-                                Customers very keen on using sustainable
-                                delivery options.
-                            </p>
+                        <h3>Drivers with Empty Cargo</h3>
+                        <div class="metric-value" id="empty-cargo-drivers">
+                            Loading...
                         </div>
-                    </section>
+                        <div
+                            class="metric-percentage"
+                            id="empty-cargo-percentage"
+                        ></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h3>Drivers Willing to Deliver</h3>
+                        <div class="metric-value" id="willing-drivers">
+                            Loading...
+                        </div>
+                        <div
+                            class="metric-percentage"
+                            id="willing-drivers-percentage"
+                        ></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-thumbs-up"></i>
+                        </div>
+                        <h3>Very Willing Customers</h3>
+                        <div class="metric-value" id="willing-customers">
+                            Loading...
+                        </div>
+                        <div
+                            class="metric-percentage"
+                            id="willing-customers-percentage"
+                        ></div>
+                    </div>
                 </div>
-
                 <div class="insights-summary">
                     <i class="fas fa-lightbulb"></i>
                     <p>
@@ -169,6 +155,8 @@
                         >
                     </p>
                 </div>
+            </div>
+        </section>
 
         <!-- Tabs Section -->
         <section id="insights-tabs" class="insights-tabs-section">
@@ -396,8 +384,7 @@
                                                     id="customer-readiness-value"
                                                     >0.0%</span
                                                 >
-                                                <span
-                                                    class="delta positive hidden"
+                                                <span class="delta positive hidden"
                                                     >▲ 0</span
                                                 >
                                             </div>
@@ -723,6 +710,5 @@
         <script src="./js/charts.js"></script>
         <script src="./js/tabs.js"></script>
         <script src="./js/customer-animations.js"></script>
-        <script src="./js/scroll-metrics.js"></script>
     </body>
 </html>
