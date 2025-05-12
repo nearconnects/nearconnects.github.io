@@ -1,0 +1,59 @@
+Use GSAP and ScrollTrigger for dynamic scroll animations and transitions.
+
+Introduce a 3D card stack animation (horizontal or vertical) where each card highlights a step in the NEAR logistics process.
+
+Each card should display either:
+
+A screenshot of the app (you may use placeholder images like from https://picsum.photos/ or similar),
+
+Or an embedded demo video (you may use sample clips from https://sample-videos.com/ or similar).
+
+Add smooth entrance animations for cards (fade-in, scale, rotate, or slide).
+
+Integrate lazy-loaded video playback for demos (continue using IntersectionObserver or GSAP).
+
+Ensure all enhancements respect the existing dark theme and NEAR design system (defined in how-it-works.css).
+
+Add hover effects, expandable cards, or autoplaying video/GIF elements as optional enhancements.
+
+All additions must extend, not break, the existing semantic structure and classes used in how-it-works.html.
+
+📂 Context Files:
+how-it-works.html: Main layout and structure of the screen.
+
+how-it-works.css: Visual styling and theming.
+
+how-it-works.js: Lazy loading and basic scroll animation logic.
+
+🧠 Instructions:
+Modify or extend the how-it-works.js file to include GSAP timelines, ScrollTrigger logic, and optional card interaction effects.
+
+Replace or augment the #process section with animated stacked cards representing each logistics step.
+
+Embed one or two placeholder video demos (lazy-loaded) into sections like “Features” or “Integration”.
+
+Use placeholder images and videos during development to simulate app media.
+
+Make sure animations are responsive, performant, and degrade gracefully if JavaScript is disabled.
+
+Keep code modular and well-commented for future maintenance.
+
+🖼️ Example Features to Implement:
+Cards animate into view as the user scrolls, stacking visually with depth.
+
+Hovering over a card elevates it or flips it for more info.
+
+Videos auto-play once scrolled into view.
+
+Use GSAP's z, perspective, and stagger options to create immersive animations.
+
+🧪 Test Expectations:
+Smooth animation on scroll.
+
+Cards animate correctly on mobile and desktop.
+
+Placeholder videos and images load without delay.
+
+No layout breakage or console errors.
+
+Code is maintainable, DRY, and performance-aware.
