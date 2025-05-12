@@ -116,7 +116,7 @@ function initProcessCardsAnimation() {
             pin: true,
             pinSpacing: false,
             id: `pin-${index}`,
-            end: () => `+=${window.innerHeight * 0.5}`,
+            end: () => `+=${window.innerHeight * 0.3}`,
             endTrigger: featuresSection,
             invalidateOnRefresh: true
         });
@@ -193,7 +193,7 @@ function convertProcessToStackingCards() {
     // Add spacer element to ensure proper scrolling
     const spacer = document.createElement('div');
     spacer.className = 'cards-spacer';
-    spacer.style.height = `${steps.length * 100}vh`; // Ensure enough scroll space
+    spacer.style.height = `${steps.length * 60}vh`; // Reduced scroll space
     cardsContainer.appendChild(spacer);
     
     // Replace the original steps container with our new stack
