@@ -117,21 +117,29 @@ function initProcessCardsAnimation() {
             scale: () => 1 - (cards.length - index) * 0.025,
         });
 
-        // Pin each card when it reaches the top, but unpin when reaching the impact section
+        // Pin each card when it reaches the top
+        // We'll create a fixed end point where all pins will release
+        const nextSection = document.querySelector('#impact-metrics') || 
+                          document.querySelector('.features-section');
+        
+        // Calculate how much space to allow for this card based on its position in the stack
+        // This creates a cascading effect where cards are revealed one after another
+        const endPosition = `+=${(steps.length - index) * 200}`;
+        
         ScrollTrigger.create({
             trigger: card,
             start: "top top",
             pin: true,
             pinSpacing: false,
             id: `pin-${index}`,
-            end: () => `+=${document.querySelector('#impact-metrics') ? 
-                document.querySelector('#impact-metrics').getBoundingClientRect().top - 100 : 
-                window.innerHeight * 2}`,
+            end: endPosition,
             invalidateOnRefresh: true,
+            anticipatePin: 1,
             onLeave: (self) => {
                 // When the card leaves, hide it to avoid overlapping with other sections
                 gsap.to(card, { 
                     autoAlpha: 0,
+                    y: -50,
                     duration: 0.3,
                     ease: 'power1.out'
                 });
@@ -140,11 +148,28 @@ function initProcessCardsAnimation() {
                 // When scrolling back up, make the card visible again
                 gsap.to(card, { 
                     autoAlpha: 1,
+                    y: 0,
                     duration: 0.3,
                     ease: 'power1.in'
                 });
             }
         });
+        
+        // Add an additional trigger to ensure the card disappears when next section is reached
+        if (nextSection) {
+            ScrollTrigger.create({
+                trigger: nextSection,
+                start: "top bottom-=100",
+                onEnter: () => {
+                    gsap.set(card, { autoAlpha: 0 });
+                },
+                onLeaveBack: () => {
+                    if (ScrollTrigger.isInViewport(card)) {
+                        gsap.set(card, { autoAlpha: 1 });
+                    }
+                }
+            });
+        }
 
         // Add hover effects to cards for additional interactivity
         card.addEventListener("mouseenter", () => {
@@ -220,7 +245,18 @@ function convertProcessToStackingCards() {
     // Add spacer element to ensure proper scrolling
     const spacer = document.createElement("div");
     spacer.className = "cards-spacer";
-    spacer.style.height = `${steps.length * 100}vh`; // Ensure enough scroll space
+    
+    // Calculate enough space for all cards to be revealed plus a bit more
+    // This ensures we have enough scrolling distance, but not too much
+    const impactSection = document.querySelector('#impact-metrics');
+    if (impactSection) {
+        // If we find the impact section, make the spacer shorter to prevent too much empty space
+        spacer.style.height = `${steps.length * 30}vh`;
+    } else {
+        // Fallback calculation
+        spacer.style.height = `${steps.length * 40}vh`;
+    }
+    
     cardsContainer.appendChild(spacer);
 
     // Replace the original steps container with our new stack
