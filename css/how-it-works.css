@@ -391,7 +391,7 @@
     margin-left: 5px; /* Adjust for play icon alignment */
 }
 
-/* Animations */
+/* Enhanced Animations with GSAP */
 .animate-fade-in {
     opacity: 0;
     transform: translateY(20px);
@@ -403,6 +403,79 @@
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* 3D Transform and Perspective Utilities */
+.preserve-3d {
+    transform-style: preserve-3d;
+}
+
+.perspective {
+    perspective: 1000px;
+}
+
+/* Interactive Elements Hover States */
+.interactive-element {
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                box-shadow 0.3s ease,
+                background-color 0.3s ease;
+}
+
+.interactive-element:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Custom Animations */
+@keyframes float {
+    0% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-10px) rotate(1deg);
+    }
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Video Container Playing State */
+.video-container.playing .video-overlay {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.3) 0%, transparent 60%);
+}
+
+.video-container.playing .play-button {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+}
+
+.video-container.playing .play-button i {
+    color: white;
+}
+
+/* Card Hover Effects */
+.process-card:hover .step-icon {
+    animation: pulse 1.5s ease infinite;
+}
+
+/* Custom cursor for interactive elements */
+.play-button, .process-card, .feature-card {
+    cursor: pointer;
 }
 
 /* Responsive Design */

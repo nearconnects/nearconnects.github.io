@@ -239,19 +239,23 @@ function initFeaturesAnimation() {
 }
 
 /**
- * Enhanced lazy-loaded video setup
+ * Enhanced lazy-loaded video setup with custom controls
  * Combines IntersectionObserver with GSAP for smoother transitions
+ * and adds interactive play/pause controls
  */
 function setupLazyLoadedVideos() {
     const lazyVideos = document.querySelectorAll('video.lazy');
+    const playButtons = document.querySelectorAll('.play-button');
     
+    // Video lazy loading with IntersectionObserver
     const videoObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const video = entry.target;
+                const caseContent = video.closest('.case-content');
                 
                 // First fade in the container
-                gsap.to(video.closest('.case-content'), {
+                gsap.to(caseContent, {
                     opacity: 1,
                     duration: 0.5,
                     ease: 'power2.inOut',
@@ -259,8 +263,9 @@ function setupLazyLoadedVideos() {
                         // Then start loading the video
                         video.src = video.dataset.src;
                         video.load();
+                        video.muted = true; // Ensure muted for autoplay
                         
-                        // When video is loaded, play it
+                        // When video is loaded, animate it in
                         video.addEventListener('loadeddata', () => {
                             gsap.fromTo(video, 
                                 { opacity: 0 },
@@ -268,7 +273,26 @@ function setupLazyLoadedVideos() {
                                     opacity: 1, 
                                     duration: 0.8,
                                     ease: 'power2.inOut',
-                                    onComplete: () => video.play()
+                                    onComplete: () => {
+                                        video.play();
+                                        
+                                        // Animate the video overlay
+                                        const overlay = video.closest('.video-container').querySelector('.video-overlay');
+                                        gsap.to(overlay, {
+                                            opacity: 1,
+                                            duration: 0.3,
+                                            delay: 0.5,
+                                            ease: 'power1.out'
+                                        });
+                                        
+                                        // Then fade it out after a brief delay
+                                        gsap.to(overlay, {
+                                            opacity: 0,
+                                            duration: 0.8,
+                                            delay: 2,
+                                            ease: 'power1.inOut'
+                                        });
+                                    }
                                 }
                             );
                         }, { once: true });
@@ -284,7 +308,75 @@ function setupLazyLoadedVideos() {
         rootMargin: '0px'
     });
     
+    // Initialize observer on all lazy videos
     lazyVideos.forEach(video => videoObserver.observe(video));
+    
+    // Set up interactive controls for videos
+    playButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const videoContainer = this.closest('.video-container');
+            const video = videoContainer.querySelector('video');
+            const icon = this.querySelector('i');
+            
+            if (video.paused) {
+                // Play the video
+                video.play();
+                icon.classList.remove('fa-play');
+                icon.classList.add('fa-pause');
+                
+                // Add a "playing" class to the container for additional styling
+                videoContainer.classList.add('playing');
+                
+                // Animate button scale
+                gsap.to(this, {
+                    scale: 0.8,
+                    duration: 0.2,
+                    ease: 'back.out'
+                });
+            } else {
+                // Pause the video
+                video.pause();
+                icon.classList.remove('fa-pause');
+                icon.classList.add('fa-play');
+                
+                // Remove the "playing" class
+                videoContainer.classList.remove('playing');
+                
+                // Animate button scale
+                gsap.to(this, {
+                    scale: 1,
+                    duration: 0.2,
+                    ease: 'back.out'
+                });
+            }
+        });
+    });
+    
+    // Add hover effect for video containers
+    document.querySelectorAll('.video-container').forEach(container => {
+        container.addEventListener('mouseenter', function() {
+            const overlay = this.querySelector('.video-overlay');
+            gsap.to(overlay, {
+                opacity: 1,
+                duration: 0.3,
+                ease: 'power1.out'
+            });
+        });
+        
+        container.addEventListener('mouseleave', function() {
+            const overlay = this.querySelector('.video-overlay');
+            const video = this.querySelector('video');
+            
+            // Only fade out overlay if video is playing
+            if (!video.paused) {
+                gsap.to(overlay, {
+                    opacity: 0,
+                    duration: 0.5,
+                    ease: 'power1.inOut'
+                });
+            }
+        });
+    });
 }
 
 /**
