@@ -680,6 +680,91 @@
     font-weight: 600;
 }
 
+
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .panel-content {
+        width: 95%;
+        padding: 2rem 1rem;
+    }
+
+    .metric-icon {
+        font-size: 2rem;
+        height: 70px;
+        width: 70px;
+    }
+
+    .metric-value {
+        font-size: 3rem;
+    }
+
+    .panel h3 {
+        font-size: 1.5rem;
+    }
+
+    .metric-desc {
+        font-size: 1rem;
+    }
+
+    .insights-summary {
+        flex-direction: column;
+        text-align: center;
+        padding: 1.2rem;
+    }
+
+    .insights-summary i {
+        margin-bottom: 1rem;
+    }
+
+    .insights-hero h1 {
+        font-size: 2.2rem;
+    }
+
+    .insights-hero p {
+        font-size: 1rem;
+    }
+
+    .tab-button {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+
+    .chart-container {
+        height: 250px;
+    }
+
+    .readiness-gauge {
+        width: 100%;
+        min-width: auto;
+    }
+}
+
+/* Small Mobile Devices */
+@media (max-width: 480px) {
+    .panel-content {
+        width: 100%;
+        padding: 1.5rem 0.8rem;
+    }
+
+    .metric-value {
+        font-size: 2.5rem;
+    }
+
+    .metric-desc {
+        font-size: 0.9rem;
+    }
+
+    .insights-summary {
+        margin: 2rem auto;
+        padding: 1rem;
+    }
+
+    .insights-summary p {
+        font-size: 0.9rem;
+    }
+}
+
 .value-item p {
     color: #4B5563;
     line-height: 1.5;
