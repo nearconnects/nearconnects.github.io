@@ -91,6 +91,9 @@ function initProcessCardsAnimation() {
     
     if (!cards.length) return;
     
+    // Get the features section as end marker
+    const featuresSection = document.querySelector('.features-section');
+    
     // Apply scaling to cards based on their position in the stack
     cards.forEach((card, index) => {
         // Scale cards as they scroll into view
@@ -113,7 +116,8 @@ function initProcessCardsAnimation() {
             pin: true,
             pinSpacing: false,
             id: `pin-${index}`,
-            end: 'max',
+            end: () => `+=${window.innerHeight * 0.5}`,
+            endTrigger: featuresSection,
             invalidateOnRefresh: true
         });
         
