@@ -684,9 +684,72 @@
 
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 0 1rem;
+    }
+    
     .panel-content {
         width: 95%;
-        padding: 2rem 1rem;
+        padding: 1.5rem 1rem;
+        margin: 0 auto;
+    }
+
+    .insights-hero {
+        padding: 60px 0 40px;
+    }
+
+    .tabs-header {
+        flex-direction: column;
+    }
+
+    .tab-button {
+        width: 100%;
+        border-radius: 0;
+    }
+
+    .charts-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .customer-stats {
+        flex-direction: column;
+    }
+
+    .stat-container {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .feedback-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .market-opportunity-section {
+        padding: 1rem;
+    }
+
+    .value-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-content.opportunity {
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .takeaways {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .footer-column {
+        width: 100%;
     }
 
     .metric-icon {
@@ -744,8 +807,68 @@
 @media (max-width: 480px) {
     .panel-content {
         width: 100%;
-        padding: 1.5rem 0.8rem;
+        padding: 1rem 0.8rem;
     }
+
+    .insights-hero h1 {
+        font-size: 1.8rem;
+    }
+
+    .insights-hero p {
+        font-size: 0.9rem;
+        padding: 0 1rem;
+    }
+
+    .metric-icon {
+        font-size: 1.8rem;
+        height: 60px;
+        width: 60px;
+    }
+
+    .metric-value {
+        font-size: 2.2rem;
+    }
+
+    .metric-desc {
+        font-size: 0.85rem;
+    }
+
+    .gauge-container {
+        height: 140px;
+    }
+
+    .opportunity-value {
+        font-size: 2rem;
+    }
+
+    .section-header h3 {
+        font-size: 1.3rem;
+    }
+
+    .opportunity-insight p {
+        font-size: 0.9rem;
+        padding: 1rem;
+    }
+
+    .nav-menu {
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .takeaway {
+        padding: 1rem;
+    }
+
+    .next-steps {
+        padding: 1rem;
+    }
+
+    .next-steps li {
+        font-size: 0.9rem;
+    }
+}
 
     .metric-value {
         font-size: 2.5rem;
