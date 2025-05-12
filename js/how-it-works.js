@@ -79,65 +79,51 @@ function initOverviewAnimation() {
 }
 
 /**
- * Process section with 3D card stack animations
+ * Process section with horizontal card slider instead of 3D stack 
+ * (Simplified to fix layout issues)
  */
 function initProcessCardsAnimation() {
-    // Convert existing steps to 3D card stack
-    convertProcessToCardStack();
+    // Convert existing steps to horizontal card slider
+    convertProcessToCardSlider();
     
-    // Animate the 3D card stack
+    // Get our process cards
     const cards = document.querySelectorAll('.process-card');
+    const cardContainer = document.querySelector('.process-cards-container');
     
-    // Initial card positioning
-    gsap.set(cards, {
-        transformPerspective: 1000,
-        transformStyle: 'preserve-3d'
-    });
+    if (!cards.length || !cardContainer) return;
     
-    // Set initial positions for stacked cards
-    cards.forEach((card, index) => {
-        const z = -index * 20;
-        const y = index * 5;
-        const rotation = index * -1;
-        
-        gsap.set(card, {
-            zIndex: cards.length - index,
-            z: z,
-            y: y,
-            rotationX: rotation,
-            opacity: index === 0 ? 1 : 0.9 - (index * 0.15)
-        });
-    });
-    
-    // Create animation on scroll
-    const processTimeline = gsap.timeline({
+    // Create a horizontal scroll animation
+    gsap.to(cardContainer, {
         scrollTrigger: {
-            trigger: '.process-stack',
+            trigger: '.process-section',
             start: 'top 80%',
             end: 'bottom 20%',
-            scrub: 0.5,
-            pin: true,
-            pinSpacing: true
-        }
+            scrub: 1
+        },
+        x: () => -(cardContainer.scrollWidth - window.innerWidth + 40),
+        ease: 'none'
     });
     
-    // Fan out cards when scrolling
+    // Animate cards entering the viewport
     cards.forEach((card, index) => {
-        processTimeline.to(card, {
-            z: 0,
-            y: index * 30, // Spread cards apart vertically
-            rotationX: 0,
-            opacity: 1,
-            duration: 1,
-            ease: 'power2.out'
-        }, index * 0.1);
-    });
-    
-    // Add hover effects to cards
-    cards.forEach(card => {
+        gsap.from(card, {
+            opacity: 0,
+            y: 50,
+            scale: 0.9,
+            duration: 0.6,
+            delay: index * 0.1,
+            scrollTrigger: {
+                trigger: card,
+                start: 'top 90%',
+                toggleActions: 'play none none none'
+            }
+        });
+        
+        // Add hover effects to cards
         card.addEventListener('mouseenter', () => {
             gsap.to(card, {
-                scale: 1.05,
+                y: -10,
+                scale: 1.03,
                 boxShadow: '0 15px 30px rgba(0, 0, 0, 0.2)',
                 duration: 0.3,
                 ease: 'power2.out'
@@ -146,6 +132,7 @@ function initProcessCardsAnimation() {
         
         card.addEventListener('mouseleave', () => {
             gsap.to(card, {
+                y: 0,
                 scale: 1,
                 boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)',
                 duration: 0.3,
@@ -156,19 +143,19 @@ function initProcessCardsAnimation() {
 }
 
 /**
- * Convert existing process steps to a 3D card stack
+ * Convert existing process steps to a horizontal card slider
+ * (Simplified to fix display issues)
  */
-function convertProcessToCardStack() {
+function convertProcessToCardSlider() {
     const processSection = document.querySelector('.process-section .container');
+    if (!processSection) return;
+    
     const steps = document.querySelectorAll('.step');
+    if (!steps.length) return;
     
-    // Create the card stack container
-    const cardStackContainer = document.createElement('div');
-    cardStackContainer.className = 'process-stack-container';
-    
-    // Create the actual stack
-    const cardStack = document.createElement('div');
-    cardStack.className = 'process-stack';
+    // Create card container with horizontal scroll
+    const cardsContainer = document.createElement('div');
+    cardsContainer.className = 'process-cards-container';
     
     // Move each step into a card
     steps.forEach((step, index) => {
@@ -186,13 +173,15 @@ function convertProcessToCardStack() {
         stepIndicator.textContent = `Step ${index + 1}`;
         card.prepend(stepIndicator);
         
-        // Add the card to the stack
-        cardStack.appendChild(card);
+        // Add the card to the container
+        cardsContainer.appendChild(card);
     });
     
-    // Replace the original steps container with our new stack
-    cardStackContainer.appendChild(cardStack);
-    processSection.querySelector('.process-steps').replaceWith(cardStackContainer);
+    // Replace the original steps container with our new slider
+    const processStepsElement = processSection.querySelector('.process-steps');
+    if (processStepsElement) {
+        processStepsElement.replaceWith(cardsContainer);
+    }
 }
 
 /**
@@ -247,69 +236,20 @@ function setupLazyLoadedVideos() {
     const lazyVideos = document.querySelectorAll('video.lazy');
     const playButtons = document.querySelectorAll('.play-button');
     
-    // Video lazy loading with IntersectionObserver
-    const videoObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const video = entry.target;
-                const caseContent = video.closest('.case-content');
-                
-                // First fade in the container
-                gsap.to(caseContent, {
-                    opacity: 1,
-                    duration: 0.5,
-                    ease: 'power2.inOut',
-                    onComplete: () => {
-                        // Then start loading the video
-                        video.src = video.dataset.src;
-                        video.load();
-                        video.muted = true; // Ensure muted for autoplay
-                        
-                        // When video is loaded, animate it in
-                        video.addEventListener('loadeddata', () => {
-                            gsap.fromTo(video, 
-                                { opacity: 0 },
-                                { 
-                                    opacity: 1, 
-                                    duration: 0.8,
-                                    ease: 'power2.inOut',
-                                    onComplete: () => {
-                                        video.play();
-                                        
-                                        // Animate the video overlay
-                                        const overlay = video.closest('.video-container').querySelector('.video-overlay');
-                                        gsap.to(overlay, {
-                                            opacity: 1,
-                                            duration: 0.3,
-                                            delay: 0.5,
-                                            ease: 'power1.out'
-                                        });
-                                        
-                                        // Then fade it out after a brief delay
-                                        gsap.to(overlay, {
-                                            opacity: 0,
-                                            duration: 0.8,
-                                            delay: 2,
-                                            ease: 'power1.inOut'
-                                        });
-                                    }
-                                }
-                            );
-                        }, { once: true });
-                        
-                        video.classList.remove('lazy');
-                        observer.unobserve(video);
-                    }
-                });
-            }
-        });
-    }, {
-        threshold: 0.3,
-        rootMargin: '0px'
+    // Simplified video loading without animations to ensure visibility
+    lazyVideos.forEach(video => {
+        // Immediately load the video
+        video.src = video.dataset.src;
+        video.setAttribute('muted', true);
+        video.load();
+        
+        // When loaded, play it if autoplay is desired
+        video.addEventListener('loadeddata', () => {
+            // Only autoplay if we want this behavior
+            // video.play();
+            video.classList.remove('lazy');
+        }, { once: true });
     });
-    
-    // Initialize observer on all lazy videos
-    lazyVideos.forEach(video => videoObserver.observe(video));
     
     // Set up interactive controls for videos
     playButtons.forEach(button => {
@@ -318,18 +258,39 @@ function setupLazyLoadedVideos() {
             const video = videoContainer.querySelector('video');
             const icon = this.querySelector('i');
             
+            // Ensure video has loaded
+            if (!video.src && video.dataset.src) {
+                video.src = video.dataset.src;
+                video.load();
+            }
+            
             if (video.paused) {
-                // Play the video
-                video.play();
-                icon.classList.remove('fa-play');
-                icon.classList.add('fa-pause');
+                // Try to play and handle any autoplay restrictions
+                const playPromise = video.play();
                 
-                // Add a "playing" class to the container for additional styling
-                videoContainer.classList.add('playing');
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        // Video playback started successfully
+                        icon.classList.remove('fa-play');
+                        icon.classList.add('fa-pause');
+                        videoContainer.classList.add('playing');
+                    })
+                    .catch(error => {
+                        // Auto-play was prevented
+                        console.error("Play was prevented:", error);
+                        // Try to play with user gesture by triggering play again
+                        video.muted = true; // Mute may help with autoplay restrictions
+                        video.play().then(() => {
+                            icon.classList.remove('fa-play');
+                            icon.classList.add('fa-pause');
+                            videoContainer.classList.add('playing');
+                        });
+                    });
+                }
                 
-                // Animate button scale
+                // Animate button
                 gsap.to(this, {
-                    scale: 0.8,
+                    scale: 0.9,
                     duration: 0.2,
                     ease: 'back.out'
                 });
@@ -338,8 +299,6 @@ function setupLazyLoadedVideos() {
                 video.pause();
                 icon.classList.remove('fa-pause');
                 icon.classList.add('fa-play');
-                
-                // Remove the "playing" class
                 videoContainer.classList.remove('playing');
                 
                 // Animate button scale
@@ -352,27 +311,27 @@ function setupLazyLoadedVideos() {
         });
     });
     
-    // Add hover effect for video containers
+    // Simple hover effects without animations for overlay
     document.querySelectorAll('.video-container').forEach(container => {
         container.addEventListener('mouseenter', function() {
-            const overlay = this.querySelector('.video-overlay');
-            gsap.to(overlay, {
-                opacity: 1,
-                duration: 0.3,
+            const button = this.querySelector('.play-button');
+            gsap.to(button, {
+                scale: 1.1, 
+                duration: 0.2,
                 ease: 'power1.out'
             });
         });
         
         container.addEventListener('mouseleave', function() {
-            const overlay = this.querySelector('.video-overlay');
+            const button = this.querySelector('.play-button');
             const video = this.querySelector('video');
             
-            // Only fade out overlay if video is playing
-            if (!video.paused) {
-                gsap.to(overlay, {
-                    opacity: 0,
-                    duration: 0.5,
-                    ease: 'power1.inOut'
+            // Scale down button only if video isn't playing
+            if (video.paused) {
+                gsap.to(button, {
+                    scale: 1,
+                    duration: 0.2,
+                    ease: 'power1.out'
                 });
             }
         });
