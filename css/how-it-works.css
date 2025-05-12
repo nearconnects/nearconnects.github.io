@@ -158,19 +158,24 @@
     color: white;
 }
 
-/* Horizontal Card Slider Styles */
-.process-cards-container {
-    display: flex;
-    overflow-x: hidden;
-    margin-top: 3rem;
-    padding: 2rem 0;
-    gap: 2rem;
+/* Stacking Cards Styles */
+.cards-container {
+    position: relative;
     width: 100%;
+    margin-top: 3rem;
+}
+
+.cards-stack {
+    position: relative;
+    width: 100%;
+    padding: 20px 0;
 }
 
 .process-card {
-    flex: 0 0 auto;
-    width: 300px;
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
     padding: 2rem;
     background: linear-gradient(145deg, rgba(10, 132, 255, 0.15), rgba(10, 132, 255, 0.05));
     border-radius: var(--border-radius-lg);
@@ -178,7 +183,9 @@
     backdrop-filter: blur(10px);
     border: 1px solid rgba(10, 132, 255, 0.2);
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, y 0.3s ease;
+    z-index: 1;
+    transform-origin: center top;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .process-card::before {
@@ -190,6 +197,25 @@
     bottom: 0;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
     border-radius: var(--border-radius-lg);
+    pointer-events: none;
+}
+
+.process-card.active {
+    z-index: 10;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Ensure cards stack above each other */
+.cards-stack .process-card:nth-child(1) { z-index: 5; }
+.cards-stack .process-card:nth-child(2) { z-index: 4; }
+.cards-stack .process-card:nth-child(3) { z-index: 3; }
+.cards-stack .process-card:nth-child(4) { z-index: 2; }
+.cards-stack .process-card:nth-child(5) { z-index: 1; }
+
+/* Make sure we have enough scrolling space */
+.cards-spacer {
+    height: 400vh; /* Will be dynamically set in JS */
+    width: 100%;
     pointer-events: none;
 }
 

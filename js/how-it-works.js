@@ -79,51 +79,50 @@ function initOverviewAnimation() {
 }
 
 /**
- * Process section with horizontal card slider instead of 3D stack 
- * (Simplified to fix layout issues)
+ * Process section with stacking cards based on scroll
+ * Uses GSAP ScrollTrigger for animation
  */
 function initProcessCardsAnimation() {
-    // Convert existing steps to horizontal card slider
-    convertProcessToCardSlider();
+    // Convert existing steps to stacking cards
+    convertProcessToStackingCards();
     
     // Get our process cards
-    const cards = document.querySelectorAll('.process-card');
-    const cardContainer = document.querySelector('.process-cards-container');
+    const cards = gsap.utils.toArray('.process-card');
     
-    if (!cards.length || !cardContainer) return;
+    if (!cards.length) return;
     
-    // Create a horizontal scroll animation
-    gsap.to(cardContainer, {
-        scrollTrigger: {
-            trigger: '.process-section',
-            start: 'top 80%',
-            end: 'bottom 20%',
-            scrub: 1
-        },
-        x: () => -(cardContainer.scrollWidth - window.innerWidth + 40),
-        ease: 'none'
-    });
-    
-    // Animate cards entering the viewport
+    // Apply scaling to cards based on their position in the stack
     cards.forEach((card, index) => {
-        gsap.from(card, {
-            opacity: 0,
-            y: 50,
-            scale: 0.9,
-            duration: 0.6,
-            delay: index * 0.1,
+        // Scale cards as they scroll into view
+        gsap.to(card, {
             scrollTrigger: {
                 trigger: card,
-                start: 'top 90%',
-                toggleActions: 'play none none none'
-            }
+                start: () => 'top bottom-=100',
+                end: () => 'top top+=40',
+                scrub: true,
+                invalidateOnRefresh: true
+            },
+            ease: 'none',
+            scale: () => 1 - (cards.length - index) * 0.025
         });
         
-        // Add hover effects to cards
+        // Pin each card when it reaches the top
+        ScrollTrigger.create({
+            trigger: card,
+            start: 'top top',
+            pin: true,
+            pinSpacing: false,
+            id: `pin-${index}`,
+            end: 'max',
+            invalidateOnRefresh: true
+        });
+        
+        // Add hover effects to cards for additional interactivity
         card.addEventListener('mouseenter', () => {
+            if (!ScrollTrigger.isInViewport(card)) return;
+            
             gsap.to(card, {
-                y: -10,
-                scale: 1.03,
+                y: -5,
                 boxShadow: '0 15px 30px rgba(0, 0, 0, 0.2)',
                 duration: 0.3,
                 ease: 'power2.out'
@@ -133,7 +132,6 @@ function initProcessCardsAnimation() {
         card.addEventListener('mouseleave', () => {
             gsap.to(card, {
                 y: 0,
-                scale: 1,
                 boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)',
                 duration: 0.3,
                 ease: 'power2.out'
@@ -143,19 +141,22 @@ function initProcessCardsAnimation() {
 }
 
 /**
- * Convert existing process steps to a horizontal card slider
- * (Simplified to fix display issues)
+ * Convert existing process steps to stacking cards
  */
-function convertProcessToCardSlider() {
+function convertProcessToStackingCards() {
     const processSection = document.querySelector('.process-section .container');
     if (!processSection) return;
     
     const steps = document.querySelectorAll('.step');
     if (!steps.length) return;
     
-    // Create card container with horizontal scroll
+    // Create a container for the cards and stack
     const cardsContainer = document.createElement('div');
-    cardsContainer.className = 'process-cards-container';
+    cardsContainer.className = 'cards-container';
+    
+    const cardsStack = document.createElement('div');
+    cardsStack.className = 'cards-stack';
+    cardsContainer.appendChild(cardsStack);
     
     // Move each step into a card
     steps.forEach((step, index) => {
@@ -163,6 +164,14 @@ function convertProcessToCardSlider() {
         const card = document.createElement('div');
         card.className = 'process-card';
         card.setAttribute('data-step', index + 1);
+        
+        // Make first card active by default
+        if (index === 0) {
+            card.classList.add('active');
+        }
+        
+        // Position cards with slight vertical offset for stacking effect
+        card.style.top = `${index * 5}px`;
         
         // Copy content from step into card
         card.innerHTML = step.innerHTML;
@@ -173,11 +182,17 @@ function convertProcessToCardSlider() {
         stepIndicator.textContent = `Step ${index + 1}`;
         card.prepend(stepIndicator);
         
-        // Add the card to the container
-        cardsContainer.appendChild(card);
+        // Add the card to the stack
+        cardsStack.appendChild(card);
     });
     
-    // Replace the original steps container with our new slider
+    // Add spacer element to ensure proper scrolling
+    const spacer = document.createElement('div');
+    spacer.className = 'cards-spacer';
+    spacer.style.height = `${steps.length * 100}vh`; // Ensure enough scroll space
+    cardsContainer.appendChild(spacer);
+    
+    // Replace the original steps container with our new stack
     const processStepsElement = processSection.querySelector('.process-steps');
     if (processStepsElement) {
         processStepsElement.replaceWith(cardsContainer);
