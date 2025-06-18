@@ -989,7 +989,7 @@ nav {
 /* ---- Mobile Get Started Button ---- */
 /* Hide mobile get started button on desktop */
 .mobile-get-started {
-    display: none !important;
+    display: none;
 }
 
 /* ---- Responsive Design ---- */
@@ -1034,7 +1034,7 @@ nav {
     }
 
     .nav-menu.active .mobile-get-started {
-        display: block; /* Show in mobile menu */
+        display: block !important; /* Show in mobile menu */
     }
 
     .mobile-get-started .btn {
@@ -1044,6 +1044,7 @@ nav {
         text-align: center;
         padding: var(--spacing-md) var(--spacing-lg);
         font-weight: 600;
+        margin-top: var(--spacing-sm);
     }
 
     .cta-buttons.active {
