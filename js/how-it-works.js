@@ -206,7 +206,7 @@ function convertProcessToStackingCards() {
     // Add spacer element to ensure proper scrolling
     const spacer = document.createElement("div");
     spacer.className = "cards-spacer";
-    spacer.style.height = `${steps.length * 20}vh`; // Reduced scroll space
+    spacer.style.height = `${steps.length * 10}vh`; // Reduced scroll space
     cardsContainer.appendChild(spacer);
 
     // Replace the original steps container with our new stack
