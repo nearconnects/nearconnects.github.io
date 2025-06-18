@@ -1021,6 +1021,25 @@ nav {
         text-align: center;
     }
 
+    /* Mobile Get Started button styling */
+    .mobile-get-started {
+        display: none; /* Hidden by default */
+        margin-top: var(--spacing-md);
+    }
+
+    .nav-menu.active .mobile-get-started {
+        display: block; /* Show in mobile menu */
+    }
+
+    .mobile-get-started .btn {
+        width: 90%;
+        margin: 0 auto;
+        display: block;
+        text-align: center;
+        padding: var(--spacing-md) var(--spacing-lg);
+        font-weight: 600;
+    }
+
     .cta-buttons.active {
         display: flex;
         flex-direction: column;
