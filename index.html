@@ -25,6 +25,7 @@
 
         <!-- Custom CSS -->
         <link rel="stylesheet" href="css/styles.css" />
+        <script src="js/i18n.js"></script>
     </head>
     <body>
         <!-- Header -->
@@ -39,17 +40,17 @@
 
                 <nav>
                     <ul class="nav-menu">
-                        <li><a href="#home">Inicio</a></li>
-                        <li><a href="#impact-metrics">Green Deliveries</a></li>
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#blog">Blog</a></li>
+                        <li><a href="#home" data-translate="nav.home">Inicio</a></li>
+                        <li><a href="#impact-metrics" data-translate="nav.green-deliveries">Green Deliveries</a></li>
+                        <li><a href="#about" data-translate="nav.about">About Us</a></li>
+                        <li><a href="#blog" data-translate="nav.blog">Blog</a></li>
                         <li>
-                            <a href="insights/" class="insights-link"
+                            <a href="insights/" class="insights-link" data-translate="nav.data-insights"
                                 >Data Insights</a
                             >
                         </li>
                         <li class="mobile-get-started">
-                            <a href="https://app.nearconnects.com" class="btn btn-primary" target="_blank"
+                            <a href="https://app.nearconnects.com" class="btn btn-primary" target="_blank" data-translate="nav.get-started"
                                 >Get Started</a
                             >
                         </li>
@@ -62,8 +63,8 @@
                                 <option value="en">EN</option>
                             </select>
                         </div>
-                        <a href="#login" class="btn btn-outline">Sign In</a>
-                        <a href="https://app.nearconnects.com" class="btn btn-primary" target="_blank">Get Started</a>
+                        <a href="#login" class="btn btn-outline" data-translate="nav.sign-in">Sign In</a>
+                        <a href="https://app.nearconnects.com" class="btn btn-primary" target="_blank" data-translate="nav.get-started">Get Started</a>
                     </div>
 
                     <div class="hamburger">
@@ -83,10 +84,10 @@
             <div class="container">
                 <div class="hero-content hero-split animate-on-load">
                     <div class="hero-tagline">
-                        <div class="tagline-top">NEVER EMPTY AGAIN</div>
-                        <div class="tagline-bottom">ON RETURN</div>
+                        <div class="tagline-top" data-translate="hero.tagline.top">NEVER EMPTY AGAIN</div>
+                        <div class="tagline-bottom" data-translate="hero.tagline.bottom">ON RETURN</div>
                     </div>
-                    <p class="hero-subtitle">
+                    <p class="hero-subtitle" data-translate="hero.subtitle">
                         Reducing empty trips and emissions while enabling
                         accessible deliveries
                     </p>
@@ -95,6 +96,7 @@
                         <a
                             href="how-it-works.html"
                             class="btn btn-large btn-primary"
+                            data-translate="hero.button.discover"
                             >Discover How It Works</a
                         >
                     </div>
@@ -106,27 +108,27 @@
         <section id="from-the-fields" class="from-the-fields">
             <div class="container">
                 <div class="fields-content">
-                    <div class="fields-tag">NEVER EMPTY</div>
+                    <div class="fields-tag" data-translate="fields.tag">NEVER EMPTY</div>
                     <div class="fields-text">
-                        <h2>
+                        <h2 data-translate="fields.title">
                             In transportation, operational excellence is born
                             where things truly happen:
                         </h2>
-                        <p>
+                        <p data-translate="fields.description1">
                             With drivers, freelancers, operators, and logistics
                             managers. On the road, in warehouses, at every
                             delivery.
                         </p>
-                        <p>
+                        <p data-translate="fields.description2">
                             NEAR puts a smart and user-friendly platform in
                             their hands, helping them optimize routes, fill
                             empty miles, and connect directly with customers.
                         </p>
-                        <p>
+                        <p data-translate="fields.description3">
                             All from their phone — with geolocation, integrated
                             payments, and real-time support.
                         </p>
-                        <p>
+                        <p data-translate="fields.description4">
                             We turn returns into opportunities. And every
                             kilometer into positive impact.
                         </p>
@@ -167,18 +169,18 @@
                         </video>
                     </div>
                     <div class="tech-text">
-                        <div class="tech-tag">TECHNOLOGY</div>
-                        <h2>
+                        <div class="tech-tag" data-translate="tech.tag">TECHNOLOGY</div>
+                        <h2 data-translate="tech.title">
                             NEAR is the next generation of logistics
                             organization.
                         </h2>
-                        <p>
+                        <p data-translate="tech.description1">
                             Our app is built on a custom-designed Transport
                             Operating System, engineered to reduce empty trips,
                             cut costs, and maximize cargo capacity on every
                             route.
                         </p>
-                        <p>
+                        <p data-translate="tech.description2">
                             With artificial intelligence, real-time tracking,
                             and backhaul algorithms, NEAR ensures efficiency,
                             fairness, and sustainability in every operation.
@@ -196,7 +198,7 @@
         <!-- Stats Section -->
         <section id="stats" class="stats">
             <div class="container">
-                <h2 class="section-title animate-on-scroll">
+                <h2 class="section-title animate-on-scroll" data-translate="stats.title">
                     OTLE Data Insights: Understanding Transport Efficiency and
                     Environmental Impact
                 </h2>
@@ -209,7 +211,7 @@
                         <div class="stat-number">
                             <span class="counter" data-target="393">0</span>M
                         </div>
-                        <div class="stat-label">
+                        <div class="stat-label" data-translate="stats.tons.label">
                             Annual tons moved in internal displacement commerce
                             in Spain
                         </div>
@@ -222,7 +224,7 @@
                         <div class="stat-number">
                             +<span class="counter" data-target="93">0</span>M
                         </div>
-                        <div class="stat-label">
+                        <div class="stat-label" data-translate="stats.operations.label">
                             Annual number of empty operations
                         </div>
                     </div>
@@ -235,7 +237,7 @@
                             <span class="counter" data-target="23.7">0</span>M
                             tons CO₂
                         </div>
-                        <div class="stat-label">
+                        <div class="stat-label" data-translate="stats.emissions.label">
                             Annual CO₂ emissions from these displacements
                         </div>
                     </div>
@@ -246,7 +248,7 @@
         <!-- Problem/Solution Section -->
         <section id="solution" class="solution">
             <div class="container">
-                <h2 class="section-title animate-on-scroll">
+                <h2 class="section-title animate-on-scroll" data-translate="solution.title">
                     Problem and Solution
                 </h2>
 
@@ -255,16 +257,16 @@
                         <div class="card-icon">
                             <i class="fas fa-exclamation-triangle"></i>
                         </div>
-                        <h3>The Problem</h3>
-                        <p>
+                        <h3 data-translate="problem.title">The Problem</h3>
+                        <p data-translate="problem.description">
                             43% of logistics routes in Spain operate empty,
                             causing:
                         </p>
                         <ul>
-                            <li>Significant operational losses</li>
-                            <li>Unnecessary fuel costs</li>
-                            <li>Vehicle wear and tear</li>
-                            <li>Avoidable CO₂ emissions</li>
+                            <li data-translate="problem.item1">Significant operational losses</li>
+                            <li data-translate="problem.item2">Unnecessary fuel costs</li>
+                            <li data-translate="problem.item3">Vehicle wear and tear</li>
+                            <li data-translate="problem.item4">Avoidable CO₂ emissions</li>
                         </ul>
                     </div>
 
@@ -272,13 +274,13 @@
                         <div class="card-icon">
                             <i class="fas fa-lightbulb"></i>
                         </div>
-                        <h3>Our Solution</h3>
-                        <p>Intelligent platform that:</p>
+                        <h3 data-translate="solution.our-title">Our Solution</h3>
+                        <p data-translate="solution.description">Intelligent platform that:</p>
                         <ul>
-                            <li>Connects logistics supply and demand</li>
-                            <li>Optimizes existing routes</li>
-                            <li>Reduces operational costs</li>
-                            <li>Generates additional income</li>
+                            <li data-translate="solution.item1">Connects logistics supply and demand</li>
+                            <li data-translate="solution.item2">Optimizes existing routes</li>
+                            <li data-translate="solution.item3">Reduces operational costs</li>
+                            <li data-translate="solution.item4">Generates additional income</li>
                         </ul>
                     </div>
                 </div>
@@ -288,7 +290,7 @@
         <!-- Benefits Section -->
         <section id="benefits" class="benefits">
             <div class="container">
-                <h2 class="section-title animate-on-scroll">
+                <h2 class="section-title animate-on-scroll" data-translate="benefits.title">
                     Transportation Benefits
                 </h2>
 
@@ -296,16 +298,16 @@
                     <div class="benefit-card animate-on-scroll">
                         <div class="benefit-number">01</div>
                         <div class="benefit-content">
-                            <h3>Carriers and Drivers</h3>
-                            <p>
+                            <h3 data-translate="benefits.carriers.title">Carriers and Drivers</h3>
+                            <p data-translate="benefits.carriers.description">
                                 Maximize your earnings and efficiency with our
                                 platform
                             </p>
                             <ul>
-                                <li>Loads on return routes</li>
-                                <li>Reduction of empty kilometers</li>
-                                <li>Additional revenue</li>
-                                <li>Route optimization</li>
+                                <li data-translate="benefits.carriers.item1">Loads on return routes</li>
+                                <li data-translate="benefits.carriers.item2">Reduction of empty kilometers</li>
+                                <li data-translate="benefits.carriers.item3">Additional revenue</li>
+                                <li data-translate="benefits.carriers.item4">Route optimization</li>
                             </ul>
                         </div>
                     </div>
@@ -313,16 +315,16 @@
                     <div class="benefit-card animate-on-scroll">
                         <div class="benefit-number">02</div>
                         <div class="benefit-content">
-                            <h3>Shippers and Businesses</h3>
-                            <p>
+                            <h3 data-translate="benefits.shippers.title">Shippers and Businesses</h3>
+                            <p data-translate="benefits.shippers.description">
                                 Reduce your costs and simplify your logistics
                                 operations
                             </p>
                             <ul>
-                                <li>Economic shipments</li>
-                                <li>Simplified management</li>
-                                <li>Real-time tracking</li>
-                                <li>Reduced costs</li>
+                                <li data-translate="benefits.shippers.item1">Economic shipments</li>
+                                <li data-translate="benefits.shippers.item2">Simplified management</li>
+                                <li data-translate="benefits.shippers.item3">Real-time tracking</li>
+                                <li data-translate="benefits.shippers.item4">Reduced costs</li>
                             </ul>
                         </div>
                     </div>
@@ -330,16 +332,16 @@
                     <div class="benefit-card animate-on-scroll">
                         <div class="benefit-number">03</div>
                         <div class="benefit-content">
-                            <h3>Environmental Impact</h3>
-                            <p>
+                            <h3 data-translate="benefits.environment.title">Environmental Impact</h3>
+                            <p data-translate="benefits.environment.description">
                                 Contribute to a more sustainable future with
                                 each shipment
                             </p>
                             <ul>
-                                <li>Reduction of CO₂ emissions</li>
-                                <li>Resource optimization</li>
-                                <li>Lower carbon footprint</li>
-                                <li>Sustainable practices</li>
+                                <li data-translate="benefits.environment.item1">Reduction of CO₂ emissions</li>
+                                <li data-translate="benefits.environment.item2">Resource optimization</li>
+                                <li data-translate="benefits.environment.item3">Lower carbon footprint</li>
+                                <li data-translate="benefits.environment.item4">Sustainable practices</li>
                             </ul>
                         </div>
                     </div>
@@ -350,25 +352,25 @@
         <!-- Impact Section -->
         <section id="impact-metrics" class="impact-metrics-section">
             <div class="container">
-                <h2>Our Impact</h2>
+                <h2 data-translate="impact.title">Our Impact</h2>
                 <div class="metrics-container">
                     <div class="metric-card">
                         <div class="chart-container" id="emissionsChart"></div>
-                        <h3>CO₂ Emissions Avoided</h3>
+                        <h3 data-translate="impact.emissions.title">CO₂ Emissions Avoided</h3>
                         <div class="metric-value" data-value="1160000">0</div>
-                        <span class="metric-unit">tons</span>
+                        <span class="metric-unit" data-translate="impact.emissions.unit">tons</span>
                     </div>
                     <div class="metric-card">
                         <div class="chart-container" id="kilometersChart"></div>
-                        <h3>Empty Kilometers Eliminated</h3>
+                        <h3 data-translate="impact.kilometers.title">Empty Kilometers Eliminated</h3>
                         <div class="metric-value" data-value="5200000">0</div>
-                        <span class="metric-unit">km</span>
+                        <span class="metric-unit" data-translate="impact.kilometers.unit">km</span>
                     </div>
                     <div class="metric-card">
                         <div class="chart-container" id="revenueChart"></div>
-                        <h3>Additional Revenue Generated</h3>
+                        <h3 data-translate="impact.revenue.title">Additional Revenue Generated</h3>
                         <div class="metric-value" data-value="963000">0</div>
-                        <span class="metric-unit">€</span>
+                        <span class="metric-unit" data-translate="impact.revenue.unit">€</span>
                     </div>
                 </div>
             </div>
@@ -429,12 +431,12 @@
     <!-- Contact Section -->
         <section id="contact" class="contact">
             <div class="container">
-                <h2 class="section-title animate-on-scroll">Contact Us</h2>
+                <h2 class="section-title animate-on-scroll" data-translate="contact.title">Contact Us</h2>
 
                 <div class="contact-container">
                     <div class="contact-info animate-on-scroll">
-                        <h3>Have a question?</h3>
-                        <p>
+                        <h3 data-translate="contact.question">Have a question?</h3>
+                        <p data-translate="contact.description">
                             Contact us and we'll get back to you as soon as
                             possible.
                         </p>
@@ -457,13 +459,13 @@
                         class="contact-form animate-on-scroll"
                     >
                         <div class="form-group">
-                            <label for="name">Name</label>
+                            <label for="name" data-translate="contact.form.name">Name</label>
                             <input type="text" id="name" name="name" required />
                             <span class="error-message"></span>
                         </div>
 
                         <div class="form-group">
-                            <label for="email">Email</label>
+                            <label for="email" data-translate="contact.form.email">Email</label>
                             <input
                                 type="email"
                                 id="email"
@@ -474,20 +476,20 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="type"
+                            <label for="type" data-translate="contact.form.type"
                                 >Are you a shipper or carrier?</label
                             >
                             <select id="type" name="type" required>
-                                <option value="">Select an option</option>
-                                <option value="client">Shipper</option>
-                                <option value="transporter">Carrier</option>
-                                <option value="other">Other</option>
+                                <option value="" data-translate="contact.form.type.select">Select an option</option>
+                                <option value="client" data-translate="contact.form.type.shipper">Shipper</option>
+                                <option value="transporter" data-translate="contact.form.type.carrier">Carrier</option>
+                                <option value="other" data-translate="contact.form.type.other">Other</option>
                             </select>
                             <span class="error-message"></span>
                         </div>
 
                         <div class="form-group">
-                            <label for="message">Message</label>
+                            <label for="message" data-translate="contact.form.message">Message</label>
                             <textarea
                                 id="message"
                                 name="message"
@@ -497,13 +499,13 @@
                             <span class="error-message"></span>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary" data-translate="contact.form.submit">
                             Send Message
                         </button>
 
                         <div id="form-success" class="form-success">
                             <i class="fas fa-check-circle"></i>
-                            <p>
+                            <p data-translate="contact.form.success">
                                 Message sent successfully! We'll be in touch
                                 soon.
                             </p>
@@ -519,49 +521,49 @@
                 <div class="footer-content">
                     <div class="footer-logo">
                         <span>NEAR</span>
-                        <p class="tagline">
+                        <p class="tagline" data-translate="footer.tagline">
                             Caring for the planet, connecting paths 🌱
                         </p>
                     </div>
 
                     <div class="footer-links">
                         <div class="footer-column">
-                            <h4>Company</h4>
+                            <h4 data-translate="footer.company">Company</h4>
                             <ul>
-                                <li><a href="#about">About Us</a></li>
-                                <li><a href="#team">Team</a></li>
-                                <li><a href="#careers">Careers</a></li>
-                                <li><a href="#press">Press</a></li>
+                                <li><a href="#about" data-translate="footer.company.about">About Us</a></li>
+                                <li><a href="#team" data-translate="footer.company.team">Team</a></li>
+                                <li><a href="#careers" data-translate="footer.company.careers">Careers</a></li>
+                                <li><a href="#press" data-translate="footer.company.press">Press</a></li>
                             </ul>
                         </div>
 
                         <div class="footer-column">
-                            <h4>Legal</h4>
+                            <h4 data-translate="footer.legal">Legal</h4>
                             <ul>
                                 <li>
-                                    <a href="#privacy">Privacy Policy</a>
+                                    <a href="#privacy" data-translate="footer.legal.privacy">Privacy Policy</a>
                                 </li>
                                 <li>
-                                    <a href="#terms">Terms & Conditions</a>
+                                    <a href="#terms" data-translate="footer.legal.terms">Terms & Conditions</a>
                                 </li>
                                 <li>
-                                    <a href="#cookies">Cookie Policy</a>
+                                    <a href="#cookies" data-translate="footer.legal.cookies">Cookie Policy</a>
                                 </li>
                             </ul>
                         </div>
 
                         <div class="footer-column">
-                            <h4>Help</h4>
+                            <h4 data-translate="footer.help">Help</h4>
                             <ul>
-                                <li><a href="#faq">FAQ</a></li>
-                                <li><a href="#contact">Contact</a></li>
-                                <li><a href="#support">Support</a></li>
+                                <li><a href="#faq" data-translate="footer.help.faq">FAQ</a></li>
+                                <li><a href="#contact" data-translate="footer.help.contact">Contact</a></li>
+                                <li><a href="#support" data-translate="footer.help.support">Support</a></li>
                             </ul>
                         </div>
                     </div>
 
                     <div class="footer-social">
-                        <h4>Follow Us</h4>
+                        <h4 data-translate="footer.social">Follow Us</h4>
                         <div class="social-icons">
                             <a href="#" aria-label="Facebook">
                                 <svg
@@ -661,7 +663,7 @@
                 </div>
 
                 <div class="footer-bottom">
-                    <p>
+                    <p data-translate="footer.copyright">
                         &copy; 2025 NEAR (Never Empty Again on Return). All
                         rights reserved.
                     </p>
