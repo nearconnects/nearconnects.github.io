@@ -1284,8 +1284,6 @@ nav {
     opacity: 0;
     transform: translateX(-100px);
     transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
-    max-width: 1200px;
-    margin: 0 auto;
 }
 
 .fields-content .fields-text {
@@ -1315,25 +1313,21 @@ nav {
 
 .fields-text {
     position: relative;
-    max-width: 65%;
+    max-width: 55%;
 }
 
 .fields-text h2 {
-    font-size: 3.2rem;
+    font-size: 3.5rem;
     font-weight: 700;
     margin-bottom: 3rem;
-    line-height: 1.2;
-    word-wrap: break-word;
-    hyphens: auto;
+    line-height: 1.1;
 }
 
 .fields-text p {
     font-size: 1.25rem;
-    line-height: 1.7;
+    line-height: 1.6;
     margin-bottom: 2rem;
     color: rgba(255, 255, 255, 0.8);
-    word-wrap: break-word;
-    hyphens: auto;
 }
 
 .fields-image {
@@ -1478,18 +1472,8 @@ nav {
         font-size: 3rem;
     }
 
-    .fields-text {
-        max-width: 100%;
-    }
-    
     .fields-text h2, .tech-text h2 {
-        font-size: 2.2rem;
-        line-height: 1.3;
-    }
-    
-    .fields-text p {
-        font-size: 1.1rem;
-        line-height: 1.6;
+        font-size: 2rem;
     }
 }
 
