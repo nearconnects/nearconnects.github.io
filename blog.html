@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Blog - NEAR | Never Empty Again on Return</title>
+        <meta
+            name="description"
+            content="Insights, trends and updates from NEAR - revolutionizing logistics and reducing carbon footprint"
+        />
+
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+
+        <!-- Font Awesome for icons -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="css/styles.css" />
+        <link rel="stylesheet" href="css/blog.css" />
+        <script src="js/i18n.js"></script>
+    </head>
+    <body>
+        <!-- Header -->
+        <header id="header">
+            <div class="container">
+                <div class="logo">
+                    <a href="index.html">
+                        <span>NEAR</span>
+                    </a>
+                </div>
+
+                <nav>
+                    <ul class="nav-menu">
+                        <li><a href="index.html#home" data-translate="nav.home">Inicio</a></li>
+                        <li><a href="index.html#impact-metrics" data-translate="nav.green-deliveries">Green Deliveries</a></li>
+                        <li><a href="index.html#about" data-translate="nav.about">About Us</a></li>
+                        <li><a href="blog.html" class="active" data-translate="nav.blog">Blog</a></li>
+                        <li>
+                            <a href="insights/" class="insights-link" data-translate="nav.data-insights">Data Insights</a>
+                        </li>
+                        <li class="mobile-get-started">
+                            <a href="https://app.nearconnects.com" class="btn btn-primary" target="_blank" data-translate="nav.get-started">Get Started</a>
+                        </li>
+                    </ul>
+
+                    <div class="cta-buttons">
+                        <div class="language-selector">
+                            <select>
+                                <option value="es">ES</option>
+                                <option value="en">EN</option>
+                            </select>
+                        </div>
+                        <a href="#login" class="btn btn-outline" data-translate="nav.sign-in">Sign In</a>
+                        <a href="https://app.nearconnects.com" class="btn btn-primary" target="_blank" data-translate="nav.get-started">Get Started</a>
+                    </div>
+
+                    <div class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Blog Hero Section -->
+        <section class="blog-hero">
+            <div class="container">
+                <div class="blog-hero-content">
+                    <h1 data-translate="blog.hero.title">NEAR Blog</h1>
+                    <p data-translate="blog.hero.subtitle">Insights, trends, and innovations in sustainable logistics</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Categories -->
+        <section class="blog-categories">
+            <div class="container">
+                <div class="category-filters">
+                    <button class="category-btn active" data-category="all" data-translate="blog.categories.all">All</button>
+                    <button class="category-btn" data-category="sustainability" data-translate="blog.categories.sustainability">Sustainability</button>
+                    <button class="category-btn" data-category="technology" data-translate="blog.categories.technology">Technology</button>
+                    <button class="category-btn" data-category="industry" data-translate="blog.categories.industry">Industry Insights</button>
+                    <button class="category-btn" data-category="success" data-translate="blog.categories.success">Success Stories</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Posts Grid -->
+        <section class="blog-posts">
+            <div class="container">
+                <div class="posts-grid">
+                    <!-- Featured Post -->
+                    <article class="blog-post featured" data-category="sustainability">
+                        <div class="post-image">
+                            <div class="post-placeholder">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <div class="post-category" data-translate="blog.categories.sustainability">Sustainability</div>
+                        </div>
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span class="post-date">March 15, 2024</span>
+                                <span class="read-time">5 min read</span>
+                            </div>
+                            <h2 data-translate="blog.post1.title">The Hidden Environmental Cost of Empty Logistics Routes</h2>
+                            <p data-translate="blog.post1.excerpt">Discover how empty return trips contribute to 40% of logistics emissions and what innovative solutions are changing the industry landscape.</p>
+                            <div class="post-footer">
+                                <div class="post-author">
+                                    <span>NEAR Team</span>
+                                </div>
+                                <a href="#" class="read-more" data-translate="blog.read-more">Read More</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Regular Posts -->
+                    <article class="blog-post" data-category="technology">
+                        <div class="post-image">
+                            <div class="post-placeholder">
+                                <i class="fas fa-microchip"></i>
+                            </div>
+                            <div class="post-category" data-translate="blog.categories.technology">Technology</div>
+                        </div>
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span class="post-date">March 10, 2024</span>
+                                <span class="read-time">4 min read</span>
+                            </div>
+                            <h3 data-translate="blog.post2.title">AI-Powered Route Optimization: The Future of Logistics</h3>
+                            <p data-translate="blog.post2.excerpt">How artificial intelligence is revolutionizing cargo distribution and reducing operational costs by up to 30%.</p>
+                            <div class="post-footer">
+                                <div class="post-author">
+                                    <span>NEAR Team</span>
+                                </div>
+                                <a href="#" class="read-more" data-translate="blog.read-more">Read More</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="blog-post" data-category="industry">
+                        <div class="post-image">
+                            <div class="post-placeholder">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="post-category" data-translate="blog.categories.industry">Industry Insights</div>
+                        </div>
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span class="post-date">March 5, 2024</span>
+                                <span class="read-time">6 min read</span>
+                            </div>
+                            <h3 data-translate="blog.post3.title">Spanish Logistics Market: 2024 Trends and Opportunities</h3>
+                            <p data-translate="blog.post3.excerpt">An in-depth analysis of the Spanish transportation sector and emerging opportunities for carriers and shippers.</p>
+                            <div class="post-footer">
+                                <div class="post-author">
+                                    <span>NEAR Team</span>
+                                </div>
+                                <a href="#" class="read-more" data-translate="blog.read-more">Read More</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="blog-post" data-category="success">
+                        <div class="post-image">
+                            <div class="post-placeholder">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="post-category" data-translate="blog.categories.success">Success Stories</div>
+                        </div>
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span class="post-date">February 28, 2024</span>
+                                <span class="read-time">3 min read</span>
+                            </div>
+                            <h3 data-translate="blog.post4.title">Case Study: 35% Cost Reduction for Barcelona-Madrid Route</h3>
+                            <p data-translate="blog.post4.excerpt">Learn how a mid-size logistics company transformed their operations using NEAR's platform.</p>
+                            <div class="post-footer">
+                                <div class="post-author">
+                                    <span>NEAR Team</span>
+                                </div>
+                                <a href="#" class="read-more" data-translate="blog.read-more">Read More</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="blog-post" data-category="sustainability">
+                        <div class="post-image">
+                            <div class="post-placeholder">
+                                <i class="fas fa-globe-europe"></i>
+                            </div>
+                            <div class="post-category" data-translate="blog.categories.sustainability">Sustainability</div>
+                        </div>
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span class="post-date">February 20, 2024</span>
+                                <span class="read-time">4 min read</span>
+                            </div>
+                            <h3 data-translate="blog.post5.title">Carbon Footprint Calculator for Logistics Operations</h3>
+                            <p data-translate="blog.post5.excerpt">Understanding and measuring your transportation environmental impact with our new tools.</p>
+                            <div class="post-footer">
+                                <div class="post-author">
+                                    <span>NEAR Team</span>
+                                </div>
+                                <a href="#" class="read-more" data-translate="blog.read-more">Read More</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="blog-post" data-category="technology">
+                        <div class="post-image">
+                            <div class="post-placeholder">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div class="post-category" data-translate="blog.categories.technology">Technology</div>
+                        </div>
+                        <div class="post-content">
+                            <div class="post-meta">
+                                <span class="post-date">February 15, 2024</span>
+                                <span class="read-time">5 min read</span>
+                            </div>
+                            <h3 data-translate="blog.post6.title">Mobile-First Logistics: Empowering Drivers on the Road</h3>
+                            <p data-translate="blog.post6.excerpt">Why mobile technology is the key to modern logistics efficiency and driver satisfaction.</p>
+                            <div class="post-footer">
+                                <div class="post-author">
+                                    <span>NEAR Team</span>
+                                </div>
+                                <a href="#" class="read-more" data-translate="blog.read-more">Read More</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Load More Button -->
+                <div class="load-more-container">
+                    <button class="btn btn-outline load-more-btn" data-translate="blog.load-more">Load More Posts</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Signup -->
+        <section class="newsletter-signup">
+            <div class="container">
+                <div class="newsletter-content">
+                    <h2 data-translate="blog.newsletter.title">Stay Updated</h2>
+                    <p data-translate="blog.newsletter.description">Get the latest insights on sustainable logistics delivered to your inbox</p>
+                    <form class="newsletter-form">
+                        <div class="form-group">
+                            <input type="email" placeholder="Enter your email" required data-translate="blog.newsletter.placeholder" />
+                            <button type="submit" class="btn btn-primary" data-translate="blog.newsletter.subscribe">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-logo">
+                        <span>NEAR</span>
+                        <p class="tagline" data-translate="footer.tagline">
+                            Caring for the planet, connecting paths 🌱
+                        </p>
+                    </div>
+
+                    <div class="footer-links">
+                        <div class="footer-column">
+                            <h4 data-translate="footer.company">Company</h4>
+                            <ul>
+                                <li><a href="index.html#about" data-translate="footer.company.about">About Us</a></li>
+                                <li><a href="#team" data-translate="footer.company.team">Team</a></li>
+                                <li><a href="#careers" data-translate="footer.company.careers">Careers</a></li>
+                                <li><a href="#press" data-translate="footer.company.press">Press</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="footer-column">
+                            <h4 data-translate="footer.legal">Legal</h4>
+                            <ul>
+                                <li>
+                                    <a href="#privacy" data-translate="footer.legal.privacy">Privacy Policy</a>
+                                </li>
+                                <li>
+                                    <a href="#terms" data-translate="footer.legal.terms">Terms & Conditions</a>
+                                </li>
+                                <li>
+                                    <a href="#cookies" data-translate="footer.legal.cookies">Cookie Policy</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="footer-column">
+                            <h4 data-translate="footer.help">Help</h4>
+                            <ul>
+                                <li><a href="#faq" data-translate="footer.help.faq">FAQ</a></li>
+                                <li><a href="index.html#contact" data-translate="footer.help.contact">Contact</a></li>
+                                <li><a href="#support" data-translate="footer.help.support">Support</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="footer-social">
+                        <h4 data-translate="footer.social">Follow Us</h4>
+                        <div class="social-icons">
+                            <a href="#" aria-label="Facebook">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-facebook">
+                                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                                </svg>
+                            </a>
+                            <a href="#" aria-label="Twitter">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter">
+                                    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                                </svg>
+                            </a>
+                            <a href="#" aria-label="Instagram">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram">
+                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                </svg>
+                            </a>
+                            <a href="https://www.linkedin.com/company/nearconnects" aria-label="LinkedIn" target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-linkedin">
+                                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                    <rect x="2" y="9" width="4" height="12"></rect>
+                                    <circle cx="4" cy="4" r="2"></circle>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-bottom">
+                    <p data-translate="footer.copyright">
+                        &copy; 2025 NEAR (Never Empty Again on Return). All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- JavaScript -->
+        <script src="js/main.js"></script>
+        <script src="js/blog.js"></script>
+    </body>
+</html>

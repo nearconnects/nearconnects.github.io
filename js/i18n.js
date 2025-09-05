@@ -118,7 +118,36 @@ const translations = {
         'footer.help.contact': 'Contacto',
         'footer.help.support': 'Soporte',
         'footer.social': 'Síguenos',
-        'footer.copyright': '&copy; 2025 NEAR (Never Empty Again on Return). Todos los derechos reservados.'
+        'footer.copyright': '&copy; 2025 NEAR (Never Empty Again on Return). Todos los derechos reservados.',
+
+        // Blog Section
+        'blog.hero.title': 'Blog de NEAR',
+        'blog.hero.subtitle': 'Ideas, tendencias e innovaciones en logística sostenible',
+        'blog.categories.all': 'Todos',
+        'blog.categories.sustainability': 'Sostenibilidad',
+        'blog.categories.technology': 'Tecnología',
+        'blog.categories.industry': 'Análisis del Sector',
+        'blog.categories.success': 'Casos de Éxito',
+        'blog.read-more': 'Leer Más',
+        'blog.load-more': 'Cargar Más Posts',
+        'blog.newsletter.title': 'Mantente Actualizado',
+        'blog.newsletter.description': 'Recibe las últimas ideas sobre logística sostenible en tu email',
+        'blog.newsletter.placeholder': 'Ingresa tu email',
+        'blog.newsletter.subscribe': 'Suscribirse',
+        
+        // Blog Posts
+        'blog.post1.title': 'El Costo Ambiental Oculto de las Rutas Logísticas Vacías',
+        'blog.post1.excerpt': 'Descubre cómo los viajes de retorno vacíos contribuyen al 40% de las emisiones logísticas y qué soluciones innovadoras están cambiando el panorama de la industria.',
+        'blog.post2.title': 'Optimización de Rutas con IA: El Futuro de la Logística',
+        'blog.post2.excerpt': 'Cómo la inteligencia artificial está revolucionando la distribución de carga y reduciendo los costos operativos hasta un 30%.',
+        'blog.post3.title': 'Mercado Logístico Español: Tendencias y Oportunidades 2024',
+        'blog.post3.excerpt': 'Un análisis profundo del sector de transporte español y las oportunidades emergentes para transportistas y remitentes.',
+        'blog.post4.title': 'Caso de Estudio: 35% de Reducción de Costos en la Ruta Barcelona-Madrid',
+        'blog.post4.excerpt': 'Aprende cómo una empresa logística mediana transformó sus operaciones usando la plataforma de NEAR.',
+        'blog.post5.title': 'Calculadora de Huella de Carbono para Operaciones Logísticas',
+        'blog.post5.excerpt': 'Entendiendo y midiendo tu impacto ambiental de transporte con nuestras nuevas herramientas.',
+        'blog.post6.title': 'Logística Mobile-First: Empoderando a Conductores en Carretera',
+        'blog.post6.excerpt': 'Por qué la tecnología móvil es clave para la eficiencia logística moderna y la satisfacción del conductor.'
     },
 
     en: {
@@ -234,7 +263,36 @@ const translations = {
         'footer.help.contact': 'Contact',
         'footer.help.support': 'Support',
         'footer.social': 'Follow Us',
-        'footer.copyright': '&copy; 2025 NEAR (Never Empty Again on Return). All rights reserved.'
+        'footer.copyright': '&copy; 2025 NEAR (Never Empty Again on Return). All rights reserved.',
+
+        // Blog Section
+        'blog.hero.title': 'NEAR Blog',
+        'blog.hero.subtitle': 'Insights, trends, and innovations in sustainable logistics',
+        'blog.categories.all': 'All',
+        'blog.categories.sustainability': 'Sustainability',
+        'blog.categories.technology': 'Technology',
+        'blog.categories.industry': 'Industry Insights',
+        'blog.categories.success': 'Success Stories',
+        'blog.read-more': 'Read More',
+        'blog.load-more': 'Load More Posts',
+        'blog.newsletter.title': 'Stay Updated',
+        'blog.newsletter.description': 'Get the latest insights on sustainable logistics delivered to your inbox',
+        'blog.newsletter.placeholder': 'Enter your email',
+        'blog.newsletter.subscribe': 'Subscribe',
+        
+        // Blog Posts
+        'blog.post1.title': 'The Hidden Environmental Cost of Empty Logistics Routes',
+        'blog.post1.excerpt': 'Discover how empty return trips contribute to 40% of logistics emissions and what innovative solutions are changing the industry landscape.',
+        'blog.post2.title': 'AI-Powered Route Optimization: The Future of Logistics',
+        'blog.post2.excerpt': 'How artificial intelligence is revolutionizing cargo distribution and reducing operational costs by up to 30%.',
+        'blog.post3.title': 'Spanish Logistics Market: 2024 Trends and Opportunities',
+        'blog.post3.excerpt': 'An in-depth analysis of the Spanish transportation sector and emerging opportunities for carriers and shippers.',
+        'blog.post4.title': 'Case Study: 35% Cost Reduction for Barcelona-Madrid Route',
+        'blog.post4.excerpt': 'Learn how a mid-size logistics company transformed their operations using NEAR\'s platform.',
+        'blog.post5.title': 'Carbon Footprint Calculator for Logistics Operations',
+        'blog.post5.excerpt': 'Understanding and measuring your transportation environmental impact with our new tools.',
+        'blog.post6.title': 'Mobile-First Logistics: Empowering Drivers on the Road',
+        'blog.post6.excerpt': 'Why mobile technology is the key to modern logistics efficiency and driver satisfaction.'
     }
 };
 
