@@ -45,25 +45,31 @@
                         <li><a href="#about" data-translate="nav.about">About Us</a></li>
                         <li><a href="blog.html" data-translate="nav.blog">Blog</a></li>
                         <li>
-                            <a href="insights/" class="insights-link" data-translate="nav.data-insights"
-                                >Data Insights</a
-                            >
+                            <a href="insights/" class="insights-link" data-translate="nav.data-insights">Data Insights</a>
                         </li>
                         <li class="mobile-get-started">
-                            <a href="https://app.nearconnects.com" class="btn btn-primary" target="_blank" data-translate="nav.get-started"
-                                >Get Started</a
-                            >
+                            <a href="https://app.nearconnects.com" class="btn btn-primary" target="_blank" data-translate="nav.get-started">Get Started</a>
+                        </li>
+                        <li class="cta-buttons">
+                            <div class="mobile-language-selector">
+                                <div class="language-toggle" onclick="toggleLanguage()">
+                                    <i class="fas fa-globe"></i>
+                                    <span class="current-lang" id="current-lang">ES</span>
+                                </div>
+                            </div>
+                            <a href="https://auth.nearconnects.com" class="btn btn-outline" target="_blank" data-translate="nav.sign-in">Sign In</a>
+                            <a href="https://app.nearconnects.com" class="btn btn-primary" target="_blank" data-translate="nav.get-started">Get Started</a>
                         </li>
                     </ul>
 
                     <div class="cta-buttons">
-                        <div class="language-selector">
-                            <select>
-                                <option value="es">ES</option>
-                                <option value="en">EN</option>
-                            </select>
+                        <div class="mobile-language-selector">
+                            <div class="language-toggle" onclick="toggleLanguage()">
+                                <i class="fas fa-globe"></i>
+                                <span class="current-lang" id="current-lang">ES</span>
+                            </div>
                         </div>
-                        <a href="#login" class="btn btn-outline" data-translate="nav.sign-in">Sign In</a>
+                        <a href="https://auth.nearconnects.com" class="btn btn-outline" target="_blank" data-translate="nav.sign-in">Sign In</a>
                         <a href="https://app.nearconnects.com" class="btn btn-primary" target="_blank" data-translate="nav.get-started">Get Started</a>
                     </div>
 
@@ -92,7 +98,7 @@
             <div class="container">
                 <div class="hero-content hero-split animate-on-load">
                     <div class="hero-tagline">
-                        <div class="tagline-top" data-translate="hero.tagline.top">NEVER EMPTY AGAIN</div>
+                        <div class="tagline-top" data-translate="hero.tagline.top">NEVER EMPTY</div>
                         <div class="tagline-bottom" data-translate="hero.tagline.bottom">ON RETURN</div>
                     </div>
                     <p class="hero-subtitle" data-translate="hero.subtitle">
@@ -385,11 +391,11 @@
         </section>
 
         <!--
-   
+
     <section id="testimonials" class="testimonials">
         <div class="container">
             <h2 class="section-title animate-on-scroll">Client Success Stories</h2>
-            
+
             <div class="testimonial-slider animate-on-scroll">
                 <div class="slider-container">
                     <div class="testimonial-slide active">
@@ -401,7 +407,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="testimonial-slide">
                         <div class="testimonial-content">
                             <p>"He conseguido enviar productos a un coste mucho menor aprovechando rutas que antes iban vacías. Además, la comunicación es directa y el seguimiento es perfecto."</p>
@@ -411,7 +417,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="testimonial-slide">
                         <div class="testimonial-content">
                             <p>"Como empresa comprometida con el medio ambiente, NEAR nos ha permitido reducir la huella de carbono de nuestras operaciones logísticas en un 25%."</p>
@@ -422,7 +428,7 @@
                         </div>
                     </div>
                 </div>
-               
+
                 <div class="slider-controls">
                     <button class="prev-btn"><i class="fas fa-chevron-left"></i></button>
                     <div class="slider-dots">
@@ -435,7 +441,7 @@
             </div>
         </div>
     </section>
-    
+
     <!-- Contact Section -->
         <section id="contact" class="contact">
             <div class="container">

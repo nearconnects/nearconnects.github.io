@@ -1100,14 +1100,23 @@ nav {
         margin-top: var(--spacing-sm);
     }
 
-    .cta-buttons.active {
-        display: flex;
+    .nav-menu.active .cta-buttons {
+        display: flex !important;
         flex-direction: column;
         width: 100%;
         padding: var(--spacing-md) var(--spacing-xl);
         gap: var(--spacing-sm);
-        background-color: rgba(18, 24, 38, 0.98); /* Dark background to match header */
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        background-color: transparent;
+        box-shadow: none;
+        position: relative;
+        margin-top: var(--spacing-md);
+        list-style: none;
+    }
+
+    .nav-menu.active .cta-buttons .btn {
+        width: 100%;
+        text-align: center;
+        display: block;
     }
 
     .hero-buttons {

@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function closeMenu() {
         hamburger.classList.remove('active');
         navMenu.classList.remove('active');
-        ctaButtons.classList.remove('active');
         const spans = hamburger.querySelectorAll('span');
         spans[0].style.transform = 'none';
         spans[1].style.opacity = '1';
@@ -24,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
             e.stopPropagation();
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
-            ctaButtons.classList.toggle('active');
             
             // Toggle hamburger animation
             const spans = hamburger.querySelectorAll('span');
