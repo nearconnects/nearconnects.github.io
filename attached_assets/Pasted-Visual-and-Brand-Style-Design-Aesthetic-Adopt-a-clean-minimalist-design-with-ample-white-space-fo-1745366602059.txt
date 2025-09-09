@@ -1,0 +1,123 @@
+Visual and Brand Style
+Design Aesthetic: Adopt a clean, minimalist design with ample white space, focusing on clarity and professionalism.
+
+Color Palette: Utilize a neutral base (white and light gray) complemented by primary accent colors (e.g., deep blue #0a84ff and sustainable green) to highlight key elements.
+
+Typography: Select modern, sans-serif fonts (e.g., Inter, Open Sans) with a clear hierarchy: large, bold headlines; medium-weight subheadings; and regular body text.
+
+Imagery: Incorporate high-quality, industry-relevant images that depict real-life logistics scenarios, including last-mile deliveries and return route efficiency.
+
+Iconography: Use simple, line-based icons to represent services and features, ensuring consistency in style and size.
+
+🧱 Layout and Structure
+Header:
+
+Logo positioned on the left.
+
+Navigation menu with links: Shippers, Carriers, Send a Package, Green Deliveries, About Us, Blog.
+
+Language selector (e.g., Spanish/English).
+
+Call-to-action (CTA) button: "Sign In" or "Get Started."
+
+Hero Section:
+
+Prominent headline (e.g., "Never Empty Again on Return").
+
+Subheadline explaining the mission to reduce empty trips and emissions while enabling accessible deliveries.
+
+Background image or video showcasing NEAR in action.
+
+Primary CTA button: "Discover How It Works."
+
+Data Insights Section (Animated Numbers):
+
+Section Title: OTLE Data Insights: Understanding Transport Efficiency and Environmental Impact
+
+Animated stats:
+
+393M tons: Annual tons moved in internal displacement commerce in Spain
+
++93M: Annual number of empty operations
+
+23.7M tons CO2: Annual CO2 emissions from these displacements
+
+Add subtle animations (count-up effect) to each figure as the user scrolls.
+
+Services Overview:
+
+Split sections for Shippers and Individuals:
+
+Benefits like route optimization, economic savings, and reliability.
+
+Step-by-step booking process illustrated with icons.
+
+CTA buttons: "More information for shippers / individuals."
+
+Technology Highlight:
+
+Showcase NEAR’s app and backend powered by real-time tracking, AI, and Firebase.
+
+Visual diagrams and mockups of the user interface.
+
+Testimonials or success indicators (e.g., % reduction in empty trips).
+
+Sustainability (Green Deliveries):
+
+Explain NEAR’s model of using backhaul logistics.
+
+Display a 3-step process: Measure, Reduce, Offset.
+
+Highlight key figures (e.g., 1.16M tons CO2 mitigated in Year 1).
+
+About Us:
+
+Company story, mission statement, and team photos.
+
+Key figures (e.g., users onboarded, number of transporters, environmental milestones).
+
+Blog/News Section:
+
+Latest articles with summaries and “Read more” links.
+
+Newsletter sign-up form.
+
+Footer:
+
+Quick links: Services, About Us, Blog, Careers, Contact.
+
+Social media icons.
+
+Legal links: Privacy Policy, Terms of Service, Legal Notices.
+
+Language selector.
+
+📱 Responsiveness and Accessibility
+Ensure mobile-first design principles.
+
+Implement responsive layouts for various screen sizes.
+
+Use accessible color contrasts and font sizes.
+
+Include alt text for images and ARIA labels for navigation.
+
+⚙️ Technical Specifications
+Framework: Choose a modern front-end framework (e.g., React) for dynamic content rendering.
+
+CMS: Integrate with a content management system (e.g., WordPress or Contentful) for easy content updates.
+
+Performance:
+
+Optimize images and assets for fast loading.
+
+Implement lazy loading for off-screen elements.
+
+Use caching strategies to enhance performance.
+
+SEO:
+
+Implement semantic HTML5 elements.
+
+Optimize meta tags and descriptions.
+
+Generate XML sitemaps and robots.txt files.

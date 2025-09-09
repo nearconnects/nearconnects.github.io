@@ -1,0 +1,82 @@
+Crea una landing page responsive en HTML, CSS y JavaScript puro (sin frameworks) para el proyecto NEAR (Never Empty Again on Return). El objetivo es presentar una plataforma que conecta transportistas con clientes para evitar viajes logísticos vacíos y reducir emisiones de CO₂.
+
+📐 Estructura solicitada:
+Header fijo al hacer scroll
+
+Logo a la izquierda
+
+Menú anclado con navegación suave (scroll-behavior: smooth)
+
+Botones CTA: “Descargar App” y “Soy Transportista”
+
+Hero Section con animación de entrada
+
+Texto principal: "Conectamos caminos, cuidamos el planeta 🌍"
+
+Subtexto: "Transformamos rutas vacías en oportunidades sostenibles"
+
+Dos botones grandes y centrados
+
+Imagen de fondo difuminada (de una carretera o logística verde)
+
+Animaciones con IntersectionObserver o onload (fade in, slide in)
+
+Sección de datos OTLE con contadores animados
+
+3 bloques de datos con íconos:
+
+393M tons: Tons moved in internal commerce
+
++93M: Empty operations per year
+
+23.7M tons CO₂: Annual emissions from empty trips
+
+Contadores animados usando setInterval o requestAnimationFrame
+
+Trigger con scroll usando IntersectionObserver
+
+Sección de Problema/Solución
+
+Cards con íconos: problema (viajes vacíos), solución (rutas optimizadas)
+
+Animación de entrada por sección (fade o zoom)
+
+Sección de Beneficios
+
+Tres columnas:
+
+Transportistas (💸 ingresos extra)
+
+Clientes (📦 entregas más baratas)
+
+Planeta (🌱 menos CO₂)
+
+Hover effects en tarjetas con transform: scale() y box-shadow
+
+Impacto Visual
+
+Barra de progreso animada al hacer scroll: toneladas de CO₂ evitadas, km vacíos eliminados, ingresos adicionales generados
+
+Números con contadores ascendentes
+
+Testimonios y Casos de Éxito
+
+Estilo carrusel o slider manual en JS
+
+Citas con nombre y ciudad
+
+Formulario de contacto
+
+Campos: nombre, email, mensaje, ¿cliente o transportista?
+
+Validación simple en JS: campos requeridos + email válido
+
+Mensaje de éxito temporal tras enviar
+
+Footer moderno
+
+Enlaces a privacidad, términos, contacto
+
+Iconos sociales SVG
+
+Frase de marca: "Cuidando el planeta, conectando caminos 🌱"

@@ -992,54 +992,6 @@ nav {
     display: none;
 }
 
-/* ---- Mobile Language Selector ---- */
-.mobile-language-selector {
-    display: none;
-    margin-right: var(--spacing-md);
-}
-
-.language-toggle {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: var(--light-color);
-    padding: 8px 12px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 0.9rem;
-    font-weight: 500;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    -webkit-tap-highlight-color: transparent;
-    outline: none;
-}
-
-.language-toggle:hover,
-.language-toggle:focus {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: var(--primary-color);
-    transform: translateY(-1px);
-}
-
-.language-toggle:active {
-    transform: translateY(0);
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.language-toggle i {
-    font-size: 1rem;
-    opacity: 0.9;
-}
-
-.current-lang {
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-}
-
 /* ---- Responsive Design ---- */
 @media (max-width: 992px) {
     :root {
@@ -1053,11 +1005,6 @@ nav {
 
     .hamburger {
         display: flex;
-    }
-
-    /* Show mobile language selector on mobile */
-    .mobile-language-selector {
-        display: block;
     }
 
     .nav-menu.active {
@@ -1100,23 +1047,14 @@ nav {
         margin-top: var(--spacing-sm);
     }
 
-    .nav-menu.active .cta-buttons {
-        display: flex !important;
+    .cta-buttons.active {
+        display: flex;
         flex-direction: column;
         width: 100%;
         padding: var(--spacing-md) var(--spacing-xl);
         gap: var(--spacing-sm);
-        background-color: transparent;
-        box-shadow: none;
-        position: relative;
-        margin-top: var(--spacing-md);
-        list-style: none;
-    }
-
-    .nav-menu.active .cta-buttons .btn {
-        width: 100%;
-        text-align: center;
-        display: block;
+        background-color: rgba(18, 24, 38, 0.98); /* Dark background to match header */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
 
     .hero-buttons {
