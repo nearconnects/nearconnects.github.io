@@ -369,6 +369,7 @@ class I18n {
         
         this.currentLanguage = language;
         localStorage.setItem('language', language);
+        this.updateLanguageSelector();
         this.translatePage();
         this.updateDocumentLanguage();
     }
