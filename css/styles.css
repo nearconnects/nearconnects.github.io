@@ -1027,16 +1027,19 @@ nav {
         text-align: center;
     }
 
-    /* Mobile Get Started button styling */
+    /* Mobile Actions button styling */
+    .mobile-actions,
     .mobile-get-started {
         display: none; /* Hidden by default */
         margin-top: var(--spacing-md);
     }
 
+    .nav-menu.active .mobile-actions,
     .nav-menu.active .mobile-get-started {
         display: block !important; /* Show in mobile menu */
     }
 
+    .mobile-actions .btn,
     .mobile-get-started .btn {
         width: 90%;
         margin: 0 auto;
@@ -1047,40 +1050,15 @@ nav {
         margin-top: var(--spacing-sm);
     }
 
-    .nav-menu.active .language-selector {
-        display: block;
-        margin: var(--spacing-md) var(--spacing-xl);
-        order: -1; /* Put language selector at the top */
+    /* Additional spacing between action buttons */
+    .mobile-actions {
+        margin-top: var(--spacing-lg);
+        margin-bottom: 0;
     }
 
-    .nav-menu.active .language-selector select {
-        width: 100%;
-        padding: var(--spacing-sm) var(--spacing-md);
-        text-align: center;
-    }
-
-    .cta-buttons.active {
-        display: none; /* Hide the separate CTA buttons container */
-    }
-
-    /* Style the mobile CTA buttons within the nav menu */
-    .nav-menu.active .mobile-sign-in,
-    .nav-menu.active .mobile-get-started {
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        margin-top: var(--spacing-md);
-    }
-
-    .nav-menu.active .mobile-sign-in {
-        padding-top: var(--spacing-md);
-    }
-
-    .nav-menu.active .mobile-sign-in a {
-        color: var(--light-color);
-        font-weight: 500;
-    }
-
-    .nav-menu.active .mobile-sign-in a:hover {
-        color: var(--primary-color);
+    /* Keep header CTAs hidden on mobile */
+    .cta-buttons {
+        display: none !important;
     }
 
     .hero-buttons {

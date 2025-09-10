@@ -12,14 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function closeMenu() {
         hamburger.classList.remove('active');
         navMenu.classList.remove('active');
-        
-        // Move language selector back to its original position
-        const languageSelector = document.querySelector('.language-selector');
-        const ctaButtonsElement = document.querySelector('.cta-buttons');
-        if (languageSelector && ctaButtonsElement) {
-            ctaButtonsElement.insertBefore(languageSelector, ctaButtonsElement.firstChild);
-        }
-        
         const spans = hamburger.querySelectorAll('span');
         spans[0].style.transform = 'none';
         spans[1].style.opacity = '1';
@@ -31,18 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
             e.stopPropagation();
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
-            
-            // Move language selector into nav menu on mobile
-            const languageSelector = document.querySelector('.language-selector');
-            if (hamburger.classList.contains('active') && languageSelector) {
-                // Move language selector to be first item in nav menu
-                const navMenuElement = document.querySelector('.nav-menu');
-                navMenuElement.insertBefore(languageSelector, navMenuElement.firstChild);
-            } else if (languageSelector) {
-                // Move language selector back to CTA buttons area
-                const ctaButtonsElement = document.querySelector('.cta-buttons');
-                ctaButtonsElement.insertBefore(languageSelector, ctaButtonsElement.firstChild);
-            }
             
             // Toggle hamburger animation
             const spans = hamburger.querySelectorAll('span');
