@@ -92,8 +92,8 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             
             // Close mobile menu if open
-            if (navMenu && navMenu.classList.contains('active')) {
-                hamburger.click();
+            if (document.documentElement.classList.contains('menu-open')) {
+                closeMobileMenu();
             }
             
             const targetId = this.getAttribute('href');
