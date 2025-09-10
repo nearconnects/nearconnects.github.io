@@ -2,7 +2,15 @@
 
 ## Overview
 
-NEAR is a logistics optimization platform that aims to reduce empty cargo trips and CO₂ emissions by connecting transporters with clients. The platform focuses on making return trips profitable by allowing drivers to pick up additional deliveries that align with their routes. This static website showcases the NEAR concept through multiple pages including the main landing page, blog, insights dashboard, and "how it works" explanations. The project includes a comprehensive data analysis component built with Streamlit that visualizes survey data from drivers and customers to understand market needs and behavior patterns.
+NEAR is a logistics optimization platform that aims to reduce empty cargo trips and CO₂ emissions by connecting transporters with clients. The platform focuses on making return trips profitable by allowing drivers to pick up additional deliveries that align with their routes. This static website showcases the NEAR concept through multiple pages including the main landing page, blog, insights dashboard, and "how it works" explanations. The project includes a comprehensive data analysis component that visualizes survey data from drivers and customers to understand market needs and behavior patterns.
+
+## Recent Updates (September 2025)
+- Enhanced mobile navigation with professional fullscreen overlay design
+- Fixed hamburger button with proper animated icon (three lines to X transition)
+- Complete internationalization (i18n) system with English/Spanish support
+- Mobile language toggle functionality with proper visual feedback
+- Code cleanup removing unused files and duplicate assets
+- Optimized project structure with clean, organized file hierarchy
 
 ## User Preferences
 
