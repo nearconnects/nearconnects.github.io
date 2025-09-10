@@ -1486,3 +1486,187 @@ nav {
         display: block;
     }
 }
+
+/* ---- Mobile Navigation Overlay ---- */
+.mobile-nav {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: rgba(6, 16, 35, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(100%);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Menu Open State - Applied to html element */
+.menu-open {
+    overflow: hidden;
+}
+
+.menu-open .mobile-nav {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+}
+
+.mobile-nav-content {
+    width: 100%;
+    max-width: 400px;
+    padding: var(--spacing-xl);
+    text-align: center;
+}
+
+.mobile-nav-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.mobile-logo {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    color: var(--light-color);
+}
+
+.mobile-close {
+    background: none;
+    border: none;
+    color: var(--light-color);
+    font-size: 1.5rem;
+    padding: var(--spacing-sm);
+    cursor: pointer;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+}
+
+.mobile-close:hover,
+.mobile-close:focus {
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(90deg);
+}
+
+.mobile-nav-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.mobile-nav-menu li {
+    margin: var(--spacing-md) 0;
+}
+
+.mobile-nav-menu a {
+    color: var(--light-color);
+    text-decoration: none;
+    font-size: var(--font-size-lg);
+    font-weight: 500;
+    padding: var(--spacing-md);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: block;
+}
+
+.mobile-nav-menu a:hover,
+.mobile-nav-menu a:focus {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--primary-color);
+}
+
+.mobile-nav-menu a.active {
+    color: var(--primary-color);
+    background: rgba(0, 255, 157, 0.1);
+}
+
+.mobile-nav-actions {
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-nav-actions .mobile-language-selector {
+    margin-bottom: var(--spacing-lg);
+}
+
+.mobile-nav-actions .language-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--light-color);
+    padding: 12px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    font-weight: 500;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+}
+
+.mobile-nav-actions .language-toggle:hover,
+.mobile-nav-actions .language-toggle:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.mobile-nav-actions .language-toggle i {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.mobile-nav-actions .current-lang {
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.mobile-cta-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.mobile-cta-buttons .btn {
+    width: 100%;
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-weight: 600;
+    text-align: center;
+    border-radius: 25px;
+}
+
+.mobile-cta-buttons .btn-outline {
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    color: var(--light-color);
+    background: transparent;
+}
+
+.mobile-cta-buttons .btn-outline:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--primary-color);
+}
+
+.mobile-cta-buttons .btn-primary {
+    background: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    color: var(--dark-color);
+}
+
+.mobile-cta-buttons .btn-primary:hover {
+    background: transparent;
+    color: var(--primary-color);
+}
