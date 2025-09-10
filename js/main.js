@@ -4,50 +4,86 @@
  */
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Mobile Navigation Toggle
+    // Mobile Navigation Overlay
     const hamburger = document.querySelector('.hamburger');
-    const navMenu = document.querySelector('.nav-menu');
-    const ctaButtons = document.querySelector('.cta-buttons');
+    const mobileNav = document.getElementById('mobile-nav');
+    const mobileClose = document.querySelector('.mobile-close');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-menu a');
     
-    function closeMenu() {
+    function openMobileMenu() {
+        document.documentElement.classList.add('menu-open');
+        mobileNav.setAttribute('aria-hidden', 'false');
+        hamburger.setAttribute('aria-expanded', 'true');
+        
+        // Animate hamburger to X
+        hamburger.classList.add('active');
+        const spans = hamburger.querySelectorAll('span');
+        spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'rotate(-45deg) translate(7px, -7px)';
+        
+        // Focus management
+        mobileClose.focus();
+    }
+    
+    function closeMobileMenu() {
+        document.documentElement.classList.remove('menu-open');
+        mobileNav.setAttribute('aria-hidden', 'true');
+        hamburger.setAttribute('aria-expanded', 'false');
+        
+        // Reset hamburger animation
         hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
         const spans = hamburger.querySelectorAll('span');
         spans[0].style.transform = 'none';
         spans[1].style.opacity = '1';
         spans[2].style.transform = 'none';
+        
+        // Return focus to hamburger
+        hamburger.focus();
     }
 
-    if (hamburger) {
+    // Event listeners
+    if (hamburger && mobileNav) {
+        // Hamburger click to open menu
         hamburger.addEventListener('click', function(e) {
+            e.preventDefault();
             e.stopPropagation();
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-            
-            // Toggle hamburger animation
-            const spans = hamburger.querySelectorAll('span');
-            if (hamburger.classList.contains('active')) {
-                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-                spans[1].style.opacity = '0';
-                spans[2].style.transform = 'rotate(-45deg) translate(7px, -7px)';
-            } else {
-                spans[0].style.transform = 'none';
-                spans[1].style.opacity = '1';
-                spans[2].style.transform = 'none';
+            openMobileMenu();
+        });
+
+        // Close button click
+        if (mobileClose) {
+            mobileClose.addEventListener('click', function(e) {
+                e.preventDefault();
+                closeMobileMenu();
+            });
+        }
+
+        // Close menu when clicking backdrop
+        mobileNav.addEventListener('click', function(e) {
+            if (e.target === mobileNav) {
+                closeMobileMenu();
             }
         });
 
-        // Close menu when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
-                closeMenu();
+        // Close menu when clicking navigation links
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                closeMobileMenu();
+            });
+        });
+
+        // ESC key to close menu
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && document.documentElement.classList.contains('menu-open')) {
+                closeMobileMenu();
             }
         });
 
-        // Prevent menu from closing when clicking inside
-        navMenu.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
+        // Initialize accessibility attributes
+        hamburger.setAttribute('aria-controls', 'mobile-nav');
+        hamburger.setAttribute('aria-expanded', 'false');
+        mobileNav.setAttribute('aria-hidden', 'true');
     }
     
     // Smooth scrolling for anchor links

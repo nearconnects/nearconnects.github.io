@@ -311,18 +311,56 @@ class I18n {
     }
 
     updateLanguageSelector() {
+        // Update desktop dropdown
         const selector = document.querySelector('.language-selector select');
         if (selector) {
             selector.value = this.currentLanguage;
         }
+        
+        // Update mobile language display (both header and overlay)
+        const currentLangSpans = document.querySelectorAll('.current-lang');
+        currentLangSpans.forEach(span => {
+            if (span) {
+                span.textContent = this.currentLanguage.toUpperCase();
+            }
+        });
     }
 
     attachEventListeners() {
+        // Desktop dropdown selector
         const selector = document.querySelector('.language-selector select');
         if (selector) {
             selector.addEventListener('change', (e) => {
                 this.changeLanguage(e.target.value);
             });
+        }
+        
+        // Mobile language toggle button (in overlay)
+        const mobileToggle = document.querySelector('.mobile-nav-actions .language-toggle');
+        if (mobileToggle) {
+            mobileToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Toggle between languages
+                const newLanguage = this.currentLanguage === 'es' ? 'en' : 'es';
+                this.changeLanguage(newLanguage);
+                
+                // Add touch feedback
+                mobileToggle.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    mobileToggle.style.transform = '';
+                }, 150);
+            });
+            
+            // Add touch event listeners for better mobile experience
+            mobileToggle.addEventListener('touchstart', function(e) {
+                e.stopPropagation();
+            }, { passive: true });
+            
+            mobileToggle.addEventListener('touchend', function(e) {
+                e.stopPropagation();
+            }, { passive: true });
         }
     }
 
