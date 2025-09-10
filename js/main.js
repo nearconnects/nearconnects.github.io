@@ -17,10 +17,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Animate hamburger to X
         hamburger.classList.add('active');
-        const spans = hamburger.querySelectorAll('span');
-        spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-        spans[1].style.opacity = '0';
-        spans[2].style.transform = 'rotate(-45deg) translate(7px, -7px)';
         
         // Focus management
         mobileClose.focus();
@@ -33,10 +29,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Reset hamburger animation
         hamburger.classList.remove('active');
-        const spans = hamburger.querySelectorAll('span');
-        spans[0].style.transform = 'none';
-        spans[1].style.opacity = '1';
-        spans[2].style.transform = 'none';
         
         // Return focus to hamburger
         hamburger.focus();

@@ -307,18 +307,24 @@ nav {
     display: none;
     flex-direction: column;
     justify-content: space-between;
-    width: 30px;
-    height: 21px;
+    width: 32px;
+    height: 24px;
     cursor: pointer;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 0;
+    z-index: 1000;
 }
 
 .hamburger span {
     display: block;
     height: 3px;
     width: 100%;
-    background-color: var(--light-color);
-    border-radius: 10px;
-    transition: all var(--transition-speed);
+    background-color: #ffffff;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    transform-origin: center;
 }
 
 /* ---- Hero Section ---- */
@@ -1000,6 +1006,22 @@ nav {
 
     .hamburger {
         display: flex;
+    }
+
+    .hamburger:hover span {
+        background-color: var(--primary-color);
+    }
+
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(8px, 8px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
     }
 
 
