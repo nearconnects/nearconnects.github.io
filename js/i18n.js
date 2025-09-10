@@ -324,13 +324,6 @@ class I18n {
                 span.textContent = this.currentLanguage.toUpperCase();
             }
         });
-        
-        // Update language toggle aria-label
-        const languageToggle = document.querySelector('.language-toggle');
-        if (languageToggle) {
-            const nextLang = this.currentLanguage === 'es' ? 'EN' : 'ES';
-            languageToggle.setAttribute('aria-label', `Switch to ${nextLang}`);
-        }
     }
 
     attachEventListeners() {
