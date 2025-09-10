@@ -1478,15 +1478,20 @@ nav {
 .mobile-nav-content {
     width: 100%;
     max-width: 400px;
-    padding: var(--spacing-xl);
+    padding: var(--spacing-lg);
     text-align: center;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .mobile-nav-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
+    flex-shrink: 0;
 }
 
 .mobile-logo {
@@ -1520,19 +1525,27 @@ nav {
     padding: 0;
 }
 
+.mobile-nav-menu {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .mobile-nav-menu li {
-    margin: var(--spacing-md) 0;
+    margin: var(--spacing-sm) 0;
 }
 
 .mobile-nav-menu a {
     color: var(--light-color);
     text-decoration: none;
-    font-size: var(--font-size-lg);
+    font-size: 1.1rem;
     font-weight: 500;
-    padding: var(--spacing-md);
-    border-radius: 8px;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: 12px;
     transition: all 0.3s ease;
     display: block;
+    margin: 0.25rem 0;
 }
 
 .mobile-nav-menu a:hover,
@@ -1547,8 +1560,8 @@ nav {
 }
 
 .mobile-nav-actions {
-    margin-top: var(--spacing-xl);
-    padding-top: var(--spacing-xl);
+    flex-shrink: 0;
+    padding-top: var(--spacing-lg);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -1595,15 +1608,17 @@ nav {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-md);
-    margin-top: var(--spacing-lg);
+    margin-top: var(--spacing-md);
 }
 
 .mobile-cta-buttons .btn {
     width: 100%;
-    padding: var(--spacing-md) var(--spacing-lg);
+    padding: 1rem var(--spacing-xl);
     font-weight: 600;
     text-align: center;
-    border-radius: 25px;
+    border-radius: 30px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
 }
 
 .mobile-cta-buttons .btn-outline {
