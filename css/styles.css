@@ -1450,6 +1450,20 @@ nav {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Hide mobile nav on desktop */
+@media (min-width: 993px) {
+    .mobile-nav {
+        display: none !important;
+    }
+}
+
+/* Ensure mobile nav is available on mobile */
+@media (max-width: 992px) {
+    .mobile-nav {
+        display: flex;
+    }
+}
+
 /* Menu Open State - Applied to html element */
 .menu-open {
     overflow: hidden;
