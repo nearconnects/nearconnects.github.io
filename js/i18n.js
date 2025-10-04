@@ -11,9 +11,10 @@ const translations = {
         'nav.green-deliveries': 'Green Deliveries',
         'nav.about': 'About Us',
         'nav.blog': 'Blog',
+        'nav.how-it-works': 'Cómo Funciona',
         'nav.data-insights': 'Data Insights',
-        'nav.sign-in': 'Sign In',
-        'nav.get-started': 'Get Started',
+        'nav.sign-in': 'Iniciar Sesión',
+        'nav.get-started': 'Comenzar',
 
         // Hero Section
         'hero.tagline.top': 'NEVER EMPTY AGAIN',
@@ -156,6 +157,7 @@ const translations = {
         'nav.green-deliveries': 'Green Deliveries',
         'nav.about': 'About Us',
         'nav.blog': 'Blog',
+        'nav.how-it-works': 'How It Works',
         'nav.data-insights': 'Data Insights',
         'nav.sign-in': 'Sign In',
         'nav.get-started': 'Get Started',
