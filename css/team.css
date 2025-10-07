@@ -1,0 +1,328 @@
+
+/* Team Page Specific Styles */
+
+/* Hero Section */
+.team-hero {
+    height: 60vh;
+    min-height: 400px;
+    background-color: #061023;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    margin-top: 0;
+}
+
+.team-hero .hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #061023;
+    background-image: url('../assets/network-bg.svg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.4;
+    z-index: 0;
+    animation: pulse 15s infinite alternate;
+}
+
+.team-hero .hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    color: white;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.team-hero h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.team-hero p {
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Team Section */
+.team-section {
+    background-color: #000000;
+    padding: 6rem 0;
+    color: white;
+}
+
+.team-intro {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 4rem;
+}
+
+.team-intro h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: white;
+}
+
+.team-intro p {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.8;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 3rem;
+    margin-top: 3rem;
+}
+
+/* Team Member Card */
+.team-member {
+    background-color: #121212;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(10, 132, 255, 0.1);
+    position: relative;
+}
+
+.team-member:hover {
+    transform: translateY(-10px);
+    border-color: rgba(10, 132, 255, 0.3);
+    box-shadow: 0 20px 40px rgba(10, 132, 255, 0.2);
+}
+
+.member-image {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    background: linear-gradient(135deg, #061023 0%, #0a1a3a 100%);
+    overflow: hidden;
+}
+
+.image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(10, 132, 255, 0.1) 0%, rgba(10, 132, 255, 0.05) 100%);
+    position: relative;
+}
+
+.image-placeholder i {
+    font-size: 6rem;
+    color: rgba(10, 132, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.team-member:hover .image-placeholder i {
+    transform: scale(1.1);
+    color: rgba(10, 132, 255, 0.5);
+}
+
+/* Image placeholder pattern */
+.image-placeholder::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('../assets/network-bg.svg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.1;
+}
+
+.member-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 2rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.team-member:hover .member-overlay {
+    opacity: 1;
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-links a {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(10, 132, 255, 0.2);
+    border: 1px solid var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.social-links a:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-3px);
+}
+
+.member-info {
+    padding: 2rem;
+}
+
+.member-info h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.member-role {
+    font-size: 1rem;
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.member-bio {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+/* Join Section */
+.join-section {
+    background: linear-gradient(135deg, #061023 0%, #0a1a3a 100%);
+    padding: 5rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.join-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('../assets/network-bg.svg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.1;
+}
+
+.join-content {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.join-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.join-content p {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .team-hero h1 {
+        font-size: 3rem;
+    }
+
+    .team-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+    }
+
+    .team-intro h2 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .team-hero {
+        min-height: 350px;
+    }
+
+    .team-hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .team-hero p {
+        font-size: 1.1rem;
+    }
+
+    .team-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .member-image {
+        height: 280px;
+    }
+
+    .join-content h2 {
+        font-size: 2rem;
+    }
+
+    .join-content p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .team-section {
+        padding: 3rem 0;
+    }
+
+    .team-intro {
+        margin-bottom: 2rem;
+    }
+
+    .team-intro h2 {
+        font-size: 1.75rem;
+    }
+
+    .team-intro p {
+        font-size: 1rem;
+    }
+
+    .member-image {
+        height: 250px;
+    }
+
+    .member-info {
+        padding: 1.5rem;
+    }
+
+    .join-section {
+        padding: 3rem 0;
+    }
+}
