@@ -1020,9 +1020,9 @@ nav {
 }
 
 .partner-logos img {
-    height: 50px;
+    height: 40px;
     width: auto;
-    max-width: 150px;
+    max-width: 120px;
     object-fit: contain;
     filter: brightness(0) invert(1);
 }
