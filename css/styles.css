@@ -1578,9 +1578,19 @@ nav {
 }
 
 .mobile-logo {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
     font-size: var(--font-size-xl);
     font-weight: 700;
     color: var(--light-color);
+}
+
+.mobile-logo img {
+    height: 45px;
+    width: auto;
+    display: block;
+    object-fit: contain;
 }
 
 .mobile-close {
