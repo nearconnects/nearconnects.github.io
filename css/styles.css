@@ -218,7 +218,7 @@ section {
 }
 
 .logo img {
-    height: 45px;
+    height: 60px;
     width: auto;
     filter: brightness(0) saturate(100%) invert(47%) sepia(95%) saturate(2878%) hue-rotate(188deg) brightness(104%) contrast(101%);
 }
