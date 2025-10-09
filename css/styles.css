@@ -214,11 +214,13 @@ section {
     font-size: var(--font-size-xl);
     font-weight: 700;
     color: var(--primary-color);
+    gap: var(--spacing-sm);
 }
 
 .logo img {
-    height: 40px;
-    margin-right: var(--spacing-sm);
+    height: 45px;
+    width: auto;
+    filter: brightness(0) saturate(100%) invert(47%) sepia(95%) saturate(2878%) hue-rotate(188deg) brightness(104%) contrast(101%);
 }
 
 nav {
