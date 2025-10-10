@@ -208,17 +208,25 @@ section {
     padding: var(--spacing-md) var(--spacing-md);
 }
 
+.logo {
+    display: flex;
+    align-items: center;
+}
+
 .logo a {
     display: flex;
     align-items: center;
     font-size: var(--font-size-xl);
     font-weight: 700;
     color: var(--primary-color);
+    gap: var(--spacing-sm);
 }
 
 .logo img {
-    height: 40px;
-    margin-right: var(--spacing-sm);
+    height: 45px;
+    width: auto;
+    display: block;
+    object-fit: contain;
 }
 
 nav {
@@ -984,6 +992,53 @@ nav {
     transform: translateY(-3px);
 }
 
+.footer-partners {
+    width: 100%;
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-partners h4 {
+    color: white;
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+}
+
+.partner-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-xl);
+    flex-wrap: wrap;
+}
+
+.partner-logos a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-sm);
+    transition: all var(--transition-speed);
+    opacity: 0.8;
+}
+
+.partner-logos a:hover {
+    opacity: 1;
+    transform: translateY(-3px);
+}
+
+.partner-logos img {
+    height: 40px;
+    width: auto;
+    max-width: 120px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
+
+.partner-logos img:hover {
+    filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+}
+
 .footer-bottom {
     text-align: center;
     padding-top: var(--spacing-md);
@@ -1145,7 +1200,13 @@ nav {
 
 .animate-on-scroll {
     opacity: 0;
+    transform: translateY(20px);
     transition: all 0.6s ease;
+}
+
+.animate-on-scroll.active {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* ---- Modern Hero Section with Split Text ---- */
@@ -1517,9 +1578,19 @@ nav {
 }
 
 .mobile-logo {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
     font-size: var(--font-size-xl);
     font-weight: 700;
     color: var(--light-color);
+}
+
+.mobile-logo img {
+    height: 45px;
+    width: auto;
+    display: block;
+    object-fit: contain;
 }
 
 .mobile-close {

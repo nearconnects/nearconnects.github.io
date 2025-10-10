@@ -22,6 +22,7 @@ author = "agent"
 
 [workflows.workflow.metadata]
 agentRequireRestartOnSave = false
+outputType = "webview"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
@@ -34,10 +35,6 @@ run = ["sh", "-c", "python -m http.server 5000"]
 [[ports]]
 localPort = 5000
 externalPort = 80
-
-[[ports]]
-localPort = 8501
-externalPort = 3000
 
 [[ports]]
 localPort = 38253

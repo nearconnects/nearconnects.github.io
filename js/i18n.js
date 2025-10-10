@@ -11,9 +11,10 @@ const translations = {
         'nav.green-deliveries': 'Green Deliveries',
         'nav.about': 'About Us',
         'nav.blog': 'Blog',
+        'nav.how-it-works': 'Cómo Funciona',
         'nav.data-insights': 'Data Insights',
-        'nav.sign-in': 'Sign In',
-        'nav.get-started': 'Get Started',
+        'nav.sign-in': 'Iniciar Sesión',
+        'nav.get-started': 'Comenzar',
 
         // Hero Section
         'hero.tagline.top': 'NEVER EMPTY AGAIN',
@@ -107,8 +108,7 @@ const translations = {
         'footer.company': 'Empresa',
         'footer.company.about': 'About Us',
         'footer.company.team': 'Equipo',
-        'footer.company.careers': 'Carreras',
-        'footer.company.press': 'Prensa',
+        'footer.company.blog': 'Blog',
         'footer.legal': 'Legal',
         'footer.legal.privacy': 'Política de Privacidad',
         'footer.legal.terms': 'Términos y Condiciones',
@@ -117,6 +117,7 @@ const translations = {
         'footer.help.faq': 'FAQ',
         'footer.help.contact': 'Contacto',
         'footer.help.support': 'Soporte',
+        'footer.partners': 'Nuestros Partners',
         'footer.social': 'Síguenos',
         'footer.copyright': '&copy; 2025 NEAR (Never Empty Again on Return). Todos los derechos reservados.',
 
@@ -134,7 +135,7 @@ const translations = {
         'blog.newsletter.description': 'Recibe las últimas ideas sobre logística sostenible en tu email',
         'blog.newsletter.placeholder': 'Ingresa tu email',
         'blog.newsletter.subscribe': 'Suscribirse',
-        
+
         // Blog Posts
         'blog.post1.title': 'El Costo Ambiental Oculto de las Rutas Logísticas Vacías',
         'blog.post1.excerpt': 'Descubre cómo los viajes de retorno vacíos contribuyen al 40% de las emisiones logísticas y qué soluciones innovadoras están cambiando el panorama de la industria.',
@@ -156,6 +157,7 @@ const translations = {
         'nav.green-deliveries': 'Green Deliveries',
         'nav.about': 'About Us',
         'nav.blog': 'Blog',
+        'nav.how-it-works': 'How It Works',
         'nav.data-insights': 'Data Insights',
         'nav.sign-in': 'Sign In',
         'nav.get-started': 'Get Started',
@@ -252,8 +254,7 @@ const translations = {
         'footer.company': 'Company',
         'footer.company.about': 'About Us',
         'footer.company.team': 'Team',
-        'footer.company.careers': 'Careers',
-        'footer.company.press': 'Press',
+        'footer.company.blog': 'Blog',
         'footer.legal': 'Legal',
         'footer.legal.privacy': 'Privacy Policy',
         'footer.legal.terms': 'Terms & Conditions',
@@ -262,6 +263,7 @@ const translations = {
         'footer.help.faq': 'FAQ',
         'footer.help.contact': 'Contact',
         'footer.help.support': 'Support',
+        'footer.partners': 'Our Partners',
         'footer.social': 'Follow Us',
         'footer.copyright': '&copy; 2025 NEAR (Never Empty Again on Return). All rights reserved.',
 
@@ -279,7 +281,7 @@ const translations = {
         'blog.newsletter.description': 'Get the latest insights on sustainable logistics delivered to your inbox',
         'blog.newsletter.placeholder': 'Enter your email',
         'blog.newsletter.subscribe': 'Subscribe',
-        
+
         // Blog Posts
         'blog.post1.title': 'The Hidden Environmental Cost of Empty Logistics Routes',
         'blog.post1.excerpt': 'Discover how empty return trips contribute to 40% of logistics emissions and what innovative solutions are changing the industry landscape.',
@@ -316,7 +318,7 @@ class I18n {
         if (selector) {
             selector.value = this.currentLanguage;
         }
-        
+
         // Update mobile language display (both header and overlay)
         const currentLangSpans = document.querySelectorAll('.current-lang');
         currentLangSpans.forEach(span => {
@@ -334,30 +336,30 @@ class I18n {
                 this.changeLanguage(e.target.value);
             });
         }
-        
+
         // Mobile language toggle button (in overlay)
         const mobileToggle = document.querySelector('.mobile-nav-actions .language-toggle');
         if (mobileToggle) {
             mobileToggle.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                
+
                 // Toggle between languages
                 const newLanguage = this.currentLanguage === 'es' ? 'en' : 'es';
                 this.changeLanguage(newLanguage);
-                
+
                 // Add touch feedback
                 mobileToggle.style.transform = 'scale(0.95)';
                 setTimeout(() => {
                     mobileToggle.style.transform = '';
                 }, 150);
             });
-            
+
             // Add touch event listeners for better mobile experience
             mobileToggle.addEventListener('touchstart', function(e) {
                 e.stopPropagation();
             }, { passive: true });
-            
+
             mobileToggle.addEventListener('touchend', function(e) {
                 e.stopPropagation();
             }, { passive: true });
@@ -366,7 +368,7 @@ class I18n {
 
     changeLanguage(language) {
         if (language === this.currentLanguage) return;
-        
+
         this.currentLanguage = language;
         localStorage.setItem('language', language);
         this.updateLanguageSelector();
@@ -379,7 +381,7 @@ class I18n {
         elements.forEach(element => {
             const key = element.getAttribute('data-translate');
             const translation = this.getTranslation(key);
-            
+
             if (translation) {
                 // Handle different types of content
                 if (element.tagName === 'INPUT' && element.type === 'submit') {
