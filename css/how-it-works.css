@@ -4,6 +4,9 @@
     height: 60vh;
     min-height: 400px;
     background-color: #061023;
+    background-image: url('../assets/network-bg.svg');
+    background-size: 150%;
+    background-position: 50% 0%;
     display: flex;
     align-items: center;
     position: relative;
@@ -17,11 +20,15 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('../assets/network-bg.svg');
-    background-size: cover;
-    background-position: center;
-    opacity: 0.4;
+    background: radial-gradient(circle at 50% 50%, rgba(10, 132, 255, 0.15) 0%, transparent 70%);
+    opacity: 0.6;
     z-index: 0;
+    animation: pulseGlow 8s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.1); }
 }
 
 .how-it-works-hero .hero-content {
@@ -41,6 +48,20 @@
     background-color: #061023;
     padding: 6rem 0;
     color: white;
+    position: relative;
+    perspective: 1500px;
+    overflow: hidden;
+}
+
+.overview-section:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 80% 20%, rgba(10, 132, 255, 0.1) 0%, transparent 60%);
+    pointer-events: none;
 }
 
 .overview-content {
@@ -185,7 +206,9 @@
     text-align: center;
     z-index: 1;
     transform-origin: center top;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-style: preserve-3d;
+    will-change: transform;
 }
 
 .process-card::before {
@@ -252,6 +275,19 @@ CCild(1) { z-index: 5; }
     background-color: #061023;
     padding: 6rem 0;
     color: white;
+    position: relative;
+    perspective: 1000px;
+}
+
+.features-section:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, transparent 0%, rgba(10, 132, 255, 0.05) 100%);
+    pointer-events: none;
 }
 
 .features-grid {
@@ -266,11 +302,30 @@ CCild(1) { z-index: 5; }
     border-radius: var(--border-radius-lg);
     padding: 2rem;
     text-align: center;
-    transition: transform 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-style: preserve-3d;
+    position: relative;
+}
+
+.feature-card:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(10, 132, 255, 0.2) 0%, transparent 50%);
+    border-radius: var(--border-radius-lg);
+    opacity: 0;
+    transition: opacity 0.4s ease;
 }
 
 .feature-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-15px) rotateY(5deg);
+}
+
+.feature-card:hover:before {
+    opacity: 1;
 }
 
 .feature-card i {
