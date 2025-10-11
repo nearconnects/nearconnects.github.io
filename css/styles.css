@@ -1194,6 +1194,15 @@ nav {
     }
 }
 
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
 .animate-on-load {
     opacity: 0;
 }
@@ -1207,6 +1216,68 @@ nav {
 .animate-on-scroll.active {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* Enhanced card animations */
+.stat-card {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stat-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 20px 40px rgba(10, 132, 255, 0.3);
+}
+
+.card {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover {
+    transform: scale(1.05) translateY(-5px);
+    box-shadow: 0 15px 35px rgba(10, 132, 255, 0.25);
+}
+
+.benefit-card {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.metric-card {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.metric-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(10, 132, 255, 0.4);
+}
+
+/* Icon enhancements */
+.stat-icon {
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover .stat-icon {
+    transform: scale(1.2) rotate(10deg);
+    color: #00d4ff;
+}
+
+.card-icon {
+    transition: all 0.4s ease;
+}
+
+.card:hover .card-icon {
+    transform: scale(1.15);
+}
+
+.benefit-number {
+    transition: all 0.3s ease;
 }
 
 /* ---- Modern Hero Section with Split Text ---- */
